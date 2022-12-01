@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { toast } from 'react-toastify'
+import { getImage } from '../services/imageServices'
 const originalHeight = 486
 const originalWidth = 864
 
@@ -31,9 +33,23 @@ function ImageBox({ image }) {
         // console.log(y, x)
     }
     useEffect(() => {
+     
+        getImageData()
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
+
     }, [])
+
+       const getImageData = async () => {
+         try {
+           const {data} = await getImage();
+           console.log(data);
+         } catch (ex) {
+        //    if (ex.response && ex.response.status === 400)
+             toast.error(ex.message);
+         }
+       };
+
     return (
         <div ref={boxRef} className='mt-2 h-80vh bg-dark d-flex justify-content-center position-relative'>
             <div className='position-absolute bg-danger ' style={{ height: '5px', width: '5px', bottom: y + 'px', left: x + 'px' }}></div>
