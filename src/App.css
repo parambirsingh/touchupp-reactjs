@@ -1,3 +1,6 @@
+@import '../node_modules/bootstrap-icons/font/bootstrap-icons.css';
+
+
 .App {
   text-align: center;
 }
@@ -40,9 +43,18 @@
 .h-100vh{
   height: 100vh;
 }
+.h-max-80vh{
+  max-height: 80vh;
+}
 .h-80vh{
   height: 80vh;
 }
 .h-50vh{
   height: 50vh;
+}
+.hover-danger:hover{
+color: red;
+}
+.cursor-pointer{
+  cursor:pointer;
 }
