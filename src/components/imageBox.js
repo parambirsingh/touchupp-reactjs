@@ -6,7 +6,7 @@ const originalWidth = 864
 
 const originalX = 150
 const originalY = 200
-function ImageBox({ image }) {
+function ImageBox({ image,coord }) {
     const imageRef = useRef()
     const boxRef = useRef()
     const [height, setHeight] = useState(0)

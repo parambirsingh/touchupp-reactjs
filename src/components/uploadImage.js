@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, {  useRef } from 'react'
 
 function UploadImage({ setImage }) {
     const image = useRef()
@@ -11,11 +11,10 @@ function UploadImage({ setImage }) {
         reader.onerror = function (error) {
             console.log('Error: ', error);
         };
-        console.log()
     }
     return (
         <div className='container-fluid pt-5 w-50'>
-            <input ref={image} className="form-control form-control-md" onChange={(e) => handleChange(e)} id="formFileLg" type="file" />
+            <input value='' ref={image} className="form-control form-control-md" onChange={(e) => handleChange(e)} id="formFileLg" type="file" />
         </div>
 
     )
