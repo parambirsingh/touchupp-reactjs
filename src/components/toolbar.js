@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 
-function Toolbar({brushMode,setBrushMode}) {
+
+function Toolbar({brushMode,setBrushMode , setBrushStock ,brushStock}) {
     return (
         <div className='d-flex justify-content-center'>
             {!brushMode ? <div className='btn' onClick={() => setBrushMode(true)}>
@@ -11,7 +12,7 @@ function Toolbar({brushMode,setBrushMode}) {
                         <i className="bi bi-x-lg"></i>
                     </div>
                     <div>
-                        <input type="range" className="form-range pt-2" id="customRange1" />
+                        <input min="0" max="100" type="range" value={brushStock} onChange={(e)=>setBrushStock(e.target.valueAsNumber)} className="form-range pt-2" id="customRange1" />
                     </div>
                 </>
             }

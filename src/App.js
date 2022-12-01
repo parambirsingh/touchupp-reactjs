@@ -3,9 +3,7 @@ import Header from './components/common/header';
 import { RouterProvider } from 'react-router-dom';
 import Footer from './components/common/footer';
 import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap/dist/css/bootstrap.min.css'
-
-
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 function App({router}) {
   return (
     <div>
