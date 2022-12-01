@@ -21,24 +21,25 @@ function ImageBox({ image }) {
     const handleResize = () => {
         xStart = (boxRef.current.clientWidth - imageRef.current.clientWidth) / 2
         yStart = (boxRef.current.clientHeight - imageRef.current.clientHeight) / 2
-        console.log(boxRef.current.clientHeight,imageRef.current.clientHeight)
         setHeight(imageRef.current.clientHeight)
         setWidth(imageRef.current.clientWidth)
         percentDecreaseHeight = 100 - ((imageRef.current.clientHeight / originalHeight) * 100)
         percentDecreaseWidth = 100 - ((imageRef.current.clientWidth / originalWidth) * 100)
         let decreaseY = (originalY / 100) * percentDecreaseHeight
         let decreaseX = (originalX / 100) * percentDecreaseWidth
-        setY(yStart + (originalY - decreaseY) )
+        setY(yStart + (originalY - decreaseY))
         setX(xStart + (originalX - decreaseX))
         // console.log(y, x)
     }
     useEffect(() => {
-     
-        getImageData()
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
 
-    }, [])
+    }, [image])
+
+    useEffect(()=>{
+          getImageData();
+    },[])
 
        const getImageData = async () => {
          try {
@@ -51,9 +52,13 @@ function ImageBox({ image }) {
        };
 
     return (
-        <div ref={boxRef} className='mt-2 h-80vh bg-dark d-flex justify-content-center position-relative'>
-            <div className='position-absolute bg-danger ' style={{ height: '5px', width: '5px', bottom: y + 'px', left: x + 'px' }}></div>
-            <img ref={imageRef} src={image} className='h-100 w-100 object-fit' style={{  objectFit: 'contain' }} />
+        <div>
+            <div ref={boxRef} className='mt-2 h-max-80vh bg-dark d-flex justify-content-center position-relative'>
+                <div className='position-absolute bg-danger ' style={{ height: '5px', width: '5px', bottom: y + 'px', left: x + 'px' }}>
+                <i className="bi bi-x-circle-fill  hover-danger cursor-pointer"></i>
+                </div>
+                <img ref={imageRef} src={image} className='h-max-80vh object-fit' style={{ objectFit: 'contain' ,maxWidth:'100%'}} />
+            </div>
         </div>
     )
 }
