@@ -1,4 +1,4 @@
-import React, {useEffect,useState , useRef} from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { ReactSketchCanvas } from 'react-sketch-canvas';
 import CustomCursor from 'custom-cursor-react';
 import 'custom-cursor-react/dist/index.css';
@@ -10,20 +10,19 @@ const styles = {
     width: '534px',
     margin: '0 auto',
     cursor: 'none'
-  };
-  
-  let x = 206;
-  let y = 158
-function Canvas({ image ,imageDimension}) {
+};
+
+let x = 206;
+let y = 158
+function Canvas({ image, imageDimension,brushStock }) {
     const canvas = useRef()
     const container = useRef()
-    const [brushStock, setBrushStock] = useState(30)
     const [isEraser, setIsEraser] = useState(false)
-    const [loading, setLoading] = useState(false)
+    // const [loading, setLoading] = useState(false)
 
-    const [brushSelected, setBrushSelected] = useState(false)
+    // const [brushSelected, setBrushSelected] = useState(false)
     // const [imageDimension, setImageDimension] = useState({ height: 0, width: 0 })
-    const [changeImageDimension, setChangeImageDimension] = useState({ height: 0, width: 0 })
+    // const [changeImageDimension, setChangeImageDimension] = useState({ height: 0, width: 0 })
 
     let setTimoutHandle
     // const handleExport = (type) => {
@@ -76,20 +75,25 @@ function Canvas({ image ,imageDimension}) {
             }, 1000)
         }
     }
-    useEffect(()=>{
+    useEffect(() => {
         console.log(imageDimension)
         // styles.height = imageDimension[0]+'px';
         // styles.width = imageDimension[1]+'px';
         // console.log(styles)
-    },[imageDimension])
-    return (<div>
+    }, [imageDimension])
+    return (<div className='mt-2'>
         <ReactSketchCanvas
             ref={canvas}
-            style={styles}
+            style={{
+                height: imageDimension[1],
+                width: imageDimension[0],
+                margin: '0 auto',
+                cursor: 'none'
+            }}
             strokeWidth={brushStock}
             eraserWidth={brushStock}
             strokeColor="#e4c725bf"
-            
+
             backgroundImage={image}
             onChange={() => handlePath()}
         />
