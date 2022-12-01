@@ -5,11 +5,13 @@ import UploadImage from '../components/uploadImage'
 
 export default function Home() {
     const [image, setImage] = useState('')
+    const [brushMode, setBrushMode] = useState('')
+
     return (
         <div className='container-fluid'>
             <UploadImage setImage={setImage}/>
             <ImageBox image={image}/>
-            <Toolbar />
+            <Toolbar brushMode={brushMode} setBrushMode={setBrushMode} />
         </div>
     )
 }

@@ -1,14 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-function Toolbar() {
+function Toolbar({brushMode,setBrushMode}) {
     return (
         <div className='d-flex justify-content-center'>
-            <div className='btn'>
-                <i className="bi bi-brush"></i>
-            </div>
-            <div>
-                <input type="range" className="form-range pt-2" id="customRange1" />
-            </div>
+            {!brushMode ? <div className='btn' onClick={() => setBrushMode(true)}>
+                <i class="bi bi-eraser-fill"></i>
+            </div> :
+                <>
+                    <div className='btn' onClick={() => setBrushMode(false)}>
+                        <i class="bi bi-x-lg"></i>
+                    </div>
+                    <div>
+                        <input type="range" className="form-range pt-2" id="customRange1" />
+                    </div>
+                </>
+            }
             <div className='btn'>
                 <i className="bi bi-arrow-counterclockwise"></i>
             </div>
