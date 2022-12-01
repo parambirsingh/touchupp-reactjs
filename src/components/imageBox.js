@@ -57,7 +57,7 @@ function ImageBox({ image,coord }) {
                 <div className='position-absolute bg-danger ' style={{ height: '5px', width: '5px', bottom: y + 'px', left: x + 'px' }}>
                 <i className="bi bi-x-circle-fill  hover-danger cursor-pointer"></i>
                 </div>
-                <img ref={imageRef} src={image} className='h-max-80vh object-fit' style={{ objectFit: 'contain' ,maxWidth:'100%'}} />
+                <img ref={imageRef} src={image} className='h-max-80vh object-fit' style={{ objectFit: 'contain' ,maxWidth:'100%'}} alt="img"/>
             </div>
         </div>
     )
