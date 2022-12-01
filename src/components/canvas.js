@@ -14,7 +14,7 @@ const styles = {
 
 let x = 206;
 let y = 158
-function Canvas({ image, imageDimension,brushStock }) {
+function Canvas({ image, imageDimension, brushStock, setImage, image2Dimension }) {
     const canvas = useRef()
     const container = useRef()
     const [isEraser, setIsEraser] = useState(false)
@@ -69,6 +69,8 @@ function Canvas({ image, imageDimension,brushStock }) {
                     path = await canvas.current.exportPaths()
                     if (path.length) {
                         console.log('return:', path)
+                        const data = await canvas.current.exportImage("png")
+                        setImage(data)
                     }
                     canvas.current.clearCanvas()
                 }
@@ -81,35 +83,36 @@ function Canvas({ image, imageDimension,brushStock }) {
         // styles.width = imageDimension[1]+'px';
         // console.log(styles)
     }, [imageDimension])
-    return (<div className='mt-2'>
-        <ReactSketchCanvas
-            ref={canvas}
-            style={{
-                height: imageDimension[1],
-                width: imageDimension[0],
-                margin: '0 auto',
-                cursor: 'none'
-            }}
-            strokeWidth={brushStock}
-            eraserWidth={brushStock}
-            strokeColor="#e4c725bf"
+    return (
+        <div className='mt-2' >
+            <ReactSketchCanvas
+                ref={canvas}
+                style={{
+                    height: imageDimension[1],
+                    width: imageDimension[0],
+                    margin: '0 auto',
+                    cursor: 'none'
+                }}
+                strokeWidth={brushStock}
+                eraserWidth={brushStock}
+                strokeColor="#e4c725bf"
 
-            backgroundImage={image}
-            onChange={() => handlePath()}
-        />
-        <CustomCursor
-            targets={['.cursor-area']}
-            customClass='custom-cursor'
-            dimensions={brushStock + brushStock}
-            strokeColor="#e4c725bf"
-            fill='#e4c725bf'
-            // smoothness={{
-            //     movement: 0.2,
-            //     scale: 0.5,
-            // }}
-            targetOpacity={2}
-        />
-    </div >)
+                backgroundImage={image}
+                onChange={() => handlePath()}
+            />
+            <CustomCursor
+                targets={['.cursor-area']}
+                customClass='custom-cursor'
+                dimensions={brushStock + brushStock}
+                strokeColor="#e4c725bf"
+                fill='#e4c725bf'
+                // smoothness={{
+                //     movement: 0.2,
+                //     scale: 0.5,
+                // }}
+                targetOpacity={2}
+            />
+        </div >)
 }
 
 export default Canvas

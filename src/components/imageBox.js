@@ -7,7 +7,7 @@ let originalWidth = 864
 const originalX = 150
 const originalY = 200
 let originalCoord = []
-function ImageBox({ image, coord, setCoord, setImageDimension }) {
+function ImageBox({ image, coord, setCoord, setImageDimension,setImage2Dimension }) {
     const imageRef = useRef()
     const boxRef = useRef()
     const [x, setX] = useState(0)
@@ -19,6 +19,7 @@ function ImageBox({ image, coord, setCoord, setImageDimension }) {
     let percentDecreaseWidth = 0
     const handleResize = () => {
         let arr = [imageRef.current.clientWidth, imageRef.current.clientHeight]
+        setImage2Dimension([imageRef.current.clientWidth, imageRef.current.clientHeight])
         setImageDimension(arr)
         let coords = [...coord]
         coords.map((v, i) => {
