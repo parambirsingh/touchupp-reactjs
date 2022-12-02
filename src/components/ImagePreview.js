@@ -1,5 +1,4 @@
 import React from 'react'
-import galleryimg from '../assets/img/img1.jpg'
 import Canvas from './canvas'
 import ImageBox from './imageBox'
 import Toolbar from './toolbar';
@@ -29,7 +28,7 @@ function ImagePreview({
                 <div className="row">
                     <div className="col-md-12">
                         <div className="d-flex align-items-center pb-4">
-                            <a onClick={() => setImage('')} className="back fs-5 text-dark text-decoration-none cursor-pointer"><span className="me-2">
+                            <a onClick={() => {setImage('');setImageHistory([]);setCurrentIndex(0)}} className="back fs-5 text-dark text-decoration-none cursor-pointer"><span className="me-2">
                                 <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M9.57 6.73175L3.5 12.8018L9.57 18.8717" stroke="#292D32" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
                                     <path d="M20.5 12.8018H3.67004" stroke="#292D32" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />

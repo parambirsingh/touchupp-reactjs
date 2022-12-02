@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 import { getImage } from '../services/imageServices'
-import Draggable from 'react-draggable';
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 
@@ -11,8 +10,6 @@ let originalCoord = []
 function ImageBox({ image, coord, setCoord, setImageDimension, setImage2Dimension, scale }) {
     const imageRef = useRef()
     const boxRef = useRef()
-    let xStart = 100
-    let yStart = 100
 
     const handleResize = () => {
         if (!imageRef || !boxRef) return
@@ -22,6 +19,8 @@ function ImageBox({ image, coord, setCoord, setImageDimension, setImage2Dimensio
         setImageDimension(arr)
         let percentDecreaseHeight = 0
         let percentDecreaseWidth = 0
+        let xStart = 0
+        let yStart = 0
         let coords = [...coord]
         coords.map((v, i) => {
             xStart = (boxRef.current.clientWidth - imageRef.current.clientWidth) / 2
@@ -51,11 +50,11 @@ function ImageBox({ image, coord, setCoord, setImageDimension, setImage2Dimensio
             originalWidth = imageRef.current.naturalWidth
             handleResize()
         })
-        //   getImageData();
+        getImageData();
     }, [])
     const getImageData = async () => {
         try {
-            const { data } = await getImage();
+            const { data } = await getImage({ photoBase64: image });
             console.log(data);
         } catch (ex) {
             //    if (ex.response && ex.response.status === 400)
@@ -67,9 +66,6 @@ function ImageBox({ image, coord, setCoord, setImageDimension, setImage2Dimensio
 
         <div className='d-flex justify-content-center'>
             <TransformWrapper
-            // initialScale={1}
-            // initialPositionX={0}
-            // initialPositionY={0}
             >
                 <TransformComponent >
                     <div ref={boxRef} className='mt-2 h-max-80vh d-flex justify-content-center position-relative'

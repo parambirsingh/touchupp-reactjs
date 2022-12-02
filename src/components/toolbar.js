@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 
 function Toolbar({ brushMode, setBrushMode, setBrushStock, brushStock, imageHistory, setImageHistory, currentIndex, setCurrentIndex, setScale }) {

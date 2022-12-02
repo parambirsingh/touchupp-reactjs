@@ -1,7 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import Canvas from '../components/canvas';
-import ImageBox from '../components/imageBox'
-import Toolbar from '../components/toolbar'
 import UploadImage from '../components/uploadImage'
 import { Constants } from '../data/constants';
 import ImagePreview from '../components/ImagePreview';
