@@ -13,20 +13,20 @@ axios.interceptors.response.use(null, (error) => {
 });
 
 axios.interceptors.request.use((request)=>{
- request.headers = {'Access-Control-Allow-Origin':'*'}
+ request.headers = {'Access-Control-Allow-Origin':'http://localhost:8080'}
  return request;
 })
 
-const setJwt = (jwt) => {
-  axios.defaults.headers.common["x-auth-token"] = jwt;
-};
+// const setJwt = (jwt) => {
+//   axios.defaults.headers.common["x-auth-token"] = jwt;
+// };
 
 const http = {
   get: axios.get,
   post: axios.post,
   put: axios.put,
   delete: axios.delete,
-  setJwt,
+  // setJwt,
 };
 
 export default http;

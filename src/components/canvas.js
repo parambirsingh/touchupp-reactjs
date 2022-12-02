@@ -14,7 +14,16 @@ const styles = {
 
 let x = 206;
 let y = 158
-function Canvas({ image, imageDimension, brushStock, setImage, image2Dimension }) {
+function Canvas({
+    image,
+    imageDimension,
+    brushStock,
+    currentIndex,
+    setImage,
+    image2Dimension,
+    setCurrentIndex,
+    setImageHistory
+}) {
     const canvas = useRef()
     const container = useRef()
     const [isEraser, setIsEraser] = useState(false)
@@ -63,18 +72,27 @@ function Canvas({ image, imageDimension, brushStock, setImage, image2Dimension }
     const handlePath = async () => {
         if (canvas) {
             clearTimeout(setTimoutHandle)
-            setTimoutHandle = setTimeout(async () => {
-                let path
-                if (!isEraser) {
-                    path = await canvas.current.exportPaths()
-                    if (path.length) {
-                        console.log('return:', path)
-                        const data = await canvas.current.exportImage("png")
-                        setImage(data)
-                    }
-                    canvas.current.clearCanvas()
+            let path
+            if (!isEraser) {
+                path = await canvas.current.exportPaths()
+                if (path.length) {
+                    console.log('return:', path)
+                    const data = await canvas.current.exportImage("png")
+                    setImageHistory((arr) => {
+                        if (currentIndex < (arr.length - 1)) arr.splice(currentIndex + 1, arr.length - currentIndex, data)
+                        else arr.push(data)
+                        setCurrentIndex(arr.length - 1)
+                        return arr
+                    })
+
+                    // setImage(data)
+
                 }
-            }, 1000)
+                canvas.current.clearCanvas()
+            // setTimoutHandle = setTimeout(async () => {
+            //     }
+            // }, 1000)
+            }
         }
     }
     useEffect(() => {
@@ -85,31 +103,35 @@ function Canvas({ image, imageDimension, brushStock, setImage, image2Dimension }
     }, [imageDimension])
     return (
         <div className='mt-2' >
-            <ReactSketchCanvas
-                ref={canvas}
-                style={{
-                    height: imageDimension[1],
-                    width: imageDimension[0],
-                    margin: '0 auto',
-                    cursor: 'none'
-                }}
-                strokeWidth={brushStock}
-                eraserWidth={brushStock}
-                strokeColor="#e4c725bf"
+            <div onMouseUp={() => handlePath()}>
+                <ReactSketchCanvas
+                    ref={canvas}
+                    style={{
+                        height: imageDimension[1],
+                        width: imageDimension[0],
+                        margin: '0 auto',
+                        cursor: 'none'
+                    }}
+                    strokeWidth={brushStock}
+                    eraserWidth={brushStock}
+                    strokeColor="#e4c725bf"
 
-                backgroundImage={image}
-                onChange={() => handlePath()}
-            />
+                    backgroundImage={image}
+
+                // onChange={() => handlePath()}
+                />
+            </div>
             <CustomCursor
                 targets={['.cursor-area']}
                 customClass='custom-cursor'
                 dimensions={brushStock + brushStock}
                 strokeColor="#e4c725bf"
                 fill='#e4c725bf'
-                // smoothness={{
-                //     movement: 0.2,
-                //     scale: 0.5,
-                // }}
+                smoothness={{
+                    movement: 0.5,
+                    scale: 0.1,
+                    opacity: 0.2,
+                }}
                 targetOpacity={2}
             />
         </div >)
