@@ -9,9 +9,9 @@ import './App.css';
 function App({router}) {
   return (
     <div>
-      {/* <Header /> */}
+      <Header />
       <RouterProvider router={router} />
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 }
