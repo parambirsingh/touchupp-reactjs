@@ -4,6 +4,7 @@ import ImageBox from '../components/imageBox'
 import Toolbar from '../components/toolbar'
 import UploadImage from '../components/uploadImage'
 import { Constants } from '../data/constants';
+import ImagePreview from '../components/ImagePreview';
 
 export default function Home() {
     const [imageDimension, setImageDimension] = useState([0, 0]);
@@ -21,33 +22,25 @@ export default function Home() {
     }, [currentIndex])
     return (
         <div className='container-fluid position-relative'>
-            <UploadImage setImage={setImage} />
-            {brushMode ?
-                <Canvas
-                    currentIndex={currentIndex}
-                    setCurrentIndex={setCurrentIndex}
-                    setImageHistory={setImageHistory}
-                    image2Dimension={image2Dimension}
-                    brushStock={brushStock} setImage={setImage}
-                    imageDimension={imageDimension} image={image}
-                /> :
-                <ImageBox
-                    scale={scale}
-                    setImage2Dimension={setImage2Dimension}
-                    setImageDimension={setImageDimension}
-                    image={image}
-                    coord={coord}
-                    setCoord={setCoord} />
-            }
-            <Toolbar
-               
-                setScale={setScale}
-                currentIndex={currentIndex} setCurrentIndex={setCurrentIndex}
-                imageHistory={imageHistory} setImageHistory={setImageHistory}
-                setBrushStock={setBrushStock}
+            {!image?<UploadImage setImage={setImage} />:
+            <ImagePreview
                 brushMode={brushMode}
-                brushStock={brushStock}
-                setBrushMode={setBrushMode} />
+                currentIndex={currentIndex}
+                setCurrentIndex={setCurrentIndex}
+                setImageHistory={setImageHistory}
+                image2Dimension={image2Dimension}
+                brushStock={brushStock} setImage={setImage}
+                imageDimension={imageDimension} image={image}
+                scale={scale}
+                setImage2Dimension={setImage2Dimension}
+                setImageDimension={setImageDimension}
+                coord={coord}
+                setCoord={setCoord}
+                setScale={setScale}
+                imageHistory={imageHistory}
+                setBrushStock={setBrushStock}
+                setBrushMode={setBrushMode}
+            ></ImagePreview>}
         </div>
     )
 }

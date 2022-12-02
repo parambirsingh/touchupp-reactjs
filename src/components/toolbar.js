@@ -18,12 +18,12 @@ function Toolbar({ brushMode, setBrushMode, setBrushStock, brushStock, imageHist
                             <i className="bi bi-eraser-fill"></i>
                         </div>
 
-                        <div className='btn' onClick={() => { setScale((s) => s < 1.6 ? s + 0.1 : s) }}>
+                        {/* <div className='btn' onClick={() => { setScale((s) => s < 1.6 ? s + 0.1 : s) }}>
                             <i className="bi bi-zoom-in"></i>
                         </div>
                         <div className='btn' onClick={() => { setScale((s) => s > 1 ? s - 0.1 : s) }}>
                             <i className="bi bi-zoom-out"></i>
-                        </div>
+                        </div> */}
 
                     </>
                     :
