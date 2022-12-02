@@ -1,11 +1,11 @@
 import React from 'react'
+import logo from '../assets/img/logo.svg'
+
 
 export default function About() {
   return (
-  
-
   <div>  
-  
+    <img className='d-none' src={logo} />
     <nav className="navbar navbar-expand-lg  border-bottom">
     <div className="container-fluid">
       <a className="navbar-brand" href="#"></a>
