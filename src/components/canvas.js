@@ -124,11 +124,11 @@ function Canvas({
                 strokeColor="#e4c725bf"
                 fill='#e4c725bf'
                 smoothness={{
-                    movement: 0.5,
+                    movement: 0.2,
                     scale: 0.1,
                     opacity: 0.2,
                 }}
-                targetOpacity={2}
+                // targetOpacity={2}
             />
         </div >)
 }
