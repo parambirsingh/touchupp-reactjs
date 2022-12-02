@@ -20,7 +20,7 @@ export default function Home() {
         setImage(imageHistory[currentIndex])
     }, [currentIndex])
     return (
-        <div className='container-fluid'>
+        <div className='container-fluid position-relative'>
             <UploadImage setImage={setImage} />
             {brushMode ?
                 <Canvas
@@ -40,6 +40,7 @@ export default function Home() {
                     setCoord={setCoord} />
             }
             <Toolbar
+               
                 setScale={setScale}
                 currentIndex={currentIndex} setCurrentIndex={setCurrentIndex}
                 imageHistory={imageHistory} setImageHistory={setImageHistory}

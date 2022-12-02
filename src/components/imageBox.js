@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 import { getImage } from '../services/imageServices'
+import Draggable from 'react-draggable';
+
 
 let originalHeight = 486
 let originalWidth = 864
@@ -57,7 +59,7 @@ function ImageBox({ image, coord, setCoord, setImageDimension,setImage2Dimension
     };
 
     return (
-        <div>
+        <Draggable className='w-auto'>
             <div ref={boxRef} className='mt-2 h-max-80vh d-flex justify-content-center position-relative' style={{ transform: `scale(${scale})`}}>
                 {coord.map((c) => (<div className='position-absolute' key={c.key} style={{ top: (c.coordinates[1]) + 'px', left: c.coordinates[0] + 'px' }}>
                     <span className='hover-danger cursor-pointer'>
@@ -67,7 +69,7 @@ function ImageBox({ image, coord, setCoord, setImageDimension,setImage2Dimension
                 </div>))}
                 <img ref={imageRef} src={image} className='h-max-80vh object-fit' style={{ objectFit: 'contain', maxWidth: '100%'  }} />
             </div>
-        </div>
+        </Draggable>
     )
 }
 

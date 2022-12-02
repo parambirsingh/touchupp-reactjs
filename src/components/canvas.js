@@ -11,9 +11,6 @@ const styles = {
     margin: '0 auto',
     cursor: 'none'
 };
-
-let x = 206;
-let y = 158
 function Canvas({
     image,
     imageDimension,
@@ -71,7 +68,7 @@ function Canvas({
     // }
     const handlePath = async () => {
         if (canvas) {
-            clearTimeout(setTimoutHandle)
+            // clearTimeout(setTimoutHandle)
             let path
             if (!isEraser) {
                 path = await canvas.current.exportPaths()
@@ -85,10 +82,9 @@ function Canvas({
                         return arr
                     })
 
-                    // setImage(data)
-
                 }
                 canvas.current.clearCanvas()
+                
             // setTimoutHandle = setTimeout(async () => {
             //     }
             // }, 1000)
@@ -103,7 +99,7 @@ function Canvas({
     }, [imageDimension])
     return (
         <div className='mt-2' >
-            <div onMouseUp={() => handlePath()}>
+            <div className='h-max-80vh' onMouseUp={() => handlePath()} onTouchStart={() => handlePath()}>
                 <ReactSketchCanvas
                     ref={canvas}
                     style={{
