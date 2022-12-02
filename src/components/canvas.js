@@ -31,7 +31,6 @@ function Canvas({
                         setCurrentIndex(arr.length - 1)
                         return arr
                     })
-
                 }
                 canvas.current.clearCanvas()
 

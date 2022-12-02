@@ -13,7 +13,6 @@ function ImageBox({ image, coord, setCoord, setImageDimension, setImage2Dimensio
 
     const handleResize = () => {
         if (!imageRef || !boxRef) return
-        console.log(originalHeight, boxRef.current.clientHeight, imageRef.current.clientHeight)
         let arr = [imageRef.current.clientWidth, imageRef.current.clientHeight]
         setImage2Dimension([imageRef.current.clientWidth, imageRef.current.clientHeight])
         setImageDimension(arr)
@@ -66,6 +65,7 @@ function ImageBox({ image, coord, setCoord, setImageDimension, setImage2Dimensio
 
         <div className='d-flex justify-content-center'>
             <TransformWrapper
+            doubleClick={{disabled:true}}
             >
                 <TransformComponent >
                     <div ref={boxRef} className='mt-2 h-max-80vh d-flex justify-content-center position-relative'

@@ -13,7 +13,7 @@ axios.interceptors.response.use(null, (error) => {
 });
 
 axios.interceptors.request.use((request)=>{
- request.headers = {'Access-Control-Allow-Origin':'http://localhost:8080'}
+ request.headers = {'Access-Control-Allow-Origin':'*'}
  return request;
 })
 
