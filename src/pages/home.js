@@ -13,17 +13,18 @@ export default function Home() {
     const [currentIndex, setCurrentIndex] = useState(0)
     const [scale, setScale] = useState(1) //no use 
     const [originalImage, setOriginalImage] = useState(Constants.base64Image); 
-    const [image, setImage] = useState(Constants.base64Image);//current image display
+    const [image, setImage] = useState('');//current image display
     const [coord, setCoord] = useState(Constants.coordinates); //cordinates of image 
     const [brushMode, setBrushMode] = useState('') 
     const [Folder_name_for_masks, setFolder_name_for_masks] = useState('');
+    const [isGettingImage,setIsGettingImage] = useState(false);
 
     useEffect(() => {
         setImage(imageHistory[currentIndex])
     }, [currentIndex])
 
        useEffect(() => {
-         setImage(originalImage);
+        //  setImage(originalImage);
        }, [originalImage]);
 
      useEffect(() => {
@@ -49,13 +50,27 @@ export default function Home() {
      const getImageData = async () => {
        try {
          let form = new FormData();
-         form.append("photoBase64", image);
-         const { data } = await getImage(form);
-        //  console.log(data);
-        //  setData(data);
+         form.append("photoBase64", originalImage);
+         setIsGettingImage(true);
+         let { data } = await getImage(form);
+  
+         setFolder_name_for_masks(data?.[2]?.Folder_name_for_masks);
+         setImage(data?.[3]?.Encoded_detected_image);
+
+           var newJson = data?.[1]?.Coordinates?.replace(
+             /([a-zA-Z0-9]+?):/g,
+             '"$1":'
+           );
+           newJson = newJson?.replace(/'/g, '"');
+
+           let coords = JSON?.parse(newJson);
+
+           setCoord(coords);
+          setIsGettingImage(false);
        } catch (ex) {
+         setIsGettingImage(false);
          //    if (ex.response && ex.response.status === 400)
-         toast.error(ex.message);
+         toast.error(ex);
        }
      };
     return (
@@ -64,6 +79,7 @@ export default function Home() {
           <UploadImage
             setOriginalImage={setOriginalImage}
             getImageData={getImageData}
+            isGettingImage={isGettingImage}
           />
         ) : (
           <ImagePreview

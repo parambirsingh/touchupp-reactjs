@@ -68,7 +68,7 @@ function OriginalImageBox({
             className="mt-2 h-max-80vh d-flex justify-content-center position-relative"
             style={{ transform: `scale(${scale})` }}
           >
-            {coord.map((c) => (
+            {coord?.map((c) => (
               <div
                 className="position-absolute"
                 key={c.key}
