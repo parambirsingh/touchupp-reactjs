@@ -1,8 +1,8 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { ReactSketchCanvas } from 'react-sketch-canvas';
 import CustomCursor from 'custom-cursor-react';
 import 'custom-cursor-react/dist/index.css';
-import CanvasDraw from "react-canvas-draw";
+import { Constants } from '../data/constants';
 
 function Canvas({
     image,
@@ -23,8 +23,10 @@ function Canvas({
                 let path
                 path = await canvas.current.exportPaths()
                 if (path.length) {
-                    console.log('return:', path)
-                    const data = await canvas.current.exportImage("png")
+                    // console.log('return:', path)
+                    let data = await canvas.current.exportImage("png")
+                    if(!data) return;
+                   data = data.slice(data?.indexOf(",")+1)
                     setImageHistory((arr) => {
                         if (currentIndex < (arr.length - 1)) arr.splice(currentIndex + 1, arr.length - currentIndex, data)
                         else arr.push(data)
@@ -35,41 +37,47 @@ function Canvas({
                 canvas.current.clearCanvas()
 
             }
-                , 1000)
+                ,1000)
         }
     }
     return (
-        <div className='mt-2' >
-            <div className='cursor-area h-max-80vh' onMouseUp={() => handlePath()} onTouchStart={() => handlePath()}>
-                <ReactSketchCanvas
-                    ref={canvas}
-                    style={{
-                        height: imageDimension[1],
-                        width: imageDimension[0],
-                        margin: '0 auto',
-                        cursor: 'none'
-                    }}
-                    strokeWidth={brushStock}
-                    eraserWidth={brushStock}
-                    strokeColor="#e4c725bf"
-                    backgroundImage={image}
-                />
-            </div>
-            <CustomCursor
-                targets={['.cursor-area']}
-                customClass='custom-cursor'
-                dimensions={brushStock + brushStock}
-                strokeColor="#e4c725bf"
-                fill='#e4c725bf'
-                smoothness={{
-                    movement: 0.2,
-                    scale: 0.1,
-                    opacity: 0.2,
-                }}
-                targetScale={1}
-            // targetOpacity={2}
-            />
-        </div >)
+      <div className="mt-2">
+        <div
+          className="cursor-area h-max-80vh"
+          onMouseUp={() => handlePath()}
+          onTouchStart={() => handlePath()}
+        >
+          <ReactSketchCanvas
+            ref={canvas}
+            style={{
+              height: imageDimension[1],
+              width: imageDimension[0],
+              margin: "0 auto",
+              cursor: "none",
+            }}
+            strokeWidth={brushStock}
+            eraserWidth={brushStock}
+            strokeColor="#e4c725bf"
+            backgroundImage={Constants.base64Start + image}
+          />
+        </div>
+
+        <CustomCursor
+          targets={[".cursor-area"]}
+          customClass="custom-cursor"
+          dimensions={brushStock * 2}
+          strokeColor="#e4c725bf"
+          fill="#e4c725bf"
+          smoothness={{
+            movement: 0.2,
+            scale: 0.1,
+            opacity: 0.2,
+          }}
+          targetScale={1}
+          // targetOpacity={2}
+        />
+      </div>
+    );
 }
 
 export default Canvas

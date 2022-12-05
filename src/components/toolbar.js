@@ -14,7 +14,7 @@ function Toolbar({ brushMode, setBrushMode, setBrushStock, brushStock, imageHist
             <div className='w-auto bg-white d-flex rounded-2'>
                 {!brushMode ?
                     <>
-                        <div className='btn' onClick={() => setBrushMode(true)}>
+                        <div className='btn' onClick={() => {setBrushMode(true);setBrushStock(30)}}>
                             <i className="bi bi-eraser-fill"></i>
                         </div>
 

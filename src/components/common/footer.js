@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 export default function Footer() {
   return (
@@ -8,12 +9,12 @@ export default function Footer() {
     
         <div className="footer-link">
             <ul className="list-unstyled list-inline my-5">
-                <li className="list-inline-item mx-4"><a href="#" className="font-nunito text-white text-decoration-none">Home</a></li>
-                <li className="list-inline-item mx-4"><a href="#" className="font-nunito text-white text-decoration-none">Pricing</a></li>
-                <li className="list-inline-item mx-4"><a href="#" className="font-nunito text-white text-decoration-none">About us</a></li>
-                <li className="list-inline-item mx-4"><a href="#" className="font-nunito text-white text-decoration-none">Contact</a></li>
-                <li className="list-inline-item mx-4"><a href="#" className="font-nunito text-white text-decoration-none">Privacy</a></li>
-                <li className="list-inline-item mx-4"><a href="#" className="font-nunito text-white text-decoration-none">Terms of Use</a></li>
+                <li className="list-inline-item mx-4"><Link to="" className="font-nunito text-white text-decoration-none">Home</Link></li>
+                <li className="list-inline-item mx-4"><Link to="" className="font-nunito text-white text-decoration-none">Pricing</Link></li>
+                <li className="list-inline-item mx-4"><Link to="about" className="font-nunito text-white text-decoration-none">About us</Link></li>
+                <li className="list-inline-item mx-4"><Link to="contact" className="font-nunito text-white text-decoration-none">Contact</Link></li>
+                <li className="list-inline-item mx-4"><Link to="" className="font-nunito text-white text-decoration-none">Privacy</Link></li>
+                <li className="list-inline-item mx-4"><Link to="" className="font-nunito text-white text-decoration-none">Terms of Use</Link></li>
 
             </ul>
         </div>
