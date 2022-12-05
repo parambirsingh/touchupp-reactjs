@@ -23,13 +23,7 @@ export default function Home() {
         setImage(imageHistory[currentIndex])
     }, [currentIndex])
 
-       useEffect(() => {
-        //  setImage(originalImage);
-       }, [originalImage]);
 
-     useEffect(() => {
-        // getImageData()
-     }, []);
 
     const handleObjectClick = async (object) =>{
          try {
@@ -48,15 +42,16 @@ export default function Home() {
          }
     }
 
-     const getImageData = async () => {
+     const getImageData = async (data1) => {
        try {
          let form = new FormData();
-         form.append("photoBase64", originalImage);
+         form.append("photoBase64", data1);
          setIsGettingImage(true);
          let { data } = await getImage(form);
         // console.log(data?.[3]?.Encoded_detected_image)
+        setImageHistory([])
+        setImage(data?.[3]?.Encoded_detected_image);
          setFolder_name_for_masks(data?.[2]?.Folder_name_for_masks);
-         setImage(data?.[3]?.Encoded_detected_image);
 
            var newJson = data?.[1]?.Coordinates?.replace(
              /([a-zA-Z0-9]+?):/g,
@@ -69,6 +64,7 @@ export default function Home() {
            setCoord(coords);
           setIsGettingImage(false);
        } catch (ex) {
+        console.log(ex)
          setIsGettingImage(false);
          //    if (ex.response && ex.response.status === 400)
          toast.error(ex);
@@ -78,14 +74,16 @@ export default function Home() {
      const handleOriginalUpdate = async (data)=>{
       if(!data) return;
       setOriginalImage(data);
-      await getImageData();
+      setTimeout(async ()=>{
+        await getImageData(data);
+      },100)
      }
     return (
       <div className="container-fluid position-relative">
         {!image ? (
           <UploadImage
             handleOriginalUpdate={handleOriginalUpdate}
-            getImageData={getImageData}
+            getImageData={()=>getImageData(originalImage)}
             isGettingImage={isGettingImage}
           />
         ) : (
