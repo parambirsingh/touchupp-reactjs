@@ -29,7 +29,7 @@ function ImagePreview({
 }) {
     return (
       <section className="py-5 text-center">
-        <div className="container">
+        <div className="container py-4">
           <div className="row">
             <div className="col-md-12">
               <div className="d-flex align-items-center pb-4">
