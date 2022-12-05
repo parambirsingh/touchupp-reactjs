@@ -53,7 +53,7 @@ function ImageBox({isEditable, image, coord, setCoord, setImageDimension, setIma
 
     return (
 
-        <div className='d-flex justify-content-center'>
+      
             <TransformWrapper
             doubleClick={{disabled:true}}
             >
@@ -71,7 +71,10 @@ function ImageBox({isEditable, image, coord, setCoord, setImageDimension, setIma
                     </div>
                 </TransformComponent>
             </TransformWrapper>
-        </div>
+        
+        
+        
+       
     )
 }
 

@@ -10,6 +10,9 @@
   pointer-events: none;
 }
 
+.icon-brush{width: 40px; height: 40px;}
+
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -113,8 +116,8 @@ html{
     font-size: 1.385rem;
     width: 100%;
     border-style: dashed;
-    border-radius: 8px;
-    border-width: 1px;
+    border-radius: 30px;
+    border-width: 3px;
     height:255px;
     cursor: pointer;
     background-color:#FBFBFB;
@@ -136,9 +139,16 @@ html{
 .btn-danger{
   background-color: #E64A19;
 }
-@media (min-width: 992px) {
+
+
+.icon-brush svg{margin-top: 5px;}
+
+
+
+
+@media (min-width: 1280px) {
   .container-lg, .container-md, .container-sm, .container {
-    max-width: 960px;
+    max-width: 1200px;
   }
   .navbar-expand-lg .navbar-nav .nav-link {
       padding-right: 1.8rem;
