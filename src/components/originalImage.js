@@ -60,7 +60,7 @@ function OriginalImageBox({
   }, []);
 
   return (
-    <div className="d-flex justify-content-center">
+   
       <TransformWrapper doubleClick={{ disabled: true }}>
         <TransformComponent>
           <div
@@ -99,7 +99,7 @@ function OriginalImageBox({
           </div>
         </TransformComponent>
       </TransformWrapper>
-    </div>
+    
   );
 }
 

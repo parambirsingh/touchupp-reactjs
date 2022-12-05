@@ -17,10 +17,10 @@ function UploadImage({ setOriginalImage, getImageData }) {
     };
   };
   return (
-    <section className="py-5 text-center">
-      <div className="container">
+    <section className="py-xs-5 text-center">
+      <div className="container py-lg-5">
         <div className="row">
-          <div className="col-md-12">
+          <div className="col-md-12 py-5">
             <div className="position-relative d-inline-block mb-4">
               <h2 className="fw-bold mb-3 d-flex">
                 <span className="text-danger me-2">Redesign </span> your space
