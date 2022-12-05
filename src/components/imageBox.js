@@ -12,7 +12,7 @@ function ImageBox({image, coord, setCoord, setImageDimension, setImage2Dimension
 
     const handleResize = () => {
         if (!imageRef || !boxRef) return
-        let arr = [imageRef.current.clientWidth, imageRef.current.clientHeight]
+        // let arr = [imageRef.current.clientWidth, imageRef.current.clientHeight]
         // setImage2Dimension([imageRef.current.clientWidth, imageRef.current.clientHeight])
         // setImageDimension(arr)
         // let percentDecreaseHeight = 0

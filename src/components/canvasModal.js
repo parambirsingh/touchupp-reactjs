@@ -20,7 +20,7 @@ function CanvasModal({
         aria-labelledby="canvasModalLabel"
         aria-hidden="true"
       >
-        <div className="modal-dialog">
+        <div className="modal-dialog modal-xl">
           <div className="modal-content">
             <div className="modal-body">
               <Canvas

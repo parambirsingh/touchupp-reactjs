@@ -54,7 +54,7 @@ export default function Home() {
          form.append("photoBase64", originalImage);
          setIsGettingImage(true);
          let { data } = await getImage(form);
-  
+        // console.log(data?.[3]?.Encoded_detected_image)
          setFolder_name_for_masks(data?.[2]?.Folder_name_for_masks);
          setImage(data?.[3]?.Encoded_detected_image);
 
@@ -78,7 +78,7 @@ export default function Home() {
      const handleOriginalUpdate = async (data)=>{
       if(!data) return;
       setOriginalImage(data);
-      this.getImageData();
+      await getImageData();
      }
     return (
       <div className="container-fluid position-relative">
