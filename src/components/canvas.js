@@ -64,7 +64,7 @@ function Canvas({
 
         <CustomCursor
           targets={[".cursor-area"]}
-          customClass="custom-cursor"
+          customclassName="custom-cursor"
           dimensions={brushStock * 2}
           strokeColor="#e4c725bf"
           fill="#e4c725bf"

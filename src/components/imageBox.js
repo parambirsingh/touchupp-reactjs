@@ -6,15 +6,15 @@ import { Constants } from '../data/constants';
 let originalHeight = 486
 let originalWidth = 864
 let originalCoord = []
-function ImageBox({isEditable, image, coord, setCoord, setImageDimension, setImage2Dimension,handleObjectClick, scale }) {
+function ImageBox({image, coord, setCoord, setImageDimension, setImage2Dimension,handleObjectClick, scale }) {
     const imageRef = useRef()
     const boxRef = useRef()
 
     const handleResize = () => {
         if (!imageRef || !boxRef) return
         let arr = [imageRef.current.clientWidth, imageRef.current.clientHeight]
-        setImage2Dimension([imageRef.current.clientWidth, imageRef.current.clientHeight])
-        setImageDimension(arr)
+        // setImage2Dimension([imageRef.current.clientWidth, imageRef.current.clientHeight])
+        // setImageDimension(arr)
         // let percentDecreaseHeight = 0
         // let percentDecreaseWidth = 0
         // let xStart = 0

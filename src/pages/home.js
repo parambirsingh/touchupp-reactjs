@@ -8,22 +8,23 @@ import { toast } from 'react-toastify';
 export default function Home() {
     const [imageDimension, setImageDimension] = useState([0, 0]); //no use
     const [image2Dimension, setImage2Dimension] = useState([0, 0]); // no use
-    const [imageHistory, setImageHistory] = useState([Constants.base64Image]);
+    const [imageHistory, setImageHistory] = useState([]);
     const [brushStock, setBrushStock] = useState(30)
     const [currentIndex, setCurrentIndex] = useState(0)
     const [scale, setScale] = useState(1) //no use 
     const [originalImage, setOriginalImage] = useState(Constants.base64Image); 
-    const [image, setImage] = useState(Constants.base64Image);//current image display
+    const [image, setImage] = useState('');//current image display
     const [coord, setCoord] = useState(Constants.coordinates); //cordinates of image 
     const [brushMode, setBrushMode] = useState('') 
     const [Folder_name_for_masks, setFolder_name_for_masks] = useState('');
+    const [isGettingImage,setIsGettingImage] = useState(false);
 
     useEffect(() => {
         setImage(imageHistory[currentIndex])
     }, [currentIndex])
 
        useEffect(() => {
-         setImage(originalImage);
+        //  setImage(originalImage);
        }, [originalImage]);
 
      useEffect(() => {
@@ -37,33 +38,55 @@ export default function Home() {
            form.append("folder_name", Folder_name_for_masks);
            form.append("object_removal_name", object.key);
            const { data } = await removeObject(form);
-           console.log(data)
+           setImage(data[1].Output_image);
+           toast.success(object.key+' deleted successfully');
         //    setFolder_name_for_masks(data.Folder_name_for_masks)
         //    setOriginalImage(data.   );
          } catch (ex) {
            //    if (ex.response && ex.response.status === 400)
-           toast.error(ex.message);
+           toast.error(ex);
          }
     }
 
      const getImageData = async () => {
        try {
          let form = new FormData();
-         form.append("photoBase64", image);
-         const { data } = await getImage(form);
-        //  console.log(data);
-        //  setData(data);
+         form.append("photoBase64", originalImage);
+         setIsGettingImage(true);
+         let { data } = await getImage(form);
+  
+         setFolder_name_for_masks(data?.[2]?.Folder_name_for_masks);
+         setImage(data?.[3]?.Encoded_detected_image);
+
+           var newJson = data?.[1]?.Coordinates?.replace(
+             /([a-zA-Z0-9]+?):/g,
+             '"$1":'
+           );
+           newJson = newJson?.replace(/'/g, '"');
+
+           let coords = JSON?.parse(newJson);
+
+           setCoord(coords);
+          setIsGettingImage(false);
        } catch (ex) {
+         setIsGettingImage(false);
          //    if (ex.response && ex.response.status === 400)
-         toast.error(ex.message);
+         toast.error(ex);
        }
      };
+
+     const handleOriginalUpdate = async (data)=>{
+      if(!data) return;
+      setOriginalImage(data);
+      this.getImageData();
+     }
     return (
       <div className="container-fluid position-relative">
         {!image ? (
           <UploadImage
-            setOriginalImage={setOriginalImage}
+            handleOriginalUpdate={handleOriginalUpdate}
             getImageData={getImageData}
+            isGettingImage={isGettingImage}
           />
         ) : (
           <ImagePreview
@@ -76,7 +99,6 @@ export default function Home() {
             setImage={setImage}
             imageDimension={imageDimension}
             originalImage={originalImage}
-            setOriginalImage={setOriginalImage}
             image={image}
             scale={scale}
             setImage2Dimension={setImage2Dimension}

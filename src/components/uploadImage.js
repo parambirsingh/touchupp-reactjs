@@ -2,7 +2,7 @@ import React, { useRef } from 'react'
 import headingImg from '../assets/img/underline.svg'
 import uploadicon from '../assets/img/upload-img.svg'
 
-function UploadImage({ setOriginalImage, getImageData }) {
+function UploadImage({ handleOriginalUpdate, getImageData,isGettingImage }) {
   const image = useRef();
   const handleChange = (e) => {
     var reader = new FileReader();
@@ -10,7 +10,7 @@ function UploadImage({ setOriginalImage, getImageData }) {
     reader.onload = function () {
       let data = reader.result;
       data = data.slice(data?.indexOf(",") + 1);
-      setOriginalImage(data);
+      handleOriginalUpdate(data);
     };
     reader.onerror = function (error) {
       console.log("Error: ", error);
@@ -34,10 +34,22 @@ function UploadImage({ setOriginalImage, getImageData }) {
             <div className="w-100">
               <button
                 type="button"
+                disabled={isGettingImage}
                 onClick={getImageData}
                 className="btn btn-primary text-uppercase btn-theme fw-bold font-nunito"
               >
-                See Examples
+                {isGettingImage ? (
+                  <>
+                    <span
+                      className="spinner-border spinner-border-sm me-2"
+                      role="status"
+                      aria-hidden="true"
+                    ></span>
+                    <span> Loading... </span>
+                  </>
+                ) : (
+                  <span>See Examples</span>
+                )}
               </button>
               <div className="file file-upload mt-5 position-relative">
                 <label

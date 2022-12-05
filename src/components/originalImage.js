@@ -6,9 +6,12 @@ let originalHeight = 486;
 let originalWidth = 864;
 let originalCoord = [];
 function OriginalImageBox({
+  isEditable,
   image,
   coord,
   setCoord,
+  setImageDimension,
+  setImage2Dimension,
   handleObjectClick,
   scale,
 }) {
@@ -17,8 +20,12 @@ function OriginalImageBox({
 
   const handleResize = () => {
     if (!imageRef || !boxRef) return;
-    // let arr = [imageRef.current.clientWidth, imageRef.current.clientHeight];
-    
+    let arr = [imageRef.current.clientWidth, imageRef.current.clientHeight];
+    setImage2Dimension([
+      imageRef.current.clientWidth,
+      imageRef.current.clientHeight,
+    ]);
+    setImageDimension(arr);
     let percentDecreaseHeight = 0;
     let percentDecreaseWidth = 0;
     let xStart = 0;
@@ -60,7 +67,7 @@ function OriginalImageBox({
   }, []);
 
   return (
-   
+    <div className="d-flex justify-content-center">
       <TransformWrapper doubleClick={{ disabled: true }}>
         <TransformComponent>
           <div
@@ -99,7 +106,7 @@ function OriginalImageBox({
           </div>
         </TransformComponent>
       </TransformWrapper>
-    
+    </div>
   );
 }
 
