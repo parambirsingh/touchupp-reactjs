@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 export default function Home() {
     const [imageDimension, setImageDimension] = useState([0, 0]); //no use
     const [image2Dimension, setImage2Dimension] = useState([0, 0]); // no use
-    const [imageHistory, setImageHistory] = useState([Constants.base64Image]);
+    const [imageHistory, setImageHistory] = useState([]);
     const [brushStock, setBrushStock] = useState(30)
     const [currentIndex, setCurrentIndex] = useState(0)
     const [scale, setScale] = useState(1) //no use 
@@ -38,12 +38,13 @@ export default function Home() {
            form.append("folder_name", Folder_name_for_masks);
            form.append("object_removal_name", object.key);
            const { data } = await removeObject(form);
-           console.log(data)
+           setImage(data[1].Output_image);
+           toast.success(object.key+' deleted successfully');
         //    setFolder_name_for_masks(data.Folder_name_for_masks)
         //    setOriginalImage(data.   );
          } catch (ex) {
            //    if (ex.response && ex.response.status === 400)
-           toast.error(ex.message);
+           toast.error(ex);
          }
     }
 
@@ -73,11 +74,17 @@ export default function Home() {
          toast.error(ex);
        }
      };
+
+     const handleOriginalUpdate = async (data)=>{
+      if(!data) return;
+      setOriginalImage(data);
+      this.getImageData();
+     }
     return (
       <div className="container-fluid position-relative">
         {!image ? (
           <UploadImage
-            setOriginalImage={setOriginalImage}
+            handleOriginalUpdate={handleOriginalUpdate}
             getImageData={getImageData}
             isGettingImage={isGettingImage}
           />
@@ -92,7 +99,6 @@ export default function Home() {
             setImage={setImage}
             imageDimension={imageDimension}
             originalImage={originalImage}
-            setOriginalImage={setOriginalImage}
             image={image}
             scale={scale}
             setImage2Dimension={setImage2Dimension}
