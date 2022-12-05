@@ -185,10 +185,6 @@ function ImagePreview({
                             />
                           </svg>
                         </div>
-<<<<<<< HEAD
-                        
-                    </div>
-=======
                       </li>
                       <li className="list-inline-item mx-0 cursor-pointer">
                         <div className="share-media border-start d-flex align-items-center justify-content-center">
@@ -259,7 +255,6 @@ function ImagePreview({
                       </li>
                     </ul>
                   </div>
->>>>>>> 6da555da6c4cbdbc6bbd2ebdf2b152394be6729e
                 </div>
               </div>
             </div>
