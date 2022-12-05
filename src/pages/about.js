@@ -30,7 +30,7 @@ export default function About() {
                     <div className="row">
                         <div className="col-md-12">
                             <div className="position-relative d-inline-block mb-4">
-                                <h2 className="fw-bold mb-3 d-flex">
+                                <h2 className="fw-bold mb-3 d-flex mt-5">
                                     <span className="text-danger me-2">Redesign </span>  your space
                                     <img src={headingImg} alt="img" className="img-fluid bottom-0 position-absolute text-heading" />
                                 </h2>

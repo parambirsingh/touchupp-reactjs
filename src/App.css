@@ -10,6 +10,9 @@
   pointer-events: none;
 }
 
+.icon-brush{width: 40px; height: 40px;}
+
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -113,8 +116,8 @@ html{
     font-size: 1.385rem;
     width: 100%;
     border-style: dashed;
-    border-radius: 8px;
-    border-width: 1px;
+    border-radius: 30px;
+    border-width: 3px;
     height:255px;
     cursor: pointer;
     background-color:#FBFBFB;
