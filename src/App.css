@@ -58,3 +58,91 @@ color: red;
 .cursor-pointer{
   cursor:pointer;
 }
+
+
+/*-custom-*/
+body{
+  font-family:  'Poppins', sans-serif;;
+}
+html{
+    font-size: 13px;
+}
+  h2, .h2 {
+    font-size: 3.231rem;
+  }
+    h3, .h3 {
+    font-size:2.769rem;
+  }
+  .nav-link {
+      font-size: 1.077rem;
+  }
+  .navbar-nav .show > .nav-link, .navbar-nav .nav-link.active {
+    color: var(--bs-navbar-active-color);
+}
+
+
+.font-nunito{
+    font-family: 'Nunito', sans-serif;
+}
+.btn-theme{
+    min-width: 131px;
+}
+.footer-link li{
+    font-size: 1.077rem;
+}
+.social-icons{
+    width:45px;
+    height:45px;
+}
+.social-icons:hover{
+    background: #2962FF;
+    border-color:#2962FF !important;
+}
+.text-heading{
+    z-index: -1;
+    left: 50%;
+    transform: translateX(-50%);
+
+}
+
+.file > input[type='file'] {
+  display: none
+}
+
+.file > label {
+    font-size: 1.385rem;
+    width: 100%;
+    border-style: dashed;
+    border-radius: 8px;
+    border-width: 1px;
+    height:255px;
+    cursor: pointer;
+    background-color:#FBFBFB;
+
+}
+.file-upload > label {
+    color: #656565;
+    border-color: #656565;
+}
+.share-media{
+    width: 36px;
+    height: 38px;
+}
+
+/*---------bootstrap--*/
+.btn-primary {
+    background-color: #2962FF;
+ }
+.btn-danger{
+  background-color: #E64A19;
+}
+@media (min-width: 992px) {
+  .container-lg, .container-md, .container-sm, .container {
+    max-width: 960px;
+  }
+  .navbar-expand-lg .navbar-nav .nav-link {
+      padding-right: 1.8rem;
+      padding-left: 1.8rem;
+
+  }
+}

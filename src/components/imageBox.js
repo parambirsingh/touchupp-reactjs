@@ -1,31 +1,29 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 import { getImage } from '../services/imageServices'
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+
 
 let originalHeight = 486
 let originalWidth = 864
-const originalX = 150
-const originalY = 200
 let originalCoord = []
-function ImageBox({ image, coord, setCoord }) {
+function ImageBox({ image, coord, setCoord, setImageDimension, setImage2Dimension, scale }) {
     const imageRef = useRef()
     const boxRef = useRef()
-    const [height, setHeight] = useState(0)
-    const [width, setWidth] = useState(0)
-    const [x, setX] = useState(0)
-    const [y, setY] = useState(486)
-    let xStart = 100
-    let yStart = 100
 
-    let percentDecreaseHeight = 0
-    let percentDecreaseWidth = 0
     const handleResize = () => {
+        if (!imageRef || !boxRef) return
+        let arr = [imageRef.current.clientWidth, imageRef.current.clientHeight]
+        setImage2Dimension([imageRef.current.clientWidth, imageRef.current.clientHeight])
+        setImageDimension(arr)
+        let percentDecreaseHeight = 0
+        let percentDecreaseWidth = 0
+        let xStart = 0
+        let yStart = 0
         let coords = [...coord]
         coords.map((v, i) => {
             xStart = (boxRef.current.clientWidth - imageRef.current.clientWidth) / 2
             yStart = (boxRef.current.clientHeight - imageRef.current.clientHeight) / 2
-            setHeight(imageRef.current.clientHeight)
-            setWidth(imageRef.current.clientWidth)
             percentDecreaseHeight = 100 - ((imageRef.current.clientHeight / originalHeight) * 100)
             percentDecreaseWidth = 100 - ((imageRef.current.clientWidth / originalWidth) * 100)
             let decreaseY = (originalCoord[i].coordinates[1] / 100) * percentDecreaseHeight
@@ -37,26 +35,25 @@ function ImageBox({ image, coord, setCoord }) {
         setCoord(coords)
     }
     useEffect(() => {
-        originalHeight = imageRef.current.naturalHeight
-        originalWidth = imageRef.current.naturalWidth
         window.addEventListener('resize', handleResize);
 
         return () => window.removeEventListener('resize', handleResize);
-        
+
     }, [])
-    
+
     useEffect(() => {
-        if(originalCoord.length==0)originalCoord = JSON.parse(JSON.stringify(coord))
-        //   getImageData();
-    }, [])
-    useEffect(() => {
-        handleResize()
-        // handleResize()
-        //   getImageData();
+        if (originalCoord.length == 0) originalCoord = JSON.parse(JSON.stringify(coord))
+        // getImageData()
+        setTimeout(() => {
+            originalHeight = imageRef.current.naturalHeight
+            originalWidth = imageRef.current.naturalWidth
+            handleResize()
+        })
+        getImageData();
     }, [])
     const getImageData = async () => {
         try {
-            const { data } = await getImage();
+            const { data } = await getImage({ photoBase64: image });
             console.log(data);
         } catch (ex) {
             //    if (ex.response && ex.response.status === 400)
@@ -65,14 +62,27 @@ function ImageBox({ image, coord, setCoord }) {
     };
 
     return (
-        <div>
-            <div ref={boxRef} className='mt-2 h-max-80vh bg-dark d-flex justify-content-center position-relative'>
-                {coord.map((c) => (<div className='position-absolute bg-danger ' key={c.key} style={{ height: '5px', width: '5px', top: c.coordinates[1] + 'px', left: c.coordinates[0] + 'px' }}>
-                    <i className="bi bi-x-circle-fill  hover-danger cursor-pointer"></i>
-                    {c.key}
-                </div>))}
-                <img ref={imageRef} src={image} className='h-max-80vh object-fit' style={{ objectFit: 'contain', maxWidth: '100%' }} />
-            </div>
+
+        <div className='d-flex justify-content-center'>
+            <TransformWrapper
+            doubleClick={{disabled:true}}
+            >
+                <TransformComponent >
+                    <div ref={boxRef} className='mt-2 h-max-80vh d-flex justify-content-center position-relative'
+                        style={{ transform: `scale(${scale})` }}
+                    >
+                        {coord.map((c) => (<div className='position-absolute' key={c.key} style={{ top: (c.coordinates[1]) + 'px', left: c.coordinates[0] + 'px' }}>
+                            <span className='hover-danger text-primary cursor-pointer'>
+                                <i className="bi bi-x-circle-fill"></i>
+                                {/* <span className='text-white text-wrap'>
+                                    {c.key}
+                                </span> */}
+                            </span>
+                        </div>))}
+                        <img ref={imageRef} src={image} className='h-max-80vh object-fit rounded-2' style={{ objectFit: 'contain', maxWidth: '100%' }} />
+                    </div>
+                </TransformComponent>
+            </TransformWrapper>
         </div>
     )
 }
