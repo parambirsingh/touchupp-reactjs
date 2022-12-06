@@ -18,15 +18,15 @@ function OriginalImageBox({
   const handleResize = () => {
     if (!imageRef || !boxRef) return;
     let arr = [imageRef.current.clientWidth, imageRef.current.clientHeight];
-
-     imageData.imageDimension=arr;
-     imageData.image2Dimension=arr
+    let newDimensions = { imageDimension: arr, image2Dimension: arr };
+    //  imageData.imageDimension=arr;
+    //  imageData.image2Dimension=arr
 
     let percentDecreaseHeight = 0;
     let percentDecreaseWidth = 0;
     let xStart = 0;
     let yStart = 0;
-    let coords = [...imageData?.coords];
+    let coords = JSON.parse(JSON.stringify(imageData?.coords));
     coords.map((v, i) => {
       xStart = (boxRef.current.clientWidth - imageRef.current.clientWidth) / 2;
       yStart =
@@ -43,7 +43,7 @@ function OriginalImageBox({
       v.coordinates[0] = xStart + (originalCoord[i].coordinates[0] - decreaseX);
       return v;
     });
-     setImageData({ ...imageData, coords });
+     setImageData({ ...imageData, coords ,...newDimensions});
   };
 
   useEffect(() => {

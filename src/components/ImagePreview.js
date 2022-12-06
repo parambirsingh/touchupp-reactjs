@@ -1,7 +1,6 @@
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom';
 import { ImageContext } from '../context/imageContext';
-import CanvasModal from './canvasModal';
 import ImageBox from './imageBox'
 import OriginalImageBox from './originalImage';
 import Toolbar from './toolbar';

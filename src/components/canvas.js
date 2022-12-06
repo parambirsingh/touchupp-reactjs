@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { ReactSketchCanvas } from "react-sketch-canvas";
 import CustomCursor from "custom-cursor-react";
 import "custom-cursor-react/dist/index.css";
@@ -11,6 +11,7 @@ function Canvas({ brushData }) {
   const canvas = useRef();
 
   let setTimoutHandle;
+
   const handlePath = async () => {
     if (canvas) {
       clearTimeout(setTimoutHandle);
@@ -22,7 +23,7 @@ function Canvas({ brushData }) {
           let data = await canvas.current.exportImage("png");
           if (!data) return;
           data = data.slice(data?.indexOf(",") + 1);
-          let h = (arr) => {
+          const h = (arr) => {
             if (imageData.currentIndex < arr.length - 1)
               arr.splice(
                 imageData.currentIndex + 1,
@@ -30,12 +31,13 @@ function Canvas({ brushData }) {
                 data
               );
             else arr.push(data);
-            setImageData({ ...imageData, currentIndex: arr.length - 1 });
+            // setImageData({ ...imageData, currentIndex: arr.length - 1 });
             return arr;
           };
+          let history =  h(imageData.imageHistory)
           setImageData({
             ...imageData,
-            imageHistory: h,
+            image:history[history?.length-1]
           });
         }
         canvas.current.clearCanvas();

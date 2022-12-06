@@ -5,7 +5,6 @@ import { getImage, removeObject } from "../services/imageServices";
 import { toast } from "react-toastify";
 import { ImageContext } from "../context/imageContext";
 import CanvasModal from "../components/canvasModal";
-import { Constants } from "../data/constants";
 
 export default function Home() {
   const [imageData, setImageData] = useContext(ImageContext);
@@ -15,7 +14,12 @@ export default function Home() {
     brushMode: false,
   });
   // useEffect(() => {
-  // setImageData({...imageData,imageHistory:imageData.imageHistory[imageData.currentIndex]})
+  //   console.log(imageData.imageHistory,imageData.currentIndex);
+  //   if (imageData.imageHistory[imageData.currentIndex])
+  //     setImageData({
+  //       ...imageData,
+  //       image: imageData.imageHistory[imageData.currentIndex],
+  //     });
   // }, [imageData?.currentIndex])
 
   useEffect(() => {
