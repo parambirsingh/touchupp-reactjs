@@ -5,6 +5,7 @@ import { getImage, removeObject } from "../services/imageServices";
 import { toast } from "react-toastify";
 import { ImageContext } from "../context/imageContext";
 import CanvasModal from "../components/canvasModal";
+import { Constants } from "../data/constants";
 
 export default function Home() {
   const [imageData, setImageData] = useContext(ImageContext);
@@ -21,7 +22,21 @@ export default function Home() {
     if (imageData.originalImage) getImageData();
   }, [imageData?.originalImage]);
 
-  const handleDownload = async () => {};
+  const handleDownload = async () => {
+    // const href = URL.createObjectURL();
+
+    // create "a" HTML element with href to file & click
+    const link = document.createElement("a");
+    console.log(Constants.base64Start + imageData.originalImage);
+    link.href = Constants.base64Start+imageData.originalImage;
+    link.setAttribute("download", "file."); //or any other extension
+    document.body.appendChild(link);
+    link.click();
+
+    // clean up "a" element & remove ObjectURL
+    document.body.removeChild(link);
+    // URL.revokeObjectURL(imageData.originalImage);
+  };
 
   const handleObjectClick = async (object) => {
     try {

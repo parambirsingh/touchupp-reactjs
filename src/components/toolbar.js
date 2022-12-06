@@ -1,25 +1,24 @@
-import React, { useContext } from 'react'
-import { ImageContext } from '../context/imageContext';
-
+import React, { useContext } from "react";
+import { ImageContext } from "../context/imageContext";
 
 function Toolbar({brushData,setBrushData}) {
   const [imageData,setImageData] = useContext(ImageContext);
 
   const handleUndo = () => {
-    if (imageData.currentIndex > 0) 
-      setImageData({...imageData,currentIndex:imageData.currentIndex-1})
+    if (imageData.currentIndex > 0)
+      setImageData({ ...imageData, currentIndex: imageData.currentIndex - 1 });
   };
   const handleRedo = () => {
     if (imageData.currentIndex < imageData.imageHistory?.length - 1)
-     setImageData({ ...imageData, currentIndex: imageData.currentIndex + 1 });
+      setImageData({ ...imageData, currentIndex: imageData.currentIndex + 1 });
   };
   return (
     <div className="justify-content-center priority-top align-items-center d-flex  w-100">
-      <div className="w-auto bg-white rounded-2">
+      <div className="w-auto bg-white rounded-2 d-flex align-items-center">
         {!brushData.brushMode ? (
           <>
             <div
-              className="btn btn-warning rounded-circle icon-brush"
+              className="btn btn-warning rounded-circle icon-brush mt-3"
               onClick={() => {
                 setBrushData({ ...brushData, brushMode: true, brushStock: 30 });
               }}
@@ -59,13 +58,13 @@ function Toolbar({brushData,setBrushData}) {
           </>
         ) : (
           <>
-            <div
+            {/* <div
               className="btn"
               onClick={() => setBrushData({ ...brushData, brushMode: false })}
             >
               <i className="bi bi-x-lg"></i>
-            </div>
-            <div>
+            </div> */}
+            <div className="text-bg-secondary px-4 py-2 rounded">
               <input
                 min="8"
                 max="100"
@@ -81,17 +80,18 @@ function Toolbar({brushData,setBrushData}) {
                 id="customRange1"
               />
             </div>
+
+            {/* <button className="btn" onClick={handleUndo}>
+              <i className="bi bi-arrow-counterclockwise"></i>
+            </button>
+            <button className="btn" onClick={handleRedo}>
+              <i className="bi bi-arrow-clockwise"></i>
+            </button> */}
           </>
         )}
-        {/* <button className="btn" onClick={handleUndo}>
-          <i className="bi bi-arrow-counterclockwise"></i>
-        </button>
-        <div className="btn" onClick={handleRedo}>
-          <i className="bi bi-arrow-clockwise"></i>
-        </div> */}
       </div>
     </div>
   );
 }
 
-export default Toolbar
+export default Toolbar;
