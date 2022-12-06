@@ -1,42 +1,31 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { Modal } from 'react-bootstrap';
+import { ImageContext } from '../context/imageContext';
 import Canvas from './canvas';
+import Toolbar from './toolbar';
 
-function CanvasModal({
-  brushStock,
-  setImageHistory,
-  currentIndex,
-  setCurrentIndex,
-  image2Dimension,
-  setImage,
-  image,
-  imageDimension,
-}) {
+function CanvasModal() {
+  const [imageData, setImageData] = useContext(ImageContext)
   return (
     <>
-      <div
-        className="modal fade"
-        id="canvasModal"
-        tabIndex="-1"
-        aria-labelledby="canvasModalLabel"
-        aria-hidden="true"
+      <Modal
+        show={imageData.brushMode}
+        fullscreen={true}
+        onHide={() => setImageData({ ...imageData, brushMode: false })}
+        backdrop="static"
+        keyboard={false}
+        animation={false}
       >
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-body">
-              <Canvas
-                currentIndex={currentIndex}
-                setCurrentIndex={setCurrentIndex}
-                setImageHistory={setImageHistory}
-                image2Dimension={image2Dimension}
-                brushStock={brushStock}
-                setImage={setImage}
-                imageDimension={imageDimension}
-                image={image}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
+        <Modal.Header closeButton>
+          <Modal.Title>Brush Image</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Canvas />
+        </Modal.Body>
+        <Modal.Footer>
+          <Toolbar />
+        </Modal.Footer>
+      </Modal>
     </>
   );
 }

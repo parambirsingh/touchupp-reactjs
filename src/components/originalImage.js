@@ -1,36 +1,35 @@
-import React, { useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+import { ImageContext } from "../context/imageContext";
 import { Constants } from "../data/constants";
 
 let originalHeight = 486;
 let originalWidth = 864;
 let originalCoord = [];
 function OriginalImageBox({
-  isEditable,
-  image,
-  coord,
-  setCoord,
-  setImageDimension,
-  setImage2Dimension,
   handleObjectClick,
-  scale,
 }) {
+  const [imageData,setImageData] = useContext(ImageContext);
+  const [ref,setRef] = useState({});
+
   const imageRef = useRef();
   const boxRef = useRef();
-
+  useEffect(()=>{
+    if(ref.originalImage)
+    setImageData(ref);
+  },[ref])
   const handleResize = () => {
     if (!imageRef || !boxRef) return;
     let arr = [imageRef.current.clientWidth, imageRef.current.clientHeight];
-    setImage2Dimension([
-      imageRef.current.clientWidth,
-      imageRef.current.clientHeight,
-    ]);
-    setImageDimension(arr);
+
+     imageData.imageDimension=arr;
+     imageData.image2Dimension=arr
+
     let percentDecreaseHeight = 0;
     let percentDecreaseWidth = 0;
     let xStart = 0;
     let yStart = 0;
-    let coords = [...coord];
+    let coords = [...imageData?.coords];
     coords.map((v, i) => {
       xStart = (boxRef.current.clientWidth - imageRef.current.clientWidth) / 2;
       yStart =
@@ -47,7 +46,7 @@ function OriginalImageBox({
       v.coordinates[0] = xStart + (originalCoord[i].coordinates[0] - decreaseX);
       return v;
     });
-    setCoord(coords);
+    setRef(imageData);
   };
 
   useEffect(() => {
@@ -58,7 +57,7 @@ function OriginalImageBox({
 
   useEffect(() => {
     if (originalCoord.length === 0)
-      originalCoord = JSON.parse(JSON.stringify(coord));
+      originalCoord = JSON.parse(JSON.stringify(imageData?.coords));
     setTimeout(() => {
       originalHeight = imageRef.current.naturalHeight;
       originalWidth = imageRef.current.naturalWidth;
@@ -73,9 +72,9 @@ function OriginalImageBox({
           <div
             ref={boxRef}
             className="mt-2 h-max-80vh d-flex justify-content-center position-relative"
-            style={{ transform: `scale(${scale})` }}
+            style={{ transform: `scale(${imageData?.scale})` }}
           >
-            {coord.map((c) => (
+            {imageData.coords.map((c) => (
               <div
                 className="position-absolute"
                 key={c.key}
@@ -98,7 +97,7 @@ function OriginalImageBox({
 
             <img
               ref={imageRef}
-              src={Constants.base64Start + image}
+              src={Constants.base64Start + imageData.originalImage}
               className="h-max-80vh object-fit rounded-2"
               style={{ objectFit: "contain", maxWidth: "100%" }}
               alt="img"
