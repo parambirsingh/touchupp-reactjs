@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import headingImg from '../assets/img/underline.svg'
 import uploadicon from '../assets/img/upload-img.svg'
 import { ImageContext } from '../context/imageContext';
@@ -9,17 +9,53 @@ function UploadImage({ isGettingImage }) {
 
   const image = useRef();
   const handleChange = (e) => {
-    var reader = new FileReader();
-    reader.readAsDataURL(e.target.files[0]);
-    reader.onload = function () {
-      let data = reader.result;
-      data = data.slice(data?.indexOf(",") + 1);
-      setImageData({...imageData,originalImage:data})
-    };
-    reader.onerror = function (error) {
-      console.log("Error: ", error);
-    };
+    if(e.target.files[0])
+      handleFile(e.target.files[0])
   };
+
+
+  const handleFile = (file)=>{
+     var reader = new FileReader();
+     reader.readAsDataURL(file);
+     reader.onload = function () {
+       let data = reader.result;
+       data = data.slice(data?.indexOf(",") + 1);
+       setImageData({ ...imageData, originalImage: data });
+     };
+     reader.onerror = function (error) {
+      //  console.log("Error: ", error);
+     };
+  }
+
+  
+  useEffect(()=>{
+    const image_drop_area = document.querySelector("#image_drop_area");
+    image_drop_area.addEventListener("dragover", (event) => {
+      event.stopPropagation();
+      event.preventDefault();
+      if(!isGettingImage){
+        image_drop_area.style.borderColor="#00C";
+        event.dataTransfer.dropEffect = "copy";
+      }
+    });
+
+    image_drop_area.addEventListener("drop", (event) => {
+      event.stopPropagation();
+      event.preventDefault();
+       image_drop_area.style.borderColor = "#656565";
+        if(!isGettingImage){
+          const fileList = event?.dataTransfer?.files;
+          if(fileList?.[0])
+          handleFile(fileList?.[0]);
+        }
+    });
+
+      image_drop_area.addEventListener("dragleave", (event) => {
+        event.stopPropagation();
+        event.preventDefault();
+         image_drop_area.style.borderColor = "#656565";
+      });
+  })
   return (
     <section className="py-xl-5 text-center">
       <div className="container py-lg-5">
@@ -55,10 +91,11 @@ function UploadImage({ isGettingImage }) {
                   <span>See Examples</span>
                 )}
               </button> */}
-              <div className="file file-upload mt-5 position-relative">
+              <div className="file file-upload mt-5 position-relative ">
                 <label
                   htmlFor="input-file"
                   className="w-100 cursor-pointer d-flex align-items-center justify-content-center flex-wrap"
+                  id="image_drop_area"
                 >
                   <div className="text-center">
                     <img
@@ -67,7 +104,7 @@ function UploadImage({ isGettingImage }) {
                       className="img-fluid mb-3"
                     />
                     <div className="w-100 fw-semibold etxt-center">
-                      Click here or drag an image file
+                      {isGettingImage ? "Uploading...." : "Click here or drag an image file"}
                     </div>
                   </div>
                 </label>
@@ -77,6 +114,7 @@ function UploadImage({ isGettingImage }) {
                   onChange={(e) => handleChange(e)}
                   type="file"
                   disabled={isGettingImage}
+                  accept='image/*'
                 />
               </div>
             </div>

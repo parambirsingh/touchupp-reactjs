@@ -23,19 +23,7 @@ export default function Home() {
   }, [imageData?.originalImage]);
 
   const handleDownload = async () => {
-    // const href = URL.createObjectURL();
-
-    // create "a" HTML element with href to file & click
-    const link = document.createElement("a");
-    console.log(Constants.base64Start + imageData.originalImage);
-    link.href = Constants.base64Start+imageData.originalImage;
-    link.setAttribute("download", "file."); //or any other extension
-    document.body.appendChild(link);
-    link.click();
-
-    // clean up "a" element & remove ObjectURL
-    document.body.removeChild(link);
-    // URL.revokeObjectURL(imageData.originalImage);
+    
   };
 
   const handleObjectClick = async (object) => {
