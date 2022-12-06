@@ -1,8 +1,12 @@
-import React, { useRef } from 'react'
+import React, { useContext, useRef } from 'react'
 import headingImg from '../assets/img/underline.svg'
 import uploadicon from '../assets/img/upload-img.svg'
+import { ImageContext } from '../context/imageContext';
+// import { Constants } from '../data/constants';
 
-function UploadImage({ handleOriginalUpdate, getImageData,isGettingImage }) {
+function UploadImage({ isGettingImage }) {
+  const [imageData,setImageData] = useContext(ImageContext)
+
   const image = useRef();
   const handleChange = (e) => {
     var reader = new FileReader();
@@ -10,7 +14,7 @@ function UploadImage({ handleOriginalUpdate, getImageData,isGettingImage }) {
     reader.onload = function () {
       let data = reader.result;
       data = data.slice(data?.indexOf(",") + 1);
-      handleOriginalUpdate(data);
+      setImageData({...imageData,originalImage:data})
     };
     reader.onerror = function (error) {
       console.log("Error: ", error);
@@ -32,10 +36,10 @@ function UploadImage({ handleOriginalUpdate, getImageData,isGettingImage }) {
               </h2>
             </div>
             <div className="w-100">
-              <button
+              {/* <button
                 type="button"
                 disabled={isGettingImage}
-                onClick={getImageData}
+                onClick={()=>setOriginalImage(Constants.base64Image)}
                 className="btn btn-primary text-uppercase btn-theme fw-bold font-nunito"
               >
                 {isGettingImage ? (
@@ -50,7 +54,7 @@ function UploadImage({ handleOriginalUpdate, getImageData,isGettingImage }) {
                 ) : (
                   <span>See Examples</span>
                 )}
-              </button>
+              </button> */}
               <div className="file file-upload mt-5 position-relative">
                 <label
                   htmlFor="input-file"

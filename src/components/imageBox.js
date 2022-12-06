@@ -1,12 +1,14 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+import { ImageContext } from '../context/imageContext';
 import { Constants } from '../data/constants';
 
 
 let originalHeight = 486
 let originalWidth = 864
 let originalCoord = []
-function ImageBox({image, coord, setCoord, setImageDimension, setImage2Dimension,handleObjectClick, scale }) {
+function ImageBox() {
+    const [imageData] = useContext(ImageContext)
     const imageRef = useRef()
     const boxRef = useRef()
 
@@ -42,7 +44,7 @@ function ImageBox({image, coord, setCoord, setImageDimension, setImage2Dimension
     }, [])
 
     useEffect(() => {
-        if (originalCoord.length === 0) originalCoord = JSON.parse(JSON.stringify(coord))
+        if (originalCoord.length === 0) originalCoord = JSON.parse(JSON.stringify(imageData.coords))
         setTimeout(() => {
             originalHeight = imageRef.current.naturalHeight
             originalWidth = imageRef.current.naturalWidth
@@ -59,7 +61,7 @@ function ImageBox({image, coord, setCoord, setImageDimension, setImage2Dimension
             >
                 <TransformComponent >
                     <div ref={boxRef} className='mt-2 h-max-80vh d-flex justify-content-center position-relative'
-                        style={{ transform: `scale(${scale})` }}
+                        style={{ transform: `scale(${imageData.scale})` }}
                     >
                         {/* {coord.map((c) => (<div className='position-absolute' key={c.key} style={{ top: (c.coordinates[1]) + 'px', left: c.coordinates[0] + 'px' }}>
                             <span className='hover-danger text-primary cursor-pointer' onClick={()=>handleObjectClick(c)}>
@@ -67,7 +69,7 @@ function ImageBox({image, coord, setCoord, setImageDimension, setImage2Dimension
                             </span>
                         </div>))} */}
                         
-                        <img ref={imageRef} src={Constants.base64Start+image} className='h-max-80vh object-fit rounded-2' style={{ objectFit: 'contain', maxWidth: '100%' }} alt='img'/>
+                        <img ref={imageRef} src={Constants.base64Start+imageData.image} className='h-max-80vh object-fit rounded-2' style={{ objectFit: 'contain', maxWidth: '100%' }} alt='img'/>
                     </div>
                 </TransformComponent>
             </TransformWrapper>

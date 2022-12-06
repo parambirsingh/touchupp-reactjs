@@ -1,40 +1,28 @@
-import React from 'react'
-import CanvasModal from './canvasModal'
+import React, { useContext } from 'react'
+import { ImageContext } from '../context/imageContext';
 
 
-function Toolbar({
-  brushMode,
-  setBrushMode,
-  setBrushStock,
-  brushStock,
-  imageHistory,
-  setImageHistory,
-  currentIndex,
-  setCurrentIndex,
-  setScale,
-  image2Dimension,
-  setImage,image,imageDimension
-}) {
+function Toolbar() {
+  const [imageData,setImageData] = useContext(ImageContext);
+
   const handleUndo = () => {
-    if (currentIndex > 0) setCurrentIndex((curntIndex) => curntIndex - 1);
+    if (imageData.currentIndex > 0) 
+      setImageData({...imageData,currentIndex:imageData.currentIndex-1})
   };
   const handleRedo = () => {
-    if (currentIndex < imageHistory?.length - 1)
-      setCurrentIndex((curntIndex) => curntIndex + 1);
+    if (imageData.currentIndex < imageData.imageHistory?.length - 1)
+     setImageData({ ...imageData, currentIndex: imageData.currentIndex + 1 });
   };
   return (
-    <div className="justify-content-center priority-top bottom-2 align-items-center d-flex  w-100 pt-5">
+    <div className="justify-content-center priority-top align-items-center d-flex  w-100">
       <div className="w-auto bg-white rounded-2">
-        {!brushMode ? (
+        {!imageData.brushMode ? (
           <>
             <div
               className="btn btn-warning rounded-circle icon-brush"
               onClick={() => {
-                setBrushMode(true);
-                setBrushStock(30);
+                setImageData({ ...imageData, brushMode: true, brushStock: 30 });
               }}
-              data-bs-toggle={!brushMode && "modal"}
-              data-bs-target={!brushMode && "#canvasModal"}
             >
               <svg
                 width="14"
@@ -71,7 +59,10 @@ function Toolbar({
           </>
         ) : (
           <>
-            <div className="btn" onClick={() => setBrushMode(false)}>
+            <div
+              className="btn"
+              onClick={() => setImageData({ ...imageData, brushMode: false })}
+            >
               <i className="bi bi-x-lg"></i>
             </div>
             <div>
@@ -79,8 +70,13 @@ function Toolbar({
                 min="8"
                 max="100"
                 type="range"
-                value={brushStock}
-                onChange={(e) => setBrushStock(e.target.valueAsNumber)}
+                value={imageData.brushStock}
+                onChange={(e) =>
+                  setImageData({
+                    ...imageData,
+                    brushStock: e.target.valueAsNumber,
+                  })
+                }
                 className="form-range pt-2"
                 id="customRange1"
               />
@@ -94,16 +90,6 @@ function Toolbar({
           <i className="bi bi-arrow-clockwise"></i>
         </div>
       </div>
-      <CanvasModal
-        currentIndex={currentIndex}
-        setCurrentIndex={setCurrentIndex}
-        setImageHistory={setImageHistory}
-        brushStock={brushStock}
-        image2Dimension={image2Dimension}
-        setImage={setImage}
-        imageDimension={imageDimension}
-        image={image}
-      />
     </div>
   );
 }
