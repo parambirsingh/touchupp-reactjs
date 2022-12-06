@@ -18,7 +18,7 @@ function ImagePreview({ handleObjectClick }) {
   };
   return (
     <section className="py-5 text-center">
-      <div className="container py-4">
+      <div className="container py-4 my-3">
         <div className="row">
           <div className="col-md-12">
             <div className="d-flex align-items-center pb-4">
@@ -97,7 +97,7 @@ function ImagePreview({ handleObjectClick }) {
 
                   <div className="brush-img ms-auto">
                     <div className="text-center">
-                      <div className="d-inline-block border rounded-2 mt-5">
+                      <div className="d-inline-block border rounded-2 mt-3">
                         <ul className="list-unstyled list-inline m-0 d-flex align-items-center justify-content-center">
                           <li className="list-inline-item mx-0">
                             <div className="share-to px-3">Share</div>

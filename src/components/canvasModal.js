@@ -15,6 +15,7 @@ function CanvasModal() {
         backdrop="static"
         keyboard={false}
         animation={false}
+        centered
       >
         <Modal.Header closeButton>
           <Modal.Title>Brush Image</Modal.Title>
