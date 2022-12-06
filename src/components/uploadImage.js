@@ -76,6 +76,7 @@ function UploadImage({ isGettingImage }) {
                   ref={image}
                   onChange={(e) => handleChange(e)}
                   type="file"
+                  disabled={isGettingImage}
                 />
               </div>
             </div>

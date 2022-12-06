@@ -1,17 +1,15 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { Modal } from 'react-bootstrap';
-import { ImageContext } from '../context/imageContext';
 import Canvas from './canvas';
 import Toolbar from './toolbar';
 
-function CanvasModal() {
-  const [imageData, setImageData] = useContext(ImageContext)
+function CanvasModal({ brushData, setBrushData}) {
   return (
     <>
       <Modal
-        show={imageData.brushMode}
+        show={brushData?.brushMode}
         fullscreen={true}
-        onHide={() => setImageData({ ...imageData, brushMode: false })}
+        onHide={() => setBrushData({ ...brushData, brushMode: false })}
         backdrop="static"
         keyboard={false}
         animation={false}
@@ -20,10 +18,10 @@ function CanvasModal() {
           <Modal.Title>Brush Image</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Canvas />
+          <Canvas  brushData={brushData}/>
         </Modal.Body>
         <Modal.Footer>
-          <Toolbar />
+          <Toolbar brushData={brushData} setBrushData={setBrushData} />
         </Modal.Footer>
       </Modal>
     </>

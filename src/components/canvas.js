@@ -5,7 +5,7 @@ import 'custom-cursor-react/dist/index.css';
 import { Constants } from '../data/constants';
 import { ImageContext } from '../context/imageContext';
 
-function Canvas() {
+function Canvas({brushData}) {
     const [imageData, setImageData] = useContext(ImageContext);
     const canvas = useRef()
 
@@ -41,7 +41,7 @@ function Canvas() {
     return (
       <div className="mt-2">
         <div
-          className="cursor-area h-max-80vh"
+          className="cursor-area h-max-80vh row"
           onMouseUp={() => handlePath()}
           onTouchStart={() => handlePath()}
         >
@@ -53,8 +53,8 @@ function Canvas() {
               margin: "0 auto",
               cursor: "none",
             }}
-            strokeWidth={imageData.brushStock}
-            eraserWidth={imageData.brushStock}
+            strokeWidth={brushData.brushStock}
+            eraserWidth={brushData.brushStock}
             strokeColor="#e4c725bf"
             backgroundImage={Constants.base64Start + imageData.image}
           />
@@ -63,7 +63,7 @@ function Canvas() {
         <CustomCursor
           targets={[".cursor-area"]}
           customclassName="custom-cursor"
-          dimensions={imageData.brushStock * 2}
+          dimensions={brushData.brushStock * 2}
           strokeColor="#e4c725bf"
           fill="#e4c725bf"
           smoothness={{

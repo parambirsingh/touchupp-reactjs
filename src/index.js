@@ -10,7 +10,6 @@ import App from './App';
 import Layout from './components/layout/layout';
 import NotFound from './pages/notFound';
 
-
 const router = createBrowserRouter([
   {
     path: "/",

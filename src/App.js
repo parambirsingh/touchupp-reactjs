@@ -15,8 +15,6 @@ function App({router}) {
     Folder_name_for_masks: "",
     imageHistory: [],
     currentIndex: 0,
-    brushStock: 30,
-    brushMode:false,
     imageDimension:[0,0],
     image2Dimension:[0,0],
     scale:1,

@@ -10,14 +10,11 @@ function OriginalImageBox({
   handleObjectClick,
 }) {
   const [imageData,setImageData] = useContext(ImageContext);
-  const [ref,setRef] = useState({});
+
 
   const imageRef = useRef();
   const boxRef = useRef();
-  useEffect(()=>{
-    if(ref.originalImage)
-    setImageData(ref);
-  },[ref])
+
   const handleResize = () => {
     if (!imageRef || !boxRef) return;
     let arr = [imageRef.current.clientWidth, imageRef.current.clientHeight];
@@ -46,7 +43,7 @@ function OriginalImageBox({
       v.coordinates[0] = xStart + (originalCoord[i].coordinates[0] - decreaseX);
       return v;
     });
-    setRef(imageData);
+     setImageData({ ...imageData, coords });
   };
 
   useEffect(() => {

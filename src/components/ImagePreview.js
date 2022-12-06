@@ -6,7 +6,7 @@ import ImageBox from './imageBox'
 import OriginalImageBox from './originalImage';
 import Toolbar from './toolbar';
 
-function ImagePreview({ handleObjectClick }) {
+function ImagePreview({ handleObjectClick ,handleDownload,brushData,setBrushData}) {
   const [imageData, setImageData] = useContext(ImageContext);
   const handleBack = () => {
     setImageData({
@@ -57,8 +57,8 @@ function ImagePreview({ handleObjectClick }) {
                 Back
               </Link>
               <div className="ms-auto">
-                <Link
-                  to=""
+                <button
+                  onClick={handleDownload}
                   className="btn btn-transparent font-nunito fw-semibold text-uppercase"
                 >
                   {" "}
@@ -81,7 +81,7 @@ function ImagePreview({ handleObjectClick }) {
                     </svg>
                   </span>
                   Download
-                </Link>
+                </button>
               </div>
             </div>
             <div className="img-sec position-relative">
@@ -93,7 +93,7 @@ function ImagePreview({ handleObjectClick }) {
                 {/* Modified Image */}
                 <div className="col-5">
                   <ImageBox />
-                  <Toolbar />
+                  <Toolbar brushData={brushData} setBrushData={setBrushData}/>
 
                   <div className="brush-img ms-auto">
                     <div className="text-center">

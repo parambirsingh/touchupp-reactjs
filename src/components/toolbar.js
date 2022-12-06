@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { ImageContext } from '../context/imageContext';
 
 
-function Toolbar() {
+function Toolbar({brushData,setBrushData}) {
   const [imageData,setImageData] = useContext(ImageContext);
 
   const handleUndo = () => {
@@ -16,12 +16,12 @@ function Toolbar() {
   return (
     <div className="justify-content-center priority-top align-items-center d-flex  w-100">
       <div className="w-auto bg-white rounded-2">
-        {!imageData.brushMode ? (
+        {!brushData.brushMode ? (
           <>
             <div
               className="btn btn-warning rounded-circle icon-brush"
               onClick={() => {
-                setImageData({ ...imageData, brushMode: true, brushStock: 30 });
+                setBrushData({ ...brushData, brushMode: true, brushStock: 30 });
               }}
             >
               <svg
@@ -61,7 +61,7 @@ function Toolbar() {
           <>
             <div
               className="btn"
-              onClick={() => setImageData({ ...imageData, brushMode: false })}
+              onClick={() => setBrushData({ ...brushData, brushMode: false })}
             >
               <i className="bi bi-x-lg"></i>
             </div>
@@ -70,10 +70,10 @@ function Toolbar() {
                 min="8"
                 max="100"
                 type="range"
-                value={imageData.brushStock}
+                value={brushData.brushStock}
                 onChange={(e) =>
-                  setImageData({
-                    ...imageData,
+                  setBrushData({
+                    ...brushData,
                     brushStock: e.target.valueAsNumber,
                   })
                 }
@@ -83,12 +83,12 @@ function Toolbar() {
             </div>
           </>
         )}
-        <button className="btn" onClick={handleUndo}>
+        {/* <button className="btn" onClick={handleUndo}>
           <i className="bi bi-arrow-counterclockwise"></i>
         </button>
         <div className="btn" onClick={handleRedo}>
           <i className="bi bi-arrow-clockwise"></i>
-        </div>
+        </div> */}
       </div>
     </div>
   );
