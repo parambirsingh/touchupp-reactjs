@@ -33,7 +33,6 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject }) {
     let xStart = 0;
     let yStart = 0;
     let coords = JSON.parse(JSON.stringify(imageData?.coords));
-    console.log(coords,originalCoord);
     coords.map((v, i) => {
       xStart = (boxRef.current.clientWidth - imageRef.current.clientWidth) / 2;
       yStart =
