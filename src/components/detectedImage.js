@@ -86,7 +86,7 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject }) {
                 key={c.key}
                 style={{
                   top: c.coordinates[1] + "px",
-                  left: c.coordinates[0] + "px",
+                  left: (c.coordinates[0]) + "px",
                 }}
               >
                 <span

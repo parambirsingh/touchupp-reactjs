@@ -14,6 +14,7 @@ function Canvas({ brushData }) {
   useEffect(()=>{
     canvas.current.height =  imageData.imageDimension[1];
     canvas.current.width = imageData.imageDimension[0]
+    canvas.current.resetCanvas();
   },[imageData.imageDimension])
 
   const handlePath = async () => {
@@ -47,7 +48,6 @@ function Canvas({ brushData }) {
           //   currentIndex: history.length-1
           // });
         }
-        canvas.current.clearCanvas();
       }, 1000);
     }
   };
