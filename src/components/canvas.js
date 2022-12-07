@@ -23,7 +23,7 @@ function Canvas({ brushData }) {
       setTimoutHandle = setTimeout(async () => {
         let path;
         path = await canvas.current.exportPaths();
-        console.log(path)
+        
         if (path.length && false) {
           // console.log('return:', path)
           let data = await canvas.current.exportImage("png");
