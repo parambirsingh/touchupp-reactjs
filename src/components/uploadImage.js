@@ -1,9 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
-import { toast } from 'react-toastify';
 import headingImg from '../assets/img/underline.svg'
 import uploadicon from '../assets/img/upload-img.svg'
 import { ImageContext } from '../context/imageContext';
-import { Constants } from '../data/constants';
 // import { Constants } from '../data/constants';
 
 function UploadImage({ isGettingImage }) {
