@@ -1,20 +1,26 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { ImageContext } from "../context/imageContext";
-import { Constants } from "../data/constants";
 
-let originalHeight = 486;
-let originalWidth = 864;
+let originalHeight = 0;
+let originalWidth = 0;
 let originalCoord = [];
-function OriginalImageBox({
-  handleObjectClick,
-}) {
-  const [imageData,setImageData] = useContext(ImageContext);
-
+function DetectedImageBox({ handleObjectClick, isDeletingObject }) {
+  const [imageData, setImageData] = useContext(ImageContext);
+  const [ref, setRef] = useState({});
 
   const imageRef = useRef();
   const boxRef = useRef();
 
+  useEffect(() => {
+     originalCoord = JSON.parse(JSON.stringify(imageData?.coords)) || [];
+  }, [imageData.image]);
+
+  useEffect(() => {
+    // if(ref.originalImage){
+    setImageData({ ...imageData, ...ref });
+    // }
+  }, [ref]);
   const handleResize = () => {
     if (!imageRef || !boxRef) return;
     let arr = [imageRef.current.clientWidth, imageRef.current.clientHeight];
@@ -27,6 +33,7 @@ function OriginalImageBox({
     let xStart = 0;
     let yStart = 0;
     let coords = JSON.parse(JSON.stringify(imageData?.coords));
+
     coords.map((v, i) => {
       xStart = (boxRef.current.clientWidth - imageRef.current.clientWidth) / 2;
       yStart =
@@ -36,14 +43,14 @@ function OriginalImageBox({
       percentDecreaseWidth =
         100 - (imageRef.current.clientWidth / originalWidth) * 100;
       let decreaseY =
-        (originalCoord[i].coordinates[1] / 100) * percentDecreaseHeight;
+        (originalCoord[i].coordinates?.[1] / 100) * percentDecreaseHeight;
       let decreaseX =
-        (originalCoord[i].coordinates[0] / 100) * percentDecreaseWidth;
-      v.coordinates[1] = yStart + (originalCoord[i].coordinates[1] - decreaseY);
-      v.coordinates[0] = xStart + (originalCoord[i].coordinates[0] - decreaseX);
+        (originalCoord[i].coordinates?.[0] / 100) * percentDecreaseWidth;
+      v.coordinates[1] = yStart + (originalCoord[i].coordinates?.[1] - decreaseY);
+      v.coordinates[0] = xStart + (originalCoord[i].coordinates?.[0] - decreaseX);
       return v;
     });
-     setImageData({ ...imageData, coords ,...newDimensions});
+    setRef({ coords, ...newDimensions });
   };
 
   useEffect(() => {
@@ -53,9 +60,11 @@ function OriginalImageBox({
   }, []);
 
   useEffect(() => {
-    if (originalCoord.length === 0)
+    if (originalCoord?.length === 0){
       originalCoord = JSON.parse(JSON.stringify(imageData?.coords));
+    }
     setTimeout(() => {
+      if(originalCoord?.length<0) return
       originalHeight = imageRef.current.naturalHeight;
       originalWidth = imageRef.current.naturalWidth;
       handleResize();
@@ -82,7 +91,9 @@ function OriginalImageBox({
               >
                 <span
                   className="hover-danger text-primary cursor-pointer"
-                  onClick={() => handleObjectClick(c)}
+                  onClick={() =>
+                    !isDeletingObject ? handleObjectClick(c) : ""
+                  }
                 >
                   <i className="bi bi-x-circle-fill"></i>
                   {/* <span className='text-white text-wrap'>
@@ -94,7 +105,7 @@ function OriginalImageBox({
 
             <img
               ref={imageRef}
-              src={Constants.base64Start + imageData.originalImage}
+              src={imageData.base64Start + imageData.image}
               className="h-max-80vh object-fit rounded-2"
               style={{ objectFit: "contain", maxWidth: "100%" }}
               alt="img"
@@ -106,4 +117,4 @@ function OriginalImageBox({
   );
 }
 
-export default OriginalImageBox;
+export default DetectedImageBox;

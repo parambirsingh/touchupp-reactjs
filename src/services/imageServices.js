@@ -18,3 +18,9 @@ export const removeObject = (data) => {
     headers: { "Content-Type": "multipart/form-data" },
   });
 };
+
+export const removeFromBrush = (data) => {
+  return http.post("removal_brush", data, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+};

@@ -9,6 +9,8 @@ import CanvasModal from "../components/canvasModal";
 export default function Home() {
   const [imageData, setImageData] = useContext(ImageContext);
   const [isGettingImage, setIsGettingImage] = useState(false);
+  const [isDeletingObject, setIsDeletingObject] = useState(false);
+
   const [brushData, setBrushData] = useState({
     brushStock: 30,
     brushMode: false,
@@ -23,29 +25,38 @@ export default function Home() {
   // }, [imageData?.currentIndex])
 
   useEffect(() => {
-    if (imageData.originalImage) getImageData();
-  }, [imageData?.originalImage]);
+     getImageData();
+  }, [imageData.getImage]);
 
   const handleDownload = async () => {
-    
+      const a = document.createElement("a");      
+      let startIndex = imageData.base64Start.indexOf('/');
+      let endIndex = imageData.base64Start.indexOf(";");
+      a.download =imageData.Folder_name_for_masks+'.'+imageData.base64Start.slice(startIndex+1,endIndex);
+      a.href = imageData.base64Start + imageData.originalImage;
+      a.click();
   };
 
   const handleObjectClick = async (object) => {
     try {
+      setIsDeletingObject(true)
       let form = new FormData();
       form.append("original_image", imageData?.originalImage);
       form.append("folder_name", imageData?.Folder_name_for_masks);
       form.append("object_removal_name", object.key);
       const { data } = await removeObject(form);
-      setImageData({ ...imageData, image: data[1].Output_image });
+      setImageData({ ...imageData, originalImage: data[1].Output_image });
       toast.success(object.key + " deleted successfully");
+       setIsDeletingObject(false);
     } catch (ex) {
+       setIsDeletingObject(false);
       toast.error(ex);
     }
   };
 
   const getImageData = async () => {
     try {
+      if(!imageData.originalImage) return;
       let form = new FormData();
       form.append("photoBase64", imageData?.originalImage);
       setIsGettingImage(true);
@@ -57,20 +68,20 @@ export default function Home() {
       newJson = newJson?.replace(/'/g, '"');
 
       let coords = JSON?.parse(newJson);
-
-      setImageData({
-        ...imageData,
-        imageHistory: [],
-        image: data?.[3]?.Encoded_detected_image,
-        Folder_name_for_masks: data?.[2]?.Folder_name_for_masks,
-        coords,
-      });
+        if (data?.[3]?.Encoded_detected_image){
+          setImageData({
+            ...imageData,
+            imageHistory: [],
+            // image: imageData?.originalImage,
+            image: data?.[3]?.Encoded_detected_image,
+            Folder_name_for_masks: data?.[2]?.Folder_name_for_masks,
+            coords,
+          });
+        }
 
       setIsGettingImage(false);
     } catch (ex) {
-      console.log(ex);
       setIsGettingImage(false);
-      //    if (ex.response && ex.response.status === 400)
       toast.error(ex);
     }
   };
@@ -84,6 +95,7 @@ export default function Home() {
         />
       ) : (
         <ImagePreview
+          isDeletingObject={isDeletingObject}
           handleDownload={handleDownload}
           handleObjectClick={handleObjectClick}
           brushData={brushData}

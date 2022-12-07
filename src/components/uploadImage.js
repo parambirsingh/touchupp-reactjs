@@ -1,11 +1,14 @@
-import React, { useContext, useEffect, useRef } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
+import { toast } from 'react-toastify';
 import headingImg from '../assets/img/underline.svg'
 import uploadicon from '../assets/img/upload-img.svg'
 import { ImageContext } from '../context/imageContext';
+import { Constants } from '../data/constants';
 // import { Constants } from '../data/constants';
 
 function UploadImage({ isGettingImage }) {
   const [imageData,setImageData] = useContext(ImageContext)
+  const [localSrc ,setLocalSrc] = useState('')
 
   const image = useRef();
   const handleChange = (e) => {
@@ -13,21 +16,48 @@ function UploadImage({ isGettingImage }) {
       handleFile(e.target.files[0])
   };
 
-
   const handleFile = (file)=>{
      var reader = new FileReader();
      reader.readAsDataURL(file);
      reader.onload = function () {
-       let data = reader.result;
-       data = data.slice(data?.indexOf(",") + 1);
-       setImageData({ ...imageData, originalImage: data });
+      //  let data = reader.result;
+       setLocalSrc(reader.result)
+       setTimeout(() => {
+        let element = document.getElementById("imgCon");
+        element?.scrollIntoView({block:'center',behavior:'smooth'});
+       });
+      //  data = data.slice(data?.indexOf(",") + 1);
+      //  setImageData({ ...imageData, originalImage: data });
      };
      reader.onerror = function (error) {
       //  console.log("Error: ", error);
      };
   }
 
+  const emptyImage = ()=>{
+    setLocalSrc('');
+    image.current.value='';
+    setTimeout(()=>{
+      window.scroll({
+        top: 0,
+        behavior: "smooth",
+      });
+    })
+
+  }
   
+  const proceed=()=>{
+    let data = localSrc.slice(localSrc?.indexOf(",") + 1);
+    let start = localSrc.slice(0,localSrc?.indexOf(",") + 1);
+
+    setImageData({
+      ...imageData,
+      originalImage: data,
+      base64Start:start,
+      getImage: !imageData.getImage,
+    });
+  }
+
   useEffect(()=>{
     const image_drop_area = document.querySelector("#image_drop_area");
     image_drop_area.addEventListener("dragover", (event) => {
@@ -104,7 +134,7 @@ function UploadImage({ isGettingImage }) {
                       className="img-fluid mb-3"
                     />
                     <div className="w-100 fw-semibold etxt-center">
-                      {isGettingImage ? "Uploading...." : "Click here or drag an image file"}
+                      Click here or drag an image file
                     </div>
                   </div>
                 </label>
@@ -114,9 +144,46 @@ function UploadImage({ isGettingImage }) {
                   onChange={(e) => handleChange(e)}
                   type="file"
                   disabled={isGettingImage}
-                  accept='image/*'
+                  accept="image/*"
                 />
               </div>
+              {localSrc && (
+                <div>
+                  <div>
+                    <img
+                      src={localSrc}
+                      className="image-container mt-5 mh-50"
+                      id="imgCon"
+                      alt="img"
+                    />
+                  </div>
+                  <div className=" d-flex justify-content-center mt-5">
+                    <button
+                      className="btn btn-danger me-2"
+                      onClick={emptyImage}
+                      disabled={isGettingImage}
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      className="btn btn-primary"
+                      onClick={proceed}
+                      disabled={isGettingImage}
+                    >
+                      <div className="w-100 fw-semibold etxt-center">
+                        {isGettingImage ? (
+                          "Uploading...."
+                        ) : (
+                          <>
+                            <span>Proceed To Remove Objects</span>
+                            <i className="bi bi-arrow-right ms-2"></i>
+                          </>
+                        )}
+                      </div>
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>

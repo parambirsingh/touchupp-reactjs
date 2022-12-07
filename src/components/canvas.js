@@ -2,15 +2,19 @@ import React, { useContext, useEffect, useRef } from "react";
 import { ReactSketchCanvas } from "react-sketch-canvas";
 import CustomCursor from "custom-cursor-react";
 import "custom-cursor-react/dist/index.css";
-import { Constants } from "../data/constants";
 import { ImageContext } from "../context/imageContext";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
-
+ 
 function Canvas({ brushData }) {
-  const [imageData, setImageData] = useContext(ImageContext);
+  const [imageData] = useContext(ImageContext);
   const canvas = useRef();
 
   let setTimoutHandle;
+
+  useEffect(()=>{
+    canvas.current.height =  imageData.imageDimension[1];
+    canvas.current.width = imageData.imageDimension[0]
+  },[imageData.imageDimension])
 
   const handlePath = async () => {
     if (canvas) {
@@ -18,7 +22,8 @@ function Canvas({ brushData }) {
       setTimoutHandle = setTimeout(async () => {
         let path;
         path = await canvas.current.exportPaths();
-        if (path.length) {
+        console.log(path)
+        if (path.length && false) {
           // console.log('return:', path)
           let data = await canvas.current.exportImage("png");
           if (!data) return;
@@ -35,10 +40,12 @@ function Canvas({ brushData }) {
             return arr;
           };
           let history =  h(imageData.imageHistory)
-          setImageData({
-            ...imageData,
-            image:history[history?.length-1]
-          });
+          console.log(history[history?.length - 1]);
+          // setImageData({
+          //   ...imageData,
+          //   image:history[history?.length-1],
+          //   currentIndex: history.length-1
+          // });
         }
         canvas.current.clearCanvas();
       }, 1000);
@@ -48,26 +55,28 @@ function Canvas({ brushData }) {
     <div className="mt-2 d-flex justify-content-center">
       {/* <TransformWrapper doubleClick={{ disabled: true }}>
         <TransformComponent> */}
-          <div
-            className="cursor-area h-max-80vh row"
-            onMouseUp={() => handlePath()}
-            onTouchStart={() => handlePath()}
-          >
-            <ReactSketchCanvas
-              ref={canvas}
-              style={{
-                height: imageData.imageDimension[1],
-                width: imageData.imageDimension[0],
-                margin: "0 auto",
-                cursor: "none",
-              }}
-              strokeWidth={brushData.brushStock}
-              eraserWidth={brushData.brushStock}
-              strokeColor="#e4c725bf"
-              backgroundImage={Constants.base64Start + imageData.image}
-            />
-          </div>
-        {/* </TransformComponent>
+      <div
+        className="cursor-area h-max-80vh row"
+        onMouseUp={() => handlePath()}
+        onTouchStart={() => handlePath()}
+      >
+        <ReactSketchCanvas
+          ref={canvas}
+          style={{
+            height: imageData.imageDimension[1],
+            width: imageData.imageDimension[0],
+            margin: "0 auto",
+            cursor: "none",
+          }}
+          strokeWidth={brushData.brushStock}
+          eraserWidth={brushData.brushStock}
+          strokeColor="#e4c725bf"
+          preserveBackgroundImageAspectRatio="none"
+          backgroundImage={imageData.base64Start + imageData.originalImage}
+        />
+       
+      </div>
+      {/* </TransformComponent>
       </TransformWrapper> */}
       <CustomCursor
         targets={[".cursor-area"]}
