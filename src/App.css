@@ -198,7 +198,7 @@ html{
 }
 
 
-.side-image .react-transform-wrapper{height: 100%;}
-.side-image .react-transform-component{height: 100%;}
+.side-image .react-transform-wrapper{height: 100%; width: 100%;}
+.side-image .react-transform-component{height: 100%; width: 100%;}
 
-.side-image .react-transform-component img{object-fit:cover !important;}
+.side-image .react-transform-component img{width: 100%;}

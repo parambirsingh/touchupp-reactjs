@@ -56,7 +56,7 @@ function ImageBox({ isDeletingObject }) {
       <TransformComponent>
         <div
           ref={boxRef}
-          className="mt-2 d-grid place-items-center justify-content-center position-relative h-100"
+          className="mt-2 w-100 d-grid place-items-center justify-content-center position-relative h-100"
           // style={{ transform: `scale(${imageData.scale})` }}
         >
           {/* {coord.map((c) => (<div className='position-absolute' key={c.key} style={{ top: (c.coordinates[1]) + 'px', left: c.coordinates[0] + 'px' }}>
