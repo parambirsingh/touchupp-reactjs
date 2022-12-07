@@ -1,12 +1,11 @@
-import React, { useContext, useEffect, useRef } from 'react'
+import React, { useContext, useEffect, useRef } from "react";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
-import { ImageContext } from '../context/imageContext';
+import { ImageContext } from "../context/imageContext";
 import { TailSpin } from "react-loader-spinner";
 
-
-let originalHeight = 486
-let originalWidth = 864
-let originalCoord = []
+let originalHeight = 486;
+let originalWidth = 864;
+let originalCoord = [];
 function ImageBox({ isDeletingObject }) {
   const [imageData] = useContext(ImageContext);
   const imageRef = useRef();
@@ -57,31 +56,32 @@ function ImageBox({ isDeletingObject }) {
       <TransformComponent>
         <div
           ref={boxRef}
-          className="mt-2 h-max-80vh d-grid place-items-center justify-content-center position-relative"
-          style={{ transform: `scale(${imageData.scale})` }}
+          className="mt-2 d-grid place-items-center justify-content-center position-relative h-100"
+          // style={{ transform: `scale(${imageData.scale})` }}
         >
           {/* {coord.map((c) => (<div className='position-absolute' key={c.key} style={{ top: (c.coordinates[1]) + 'px', left: c.coordinates[0] + 'px' }}>
                             <span className='hover-danger text-primary cursor-pointer' onClick={()=>handleObjectClick(c)}>
                                 <i className="bi bi-x-circle-fill"></i>
                             </span>
                         </div>))} */}
-        {isDeletingObject && (<TailSpin
-            height="50"
-            width="50"
-            color="#4fa94d"
-            ariaLabel="tail-spin-loading"
-            radius="1"
-            wrapperStyle={{}}
-            wrapperClass="position-absolute"
-            visible={true}
-          />
+          {isDeletingObject && (
+            <TailSpin
+              height="50"
+              width="50"
+              color="#4fa94d"
+              ariaLabel="tail-spin-loading"
+              radius="1"
+              wrapperStyle={{}}
+              wrapperClass="position-absolute"
+              visible={true}
+            />
           )}
           <img
             ref={imageRef}
             src={imageData.base64Start + imageData.originalImage}
             className={
-              "h-max-80vh object-fit rounded-2 " + (isDeletingObject &&
-              "loading-image")
+              "h-100 object-fit rounded-2 " +
+              (isDeletingObject && "loading-image")
             }
             style={{ objectFit: "contain", maxWidth: "100%" }}
             alt="img"
@@ -92,4 +92,4 @@ function ImageBox({ isDeletingObject }) {
   );
 }
 
-export default ImageBox
+export default ImageBox;

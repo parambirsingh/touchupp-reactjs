@@ -191,3 +191,14 @@ html{
 .place-items-center{
   place-items: center;;
 }
+
+
+.bi-x-circle-fill::before {
+  background-color: #fff; border-radius: 50%; 
+}
+
+
+.side-image .react-transform-wrapper{height: 100%;}
+.side-image .react-transform-component{height: 100%;}
+
+.side-image .react-transform-component img{object-fit:cover !important;}

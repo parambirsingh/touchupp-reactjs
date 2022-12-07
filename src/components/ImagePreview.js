@@ -1,10 +1,10 @@
-import React, { useContext } from 'react'
-import { Link } from 'react-router-dom';
-import { ImageContext } from '../context/imageContext';
-import ImageBox from './imageBox'
-import Share from './share';
-import Toolbar from './toolbar';
-import DetectedImageBox from './detectedImage';
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
+import { ImageContext } from "../context/imageContext";
+import ImageBox from "./imageBox";
+import Share from "./share";
+import Toolbar from "./toolbar";
+import DetectedImageBox from "./detectedImage";
 
 function ImagePreview({
   handleObjectClick,
@@ -20,7 +20,7 @@ function ImagePreview({
       image: "",
       imageHistory: [],
       currentIndex: 0,
-      coords:[]
+      coords: [],
     });
   };
   return (
@@ -101,12 +101,14 @@ function ImagePreview({
                   />
                 </div>
                 {/* Modified Image */}
-                <div className="col-6">
+                <div className="col-6 side-image">
                   <ImageBox isDeletingObject={isDeletingObject} />
                 </div>
               </div>
               <div className="row">
-                <div className="col-12 d-flex justify-content-end">
+                <div className="col-6 "></div>
+
+                <div className="col-6 d-flex justify-content-center">
                   <div>
                     <Toolbar
                       brushData={brushData}
@@ -124,4 +126,4 @@ function ImagePreview({
   );
 }
 
-export default ImagePreview
+export default ImagePreview;

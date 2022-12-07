@@ -13,7 +13,7 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject }) {
   const boxRef = useRef();
 
   useEffect(() => {
-     originalCoord = JSON.parse(JSON.stringify(imageData?.coords)) || [];
+    originalCoord = JSON.parse(JSON.stringify(imageData?.coords)) || [];
   }, [imageData.image]);
 
   useEffect(() => {
@@ -46,8 +46,10 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject }) {
         (originalCoord[i].coordinates?.[1] / 100) * percentDecreaseHeight;
       let decreaseX =
         (originalCoord[i].coordinates?.[0] / 100) * percentDecreaseWidth;
-      v.coordinates[1] = yStart + (originalCoord[i].coordinates?.[1] - decreaseY);
-      v.coordinates[0] = xStart + (originalCoord[i].coordinates?.[0] - decreaseX);
+      v.coordinates[1] =
+        yStart + (originalCoord[i].coordinates?.[1] - decreaseY);
+      v.coordinates[0] =
+        xStart + (originalCoord[i].coordinates?.[0] - decreaseX);
       return v;
     });
     setRef({ coords, ...newDimensions });
@@ -60,11 +62,11 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject }) {
   }, []);
 
   useEffect(() => {
-    if (originalCoord?.length === 0){
+    if (originalCoord?.length === 0) {
       originalCoord = JSON.parse(JSON.stringify(imageData?.coords));
     }
     setTimeout(() => {
-      if(originalCoord?.length<0) return
+      if (originalCoord?.length < 0) return;
       originalHeight = imageRef.current.naturalHeight;
       originalWidth = imageRef.current.naturalWidth;
       handleResize();
@@ -77,8 +79,8 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject }) {
         <TransformComponent>
           <div
             ref={boxRef}
-            className="mt-2 h-max-80vh d-flex justify-content-center position-relative"
-            style={{ transform: `scale(${imageData?.scale})` }}
+            className="mt-2 d-flex justify-content-center position-relative"
+            // style={{ transform: `scale(${imageData?.scale})` }}
           >
             {imageData.coords.map((c) => (
               <div
