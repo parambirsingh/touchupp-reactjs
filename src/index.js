@@ -9,6 +9,7 @@ import Contact from './pages/contact';
 import App from './App';
 import Layout from './components/layout/layout';
 import NotFound from './pages/notFound';
+import Test from './pages/test';
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
       }
     ],
   },
+  {
+    path:'test',
+    element:<Test/>
+  }
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

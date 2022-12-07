@@ -33,7 +33,6 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject }) {
     let xStart = 0;
     let yStart = 0;
     let coords = JSON.parse(JSON.stringify(imageData?.coords));
-
     coords.map((v, i) => {
       xStart = (boxRef.current.clientWidth - imageRef.current.clientWidth) / 2;
       yStart =
@@ -46,10 +45,14 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject }) {
         (originalCoord[i].coordinates?.[1] / 100) * percentDecreaseHeight;
       let decreaseX =
         (originalCoord[i].coordinates?.[0] / 100) * percentDecreaseWidth;
+      let decreaseWidth =
+        (originalCoord[i].coordinates?.[2] / 100) * percentDecreaseWidth;
       v.coordinates[1] =
         yStart + (originalCoord[i].coordinates?.[1] - decreaseY);
       v.coordinates[0] =
         xStart + (originalCoord[i].coordinates?.[0] - decreaseX);
+      v.coordinates[2] =
+        xStart + (originalCoord[i].coordinates?.[2] - decreaseWidth);
       return v;
     });
     setRef({ coords, ...newDimensions });
@@ -88,7 +91,7 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject }) {
                 key={c.key}
                 style={{
                   top: c.coordinates[1] + "px",
-                  left: c.coordinates[0] + "px",
+                  left: c.coordinates[2] + "px",
                 }}
               >
                 <span
