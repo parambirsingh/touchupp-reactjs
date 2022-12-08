@@ -1,14 +1,17 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import headingImg from "../assets/img/underline.svg";
-import uploadicon from "../assets/img/upload-img.svg";
 import { ImageContext } from "../context/imageContext";
 // import { Constants } from '../data/constants';
 
-function UploadImage({ isGettingImage }) {
+function UploadImage({ isGettingImage, localSrc, setLocalSrc }) {
   const [imageData, setImageData] = useContext(ImageContext);
-  const [localSrc, setLocalSrc] = useState("");
 
   const image = useRef();
+
+  useEffect(() => {
+    let element = document.getElementById("imgCon");
+    element?.scrollIntoView({ block: "start", behavior: "smooth" });
+  }, []);
 
   const handleChange = (e) => {
     if (e.target.files[0]) handleFile(e.target.files[0]);

@@ -5,6 +5,7 @@ import { getImage, removeObject } from "../services/imageServices";
 import { toast } from "react-toastify";
 import { ImageContext } from "../context/imageContext";
 import CanvasModal from "../components/canvasModal";
+import HomeShimmer from "../components/shimmer/homeShimmer";
 
 export default function Home() {
   const [imageData, setImageData] = useContext(ImageContext);
@@ -15,6 +16,8 @@ export default function Home() {
     brushStock: 30,
     brushMode: false,
   });
+
+   const [localSrc, setLocalSrc] = useState(imageData.originalImage);
 
   // useEffect(() => {
   //   console.log(imageData.imageHistory,imageData.currentIndex);
@@ -62,6 +65,11 @@ export default function Home() {
       let form = new FormData();
       form.append("photoBase64", imageData?.originalImage);
       setIsGettingImage(true);
+        window.scroll({
+          top: 0,
+          behavior: "smooth",
+        });
+
       let { data } = await getImage(form);
       var newJson = data?.[1]?.Coordinates?.replace(
         /([a-zA-Z0-9]+?):/g,
@@ -83,11 +91,11 @@ export default function Home() {
 
       setIsGettingImage(false);
     } catch (ex) {
+      setImageData({
+        ...imageData,
+        originalImage: "",
+      });
       setIsGettingImage(false);
-       setImageData({
-         ...imageData,
-         originalImage: "",
-       });
       // setImageData({...imageData,originalImage:''})
       toast.error(ex);
     }
@@ -95,8 +103,12 @@ export default function Home() {
 
   return (
     <div className="container-fluid position-relative">
-      {!imageData?.image ? (
+      {isGettingImage ? (
+        <HomeShimmer />
+      ) : !imageData?.image ? (
         <UploadImage
+          localSrc={localSrc}
+          setLocalSrc={setLocalSrc}
           // setOriginalImage={imageData?.setOriginalImage}
           isGettingImage={isGettingImage}
         />
@@ -107,6 +119,7 @@ export default function Home() {
           handleObjectClick={handleObjectClick}
           brushData={brushData}
           setBrushData={setBrushData}
+          setLocalSrc={setLocalSrc}
         ></ImagePreview>
       )}
       <CanvasModal brushData={brushData} setBrushData={setBrushData} />
