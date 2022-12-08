@@ -8,7 +8,7 @@ import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 function Canvas({ brushData }) {
   const [imageData] = useContext(ImageContext);
   const [canvasDimention, setCanvasDimention] = useState([0,0]);
-  const [originalDimention, setOriginalDimention] = useState([400, 400]);
+  const [originalDimention, setOriginalDimention] = useState([700, 700]);
 
   const canvas = useRef();
   const boxRef = useRef();
