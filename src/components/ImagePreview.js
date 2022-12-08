@@ -102,7 +102,11 @@ function ImagePreview({
                 </div>
                 {/* Modified Image */}
                 <div className="col-6 side-image">
-                  <ImageBox isDeletingObject={isDeletingObject} brushData={brushData} setBrushData={setBrushData} />
+                  <ImageBox
+                    isDeletingObject={isDeletingObject}
+                    brushData={brushData}
+                    setBrushData={setBrushData}
+                  />
                 </div>
               </div>
               <div className="row">
@@ -113,8 +117,8 @@ function ImagePreview({
                     <Toolbar
                       brushData={brushData}
                       setBrushData={setBrushData}
-                    /> 
-                     <Share />
+                    />
+                    <Share />
                   </div>
                 </div>
               </div>
