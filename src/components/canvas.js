@@ -174,7 +174,7 @@ function Canvas({ brushData }) {
           preserveBackgroundImageAspectRatio="none"
           backgroundImage={imageData.base64Start + imageData.originalImage}
         />
-        <canvas id="CANVAS"></canvas>
+        {/* <canvas id="CANVAS"></canvas> */}
       </div>
       {/* </TransformComponent>
       </TransformWrapper> */}
