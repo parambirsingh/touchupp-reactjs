@@ -19,33 +19,43 @@ function Canvas({ brushData }) {
   },[imageData.imageDimension])
 
   const removeSelectedPath = (paths)=>{
-    console.log(paths)
+    // console.log(paths)
     let canvas = document.createElement("CANVAS");
     canvas.height = 400;
     canvas.width = 700;
     let ctx = canvas.getContext("2d");
     var img = document.createElement("IMG");
     img.onload = function () {
+      canvas.height = img.height;
+      canvas.width = img.width;
      ctx.drawImage(img, 0, 0);
      ctx.fillStyle = "black";
      ctx.fillRect(0, 0, canvas.width, canvas.height);
      ctx.fill();
      ctx.save();
+    
+
      ctx.translate(0.5, 0.5);
      ctx.beginPath();
-    //  ctx.moveTo(paths[0]?.x, paths[0]?.y);
+     ctx.lineCap = "round";
+     ctx.lineJoin = "round";
+     ctx.lineWidth = 150;
+     ctx.moveTo(paths[0]?.x, paths[0]?.y);
     //  console.log(paths[0]?.x, paths[0]?.y)
     //   ctx.lineTo(paths[0 + 1]?.x, paths[0 + 1]?.y);
     // ctx.moveTo(paths[i]?.x, paths[i]?.y);
 
-     for(let i=1;i<paths?.length;i+=2){
-       ctx.moveTo(paths[i]?.x, paths[i]?.y);
-       ctx.lineTo(Math.round(paths[i+1]?.x), Math.round(paths[i+1]?.y));
+     for(let i=1;i<paths?.length;i++){
+      //  ctx.moveTo(paths[i]?.x, paths[i]?.y);
+       ctx.lineTo(Math.round(paths[i]?.x), Math.round(paths[i]?.y));
      }
      ctx.closePath();
      ctx.clip();
+
+     ctx.strokeStyle = "white";
+     ctx.stroke();
      ctx.fillStyle = "white";
-     ctx.fill();
+    //  ctx.fill();
      ctx.restore();;
     };
     img.src = imageData.base64Start + imageData.originalImage;
@@ -53,7 +63,7 @@ function Canvas({ brushData }) {
       
       var jpegUrl = canvas.toDataURL();
       console.log(jpegUrl);
-    }, 2000);
+    }, 5000);
   }
 
 
@@ -63,8 +73,9 @@ function Canvas({ brushData }) {
       setTimoutHandle = setTimeout(async () => {
         let path;
         path = await canvas.current.exportPaths();
+        // console.log(path)
           // removeSelectedPath(path[0].paths);
-        if (path.length ) {
+        if (path.length && false) {
           // console.log('return:', path)
           let data = await canvas.current.exportImage("png");
           if (!data) return;

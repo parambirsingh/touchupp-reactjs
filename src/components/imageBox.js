@@ -2,8 +2,6 @@ import React, { useContext, useEffect, useRef } from "react";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { ImageContext } from "../context/imageContext";
 import { TailSpin } from "react-loader-spinner";
-import Toolbar from "./toolbar";
-import Share from "./share";
 import ZoomTools from "./zoomTools";
 
 let originalHeight = 486;

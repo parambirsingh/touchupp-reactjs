@@ -3,7 +3,7 @@ import {  FacebookShareButton, LinkedinShareButton, PinterestShareButton, Reddit
 import { ImageContext } from '../context/imageContext';
 
 function Share() {
-const [imageData, setImageData] = useContext(ImageContext)
+// const [imageData, setImageData] = useContext(ImageContext)
   return (
     <div className="brush-img ms-auto">
       <div className="text-center">
