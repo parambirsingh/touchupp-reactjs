@@ -127,11 +127,12 @@ function Canvas({ brushData }) {
       {/* <TransformWrapper doubleClick={{ disabled: true }}>
         <TransformComponent> */}
       <div
-        className="cursor-area h-max-80vh row"
+        className="h-max-80vh row"
         onMouseUp={() => handlePath()}
         onTouchStart={() => handlePath()}
       >
         <ReactSketchCanvas
+          className="cursor-area"
           ref={canvas}
           style={{
             height: imageData.imageDimension[1],
@@ -151,17 +152,18 @@ function Canvas({ brushData }) {
       </TransformWrapper> */}
       <CustomCursor
         targets={[".cursor-area"]}
-        customclassName="custom-cursor"
+        customClass="custom-cursor"
         dimensions={brushData.brushStock * 2}
         strokeColor="#e4c725bf"
         fill="#e4c725bf"
         smoothness={{
           movement: 0.2,
           scale: 0.1,
-          opacity: 0.2,
+          opacity: 0.4,
         }}
+        opacity={0}
         targetScale={1}
-        // targetOpacity={2}
+        // targetOpacity={0.4}
       />
     </div>
   );
