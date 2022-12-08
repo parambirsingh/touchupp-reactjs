@@ -5,7 +5,6 @@ import { getImage, removeObject } from "../services/imageServices";
 import { toast } from "react-toastify";
 import { ImageContext } from "../context/imageContext";
 import CanvasModal from "../components/canvasModal";
-import { Constants } from "../data/constants";
 
 export default function Home() {
   const [imageData, setImageData] = useContext(ImageContext);
@@ -31,12 +30,13 @@ export default function Home() {
   }, [imageData.getImage]);
 
   const handleDownload = async () => {
-      const a = document.createElement("a");      
-      let startIndex = imageData.base64Start.indexOf('/');
-      let endIndex = imageData.base64Start.indexOf(";");
-      a.download =imageData.Folder_name_for_masks+'.'+imageData.base64Start.slice(startIndex+1,endIndex);
-      a.href = imageData.base64Start + imageData.originalImage;
-      a.click();
+    const a = document.createElement("a");
+    // let startIndex = imageData.base64Start.indexOf("/");
+    // let endIndex = imageData.base64Start.indexOf(";");
+    //imageData.base64Start.slice(startIndex+1,endIndex
+    a.download = imageData.Folder_name_for_masks + ".jpg";
+    a.href = imageData.base64Start + imageData.originalImage;
+    a.click();
   };
 
   const handleObjectClick = async (object) => {

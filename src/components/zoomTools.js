@@ -19,7 +19,7 @@ function ZoomTools({ zoomIn, zoomOut, resetTransform }) {
         className="btn btn-outline-secondary"
         onClick={() => resetTransform()}
       >
-        <i className="bi bi-x-lg"></i>
+        Reset
       </button>
     </div>
   );

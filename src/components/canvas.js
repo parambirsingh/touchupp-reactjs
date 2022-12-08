@@ -19,41 +19,71 @@ function Canvas({ brushData }) {
   },[imageData.imageDimension])
 
   const removeSelectedPath = (paths)=>{
-    console.log(paths)
-    let canvas = document.createElement("CANVAS");
-    canvas.height = 400;
-    canvas.width = 700;
-    let ctx = canvas.getContext("2d");
+
+
+    // console.log(paths)
+    let dyanmicCanvas = document.getElementById("CANVAS");
+    // dyanmicCanvas.height = 614;
+    // dyanmicCanvas.width = 1024;
+    let ctx = dyanmicCanvas.getContext("2d");
     var img = document.createElement("IMG");
     img.onload = function () {
+      dyanmicCanvas.height = img.height;
+      dyanmicCanvas.width = img.width;
+      console.log(img.height, img.width);
      ctx.drawImage(img, 0, 0);
-     ctx.fillStyle = "black";
-     ctx.fillRect(0, 0, canvas.width, canvas.height);
+    //  ctx.fillStyle = "black";
+    //  ctx.fillRect(0, 0, dyanmicCanvas.width, dyanmicCanvas.height);
      ctx.fill();
      ctx.save();
-     ctx.translate(0.5, 0.5);
+    
+      let percentDecreaseHeight =
+        100 - (imageData.imageDimension[0] / img.height) * 100;
+      let percentDecreaseWidth =
+        100 - (imageData.imageDimension[1] / img.width) * 100;
+     
+    //  ctx.translate(0.5, 0.5);
      ctx.beginPath();
-    //  ctx.moveTo(paths[0]?.x, paths[0]?.y);
+     ctx.lineCap = "round";
+     ctx.lineJoin = "round";
+     ctx.lineWidth = 30;
+     let decreaseY = (paths[0]?.y / 100) * percentDecreaseHeight;
+     let decreaseX = (paths[0]?.x / 100) * percentDecreaseWidth;
+     console.log(paths[0]?.x, paths[0]?.y);
+     paths[0].y = paths[0]?.y + decreaseY;
+     paths[0].x = paths[0]?.x + decreaseX;
+     
+     console.log(decreaseY, decreaseX);
+     ctx.moveTo(paths[0]?.x, paths[0]?.y);
     //  console.log(paths[0]?.x, paths[0]?.y)
     //   ctx.lineTo(paths[0 + 1]?.x, paths[0 + 1]?.y);
     // ctx.moveTo(paths[i]?.x, paths[i]?.y);
 
-     for(let i=1;i<paths?.length;i+=2){
-       ctx.moveTo(paths[i]?.x, paths[i]?.y);
-       ctx.lineTo(Math.round(paths[i+1]?.x), Math.round(paths[i+1]?.y));
+     for(let i=1;i<paths?.length;i++){
+       let decreaseY = (paths[i]?.y / 100) * percentDecreaseHeight;
+       let decreaseX = (paths[i]?.x / 100) * percentDecreaseWidth;
+
+       paths[i].y = paths[i]?.y + decreaseY;
+       paths[i].x = paths[i]?.x + decreaseX;
+
+      //  ctx.moveTo(paths[i]?.x, paths[i]?.y);
+       ctx.lineTo(Math.round(paths[i]?.x), Math.round(paths[i]?.y));
      }
      ctx.closePath();
+     ctx.strokeStyle = "white";
+     ctx.stroke();
      ctx.clip();
-     ctx.fillStyle = "white";
-     ctx.fill();
+
+    //  ctx.fillStyle = "white";
+    //  ctx.fill();
      ctx.restore();;
     };
     img.src = imageData.base64Start + imageData.originalImage;
-    setTimeout(() => {
+    // setTimeout(() => {
       
-      var jpegUrl = canvas.toDataURL();
-      console.log(jpegUrl);
-    }, 2000);
+    //   var jpegUrl = dyanmicCanvas.toDataURL();
+    //   console.log(jpegUrl);
+    // }, 5000);
   }
 
 
@@ -63,8 +93,9 @@ function Canvas({ brushData }) {
       setTimoutHandle = setTimeout(async () => {
         let path;
         path = await canvas.current.exportPaths();
+        // console.log(path)
           // removeSelectedPath(path[0].paths);
-        if (path.length ) {
+        if (path.length && false) {
           // console.log('return:', path)
           let data = await canvas.current.exportImage("png");
           if (!data) return;
@@ -114,7 +145,7 @@ function Canvas({ brushData }) {
           preserveBackgroundImageAspectRatio="none"
           backgroundImage={imageData.base64Start + imageData.originalImage}
         />
-       
+        <canvas id="CANVAS"></canvas>
       </div>
       {/* </TransformComponent>
       </TransformWrapper> */}

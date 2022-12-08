@@ -2,8 +2,6 @@ import React, { useContext, useEffect, useRef } from "react";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { ImageContext } from "../context/imageContext";
 import { TailSpin } from "react-loader-spinner";
-import Toolbar from "./toolbar";
-import Share from "./share";
 import ZoomTools from "./zoomTools";
 
 let originalHeight = 486;
@@ -60,7 +58,7 @@ function ImageBox({ isDeletingObject ,brushData,setBrushData}) {
       centerOnInit={true}
       centerZoomedOut={true}
       wheel={{ disabled: true }}
-      // pinch={{ disabled: true }}
+      panning={{ disabled: true }}
     
     >
       {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
@@ -100,11 +98,11 @@ function ImageBox({ isDeletingObject ,brushData,setBrushData}) {
               />
             </div>
           </TransformComponent>
-          <ZoomTools
+          {/* <ZoomTools
             zoomIn={zoomIn}
             zoomOut={zoomOut}
             resetTransform={resetTransform}
-          />
+          /> */}
         </>
       )}
     </TransformWrapper>
