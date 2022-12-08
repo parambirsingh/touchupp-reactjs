@@ -84,7 +84,7 @@ function UploadImage({ isGettingImage }) {
     });
   }, [localSrc]);
   return (
-    <section className="py-xl-5 text-center">
+    <section className="py-xl-5 text-center my-xxl-0">
       <div className="container py-lg-5">
         <div className="row">
           <div className="col-md-8 py-5 mx-auto">
