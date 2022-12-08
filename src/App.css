@@ -118,7 +118,7 @@ html{
     border-style: dashed;
     border-radius: 30px;
     border-width: 3px;
-    height:255px;
+    height:115px;
     cursor: pointer;
     background-color:#FBFBFB;
 
@@ -207,7 +207,7 @@ html{
 
 .side-image .react-transform-component img{width: 100%;}
 
-.react-transform-wrapper:active {
+.cursor-pan:active {
   cursor:grab;
 }
 

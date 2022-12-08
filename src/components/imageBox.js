@@ -58,7 +58,7 @@ function ImageBox({ isDeletingObject ,brushData,setBrushData}) {
       centerOnInit={true}
       centerZoomedOut={true}
       wheel={{ disabled: true }}
-      // pinch={{ disabled: true }}
+      panning={{ disabled: true }}
     
     >
       {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
@@ -98,11 +98,11 @@ function ImageBox({ isDeletingObject ,brushData,setBrushData}) {
               />
             </div>
           </TransformComponent>
-          <ZoomTools
+          {/* <ZoomTools
             zoomIn={zoomIn}
             zoomOut={zoomOut}
             resetTransform={resetTransform}
-          />
+          /> */}
         </>
       )}
     </TransformWrapper>
