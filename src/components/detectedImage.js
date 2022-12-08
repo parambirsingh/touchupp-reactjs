@@ -120,7 +120,7 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject }) {
               <img
                 ref={imageRef}
                 src={imageData.base64Start + imageData.image}
-                className="h-max-80vh object-fit rounded-2"
+                className="object-fit rounded-2"
                 style={{ objectFit: "contain", maxWidth: "100%" }}
                 alt="img"
               />

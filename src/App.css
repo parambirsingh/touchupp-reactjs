@@ -213,14 +213,16 @@ html{
 
 
 .file-upload > label {transition: all 0.5s ease-in 0;}
-
-
 .file-upload > label svg{fill: #b9b5b5;}
-
-
 .file-upload > label:hover svg{fill: #fff;}
-
 .file-upload > label:hover{background-color: #dc3545; border-color: #6d0c15; transition: all 0.5s ease-in 0;}
-
-
 .file-upload > label:hover .etxt-center{color: #fff;}
+
+
+
+.react-transform-wrapper{width: 100%;}
+.react-transform-component{width: 100%;}
+
+.cursor-pan{width: 100%;}
+
+.cursor-pan img{width: 100%; object-fit: cover !important;}

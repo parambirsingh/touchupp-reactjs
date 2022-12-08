@@ -7,7 +7,7 @@ import ZoomTools from "./zoomTools";
 let originalHeight = 486;
 let originalWidth = 864;
 let originalCoord = [];
-function ImageBox({ isDeletingObject ,brushData,setBrushData}) {
+function ImageBox({ isDeletingObject, brushData, setBrushData }) {
   const [imageData] = useContext(ImageContext);
   const imageRef = useRef();
   const boxRef = useRef();
@@ -53,20 +53,19 @@ function ImageBox({ isDeletingObject ,brushData,setBrushData}) {
   }, []);
 
   return (
-    <TransformWrapper 
+    <TransformWrapper
       doubleClick={{ disabled: true }}
       centerOnInit={true}
       centerZoomedOut={true}
       wheel={{ disabled: true }}
       panning={{ disabled: true }}
-    
     >
       {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
         <>
           <TransformComponent>
             <div
               ref={boxRef}
-              className="mt-2 w-100 d-grid place-items-center justify-content-center position-relative h-100"
+              className="mt-2 w-100 d-grid place-items-center position-relative h-100"
               // style={{ transform: `scale(${imageData.scale})` }}
             >
               {/* {coord.map((c) => (<div className='position-absolute' key={c.key} style={{ top: (c.coordinates[1]) + 'px', left: c.coordinates[0] + 'px' }}>
@@ -90,7 +89,7 @@ function ImageBox({ isDeletingObject ,brushData,setBrushData}) {
                 ref={imageRef}
                 src={imageData.base64Start + imageData.originalImage}
                 className={
-                  "h-max-80vh object-fit  rounded-2 " +
+                  "object-fit  rounded-2 " +
                   (isDeletingObject && "loading-image")
                 }
                 style={{ objectFit: "contain", maxWidth: "100%" }}

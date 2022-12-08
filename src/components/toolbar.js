@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import { ImageContext } from "../context/imageContext";
 
-function Toolbar({brushData,setBrushData}) {
-  const [imageData,setImageData] = useContext(ImageContext);
+function Toolbar({ brushData, setBrushData }) {
+  const [imageData, setImageData] = useContext(ImageContext);
 
   const handleUndo = () => {
     if (imageData.currentIndex > 0)
@@ -13,7 +13,7 @@ function Toolbar({brushData,setBrushData}) {
       setImageData({ ...imageData, currentIndex: imageData.currentIndex + 1 });
   };
   return (
-    <div className="justify-content-center priority-top align-items-center d-flex  w-100">
+    <div className="priority-top float-start">
       <div className="w-auto bg-white rounded-2 d-flex align-items-center">
         {!brushData.brushMode ? (
           <>
@@ -102,7 +102,7 @@ function Toolbar({brushData,setBrushData}) {
                 onClick={() => {
                   setBrushData({
                     ...brushData,
-                    brushMode: false
+                    brushMode: false,
                   });
                 }}
               >
