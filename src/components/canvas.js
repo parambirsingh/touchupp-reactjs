@@ -1,25 +1,52 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { ReactSketchCanvas } from "react-sketch-canvas";
 import CustomCursor from "custom-cursor-react";
 import "custom-cursor-react/dist/index.css";
 import { ImageContext } from "../context/imageContext";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
-import { Constants } from "../data/constants";
  
 function Canvas({ brushData }) {
   const [imageData] = useContext(ImageContext);
+  const [canvasDimention, setCanvasDimention] = useState([0,0]);
+  const [originalDimention, setOriginalDimention] = useState([400, 400]);
+
   const canvas = useRef();
+  const boxRef = useRef();
+
+  const handleResize = () => {
+    
+   let arr = [
+     boxRef?.current?.clientWidth <= originalDimention[0]
+       ? boxRef?.current?.clientWidth
+       : originalDimention[0],
+     boxRef?.current?.clientHeight <= originalDimention[1]
+       ? boxRef?.current?.clientHeight
+       : originalDimention[1],
+   ];
+    setCanvasDimention(arr);
+  };
+
+   const initCanvas = () => {
+     let img = new Image();
+     img.onload = function(){
+      setOriginalDimention([img.width, img.height])
+       setCanvasDimention([img.width, img.height]);
+        window.addEventListener("resize", () => {
+          handleResize();
+        });
+     }
+     img.src = imageData.base64Start + imageData.originalImage;
+   };
+  useEffect(() => {
+    initCanvas();
+   
+  }, []);
+
+
 
   let setTimoutHandle;
 
-  useEffect(()=>{
-    canvas.current.height =  imageData.imageDimension[1];
-    canvas.current.width = imageData.imageDimension[0]
-    canvas.current.resetCanvas();
-  },[imageData.imageDimension])
-
   const removeSelectedPath = (paths)=>{
-
 
     // console.log(paths)
     let dyanmicCanvas = document.getElementById("CANVAS");
@@ -127,7 +154,8 @@ function Canvas({ brushData }) {
       {/* <TransformWrapper doubleClick={{ disabled: true }}>
         <TransformComponent> */}
       <div
-        className="h-max-80vh row"
+        ref={boxRef}
+        className="row  justify-content-center position-relative"
         onMouseUp={() => handlePath()}
         onTouchStart={() => handlePath()}
       >
@@ -135,13 +163,13 @@ function Canvas({ brushData }) {
           className="cursor-area"
           ref={canvas}
           style={{
-            height: imageData.imageDimension[1],
-            width: imageData.imageDimension[0],
+            height: originalDimention[1],
+            width: originalDimention[0],
             margin: "0 auto",
             cursor: "none",
           }}
           strokeWidth={brushData.brushStock}
-          eraserWidth={brushData.brushStock}
+          eraserWidth={brushData.brushStock}  
           strokeColor="#e4c725bf"
           preserveBackgroundImageAspectRatio="none"
           backgroundImage={imageData.base64Start + imageData.originalImage}
