@@ -12,9 +12,11 @@ function ImagePreview({
   brushData,
   setBrushData,
   isDeletingObject,
+  setLocalSrc,
 }) {
   const [imageData, setImageData] = useContext(ImageContext);
   const handleBack = () => {
+    setLocalSrc("");
     setImageData({
       ...imageData,
       image: "",
