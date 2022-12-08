@@ -1,11 +1,20 @@
-import React, { useContext } from 'react'
-import {  FacebookShareButton, LinkedinShareButton, PinterestShareButton, RedditIcon, RedditShareButton, TwitterShareButton, WhatsappIcon, WhatsappShareButton } from 'react-share';
-import { ImageContext } from '../context/imageContext';
+import React, { useContext } from "react";
+import {
+  FacebookShareButton,
+  LinkedinShareButton,
+  PinterestShareButton,
+  RedditIcon,
+  RedditShareButton,
+  TwitterShareButton,
+  WhatsappIcon,
+  WhatsappShareButton,
+} from "react-share";
+import { ImageContext } from "../context/imageContext";
 
 function Share() {
-// const [imageData, setImageData] = useContext(ImageContext)
+  // const [imageData, setImageData] = useContext(ImageContext)
   return (
-    <div className="brush-img ms-auto">
+    <div className="brush-img float-end">
       <div className="text-center">
         <div className="d-inline-block border rounded-2 mt-3">
           <ul className="list-unstyled list-inline m-0 d-flex align-items-center justify-content-center">
@@ -156,4 +165,4 @@ function Share() {
   );
 }
 
-export default Share
+export default Share;

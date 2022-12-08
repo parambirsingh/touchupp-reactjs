@@ -3,15 +3,15 @@ import headingImg from "../assets/img/underline.svg";
 import { ImageContext } from "../context/imageContext";
 // import { Constants } from '../data/constants';
 
-function UploadImage({ isGettingImage,localSrc, setLocalSrc }) {
+function UploadImage({ isGettingImage, localSrc, setLocalSrc }) {
   const [imageData, setImageData] = useContext(ImageContext);
 
   const image = useRef();
 
-  useEffect(()=>{
-     let element = document.getElementById("imgCon");
-     element?.scrollIntoView({ block: "start", behavior: "smooth" });
-  },[])
+  useEffect(() => {
+    let element = document.getElementById("imgCon");
+    element?.scrollIntoView({ block: "start", behavior: "smooth" });
+  }, []);
 
   const handleChange = (e) => {
     if (e.target.files[0]) handleFile(e.target.files[0]);
@@ -87,10 +87,10 @@ function UploadImage({ isGettingImage,localSrc, setLocalSrc }) {
     });
   }, [localSrc]);
   return (
-    <section className="py-xl-5 text-center">
-      <div className="container py-lg-5">
-        <div className="row">
-          <div className="col-md-8 py-5 mx-auto">
+    <section className={`py-xl-5 text-center ${!localSrc ? "my-xxl-5" : ""}`}>
+      <div className={`container py-lg-5  ${!localSrc ? "my-xxl-5" : ""}`}>
+        <div className={`row ${!localSrc ? "py-xxl-5" : ""}`}>
+          <div className="col-md-8 mx-auto">
             <div className="position-relative d-inline-block mb-4 py-1">
               <h2 className="fw-bold mb-3 d-flex">
                 <span className="text-danger me-2">Redesign </span> your space
@@ -121,7 +121,7 @@ function UploadImage({ isGettingImage,localSrc, setLocalSrc }) {
                   <span>See Examples</span>
                 )}
               </button> */}
-              {!localSrc ? (
+              {!localSrc && (
                 <div className="file file-upload mt-5 position-relative ">
                   <label
                     htmlFor="input-file"
@@ -167,47 +167,48 @@ function UploadImage({ isGettingImage,localSrc, setLocalSrc }) {
                     accept="image/*"
                   />
                 </div>
-              ) : (
-                <div>
-                  <div>
-                    <img
-                      src={localSrc}
-                      className="image-container mt-5 mh-local"
-                      id="imgCon"
-                      alt="img"
-                    />
-                  </div>
-                  <div className=" d-flex justify-content-center mt-5">
-                    <button
-                      className="btn btn-danger me-2"
-                      onClick={emptyImage}
-                      disabled={isGettingImage}
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      className="btn btn-primary"
-                      onClick={proceed}
-                      disabled={isGettingImage}
-                    >
-                      <div className="w-100 fw-semibold etxt-center">
-                        {isGettingImage ? (
-                          "Uploading...."
-                        ) : (
-                          <>
-                            <span>Redesign the room</span>
-                            <i className="bi bi-arrow-right ms-2"></i>
-                          </>
-                        )}
-                      </div>
-                    </button>
-                  </div>
-                </div>
               )}
             </div>
           </div>
         </div>
       </div>
+      {localSrc && (
+        <div className="container">
+          <div className="col-10 mx-auto">
+            <img
+              src={localSrc}
+              className="image-container img-fluid"
+              id="imgCon"
+              alt="img"
+            />
+          </div>
+          <div className=" d-flex justify-content-center mt-5">
+            <button
+              className="btn btn-danger me-2"
+              onClick={emptyImage}
+              disabled={isGettingImage}
+            >
+              Cancel
+            </button>
+            <button
+              className="btn btn-primary"
+              onClick={proceed}
+              disabled={isGettingImage}
+            >
+              <div className="w-100 fw-semibold etxt-center">
+                {isGettingImage ? (
+                  "Uploading...."
+                ) : (
+                  <>
+                    <span>Redesign the room</span>
+                    <i className="bi bi-arrow-right ms-2"></i>
+                  </>
+                )}
+              </div>
+            </button>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

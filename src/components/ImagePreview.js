@@ -27,7 +27,7 @@ function ImagePreview({
   };
   return (
     <section className="py-5 text-center">
-      <div className="container py-4 my-3">
+      <div className="py-4 my-3 col-10 mx-auto">
         <div className="row">
           <div className="col-md-12">
             <div className="d-flex align-items-center pb-4">
@@ -114,13 +114,15 @@ function ImagePreview({
               <div className="row">
                 <div className="col-6 "></div>
 
-                <div className="col-6 d-flex justify-content-center">
+                <div className="col-6">
                   <div>
                     <Toolbar
                       brushData={brushData}
                       setBrushData={setBrushData}
                     />
-                    <Share />
+                    <div className="ml-auto">
+                      <Share />
+                    </div>
                   </div>
                 </div>
               </div>
