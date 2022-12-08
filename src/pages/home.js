@@ -5,6 +5,7 @@ import { getImage, removeObject } from "../services/imageServices";
 import { toast } from "react-toastify";
 import { ImageContext } from "../context/imageContext";
 import CanvasModal from "../components/canvasModal";
+import { Constants } from "../data/constants";
 
 export default function Home() {
   const [imageData, setImageData] = useContext(ImageContext);
@@ -15,6 +16,7 @@ export default function Home() {
     brushStock: 30,
     brushMode: false,
   });
+
   // useEffect(() => {
   //   console.log(imageData.imageHistory,imageData.currentIndex);
   //   if (imageData.imageHistory[imageData.currentIndex])
@@ -56,6 +58,7 @@ export default function Home() {
 
   const getImageData = async () => {
     try {
+      console.log(imageData);
       if(!imageData.originalImage) return;
       let form = new FormData();
       form.append("photoBase64", imageData?.originalImage);
@@ -82,6 +85,7 @@ export default function Home() {
       setIsGettingImage(false);
     } catch (ex) {
       setIsGettingImage(false);
+      setImageData({...imageData,originalImage:''})
       toast.error(ex);
     }
   };

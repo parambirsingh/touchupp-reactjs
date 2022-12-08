@@ -9,6 +9,7 @@ function UploadImage({ isGettingImage }) {
   const [localSrc ,setLocalSrc] = useState('')
 
   const image = useRef();
+
   const handleChange = (e) => {
     if(e.target.files[0])
       handleFile(e.target.files[0])
@@ -22,7 +23,7 @@ function UploadImage({ isGettingImage }) {
        setLocalSrc(reader.result)
        setTimeout(() => {
         let element = document.getElementById("imgCon");
-        element?.scrollIntoView({block:'center',behavior:'smooth'});
+        element?.scrollIntoView({block:'start',behavior:'smooth'});
        });
       //  data = data.slice(data?.indexOf(",") + 1);
       //  setImageData({ ...imageData, originalImage: data });
@@ -34,7 +35,8 @@ function UploadImage({ isGettingImage }) {
 
   const emptyImage = ()=>{
     setLocalSrc('');
-    image.current.value='';
+    if(image?.current?.value)
+      image.current.value='';
     setTimeout(()=>{
       window.scroll({
         top: 0,
@@ -58,7 +60,8 @@ function UploadImage({ isGettingImage }) {
 
   useEffect(()=>{
     const image_drop_area = document.querySelector("#image_drop_area");
-    image_drop_area.addEventListener("dragover", (event) => {
+    if(!image_drop_area) return;
+    image_drop_area?.addEventListener("dragover", (event) => {
       event.stopPropagation();
       event.preventDefault();
       if(!isGettingImage){
@@ -83,7 +86,7 @@ function UploadImage({ isGettingImage }) {
         event.preventDefault();
          image_drop_area.style.borderColor = "#656565";
       });
-  })
+  },[localSrc])
   return (
     <section className="py-xl-5 text-center">
       <div className="container py-lg-5">
@@ -119,38 +122,39 @@ function UploadImage({ isGettingImage }) {
                   <span>See Examples</span>
                 )}
               </button> */}
-              <div className="file file-upload mt-5 position-relative ">
-                <label
-                  htmlFor="input-file"
-                  className="w-100 cursor-pointer d-flex align-items-center justify-content-center flex-wrap"
-                  id="image_drop_area"
-                >
-                  <div className="text-center">
-                    <img
-                      src={uploadicon}
-                      alt="upload"
-                      className="img-fluid mb-3"
-                    />
-                    <div className="w-100 fw-semibold etxt-center">
-                      Click here or drag an image file
+              {!localSrc ? (
+                <div className="file file-upload mt-5 position-relative ">
+                  <label
+                    htmlFor="input-file"
+                    className="w-100 cursor-pointer d-flex align-items-center justify-content-center flex-wrap"
+                    id="image_drop_area"
+                  >
+                    <div className="text-center">
+                      <img
+                        src={uploadicon}
+                        alt="upload"
+                        className="img-fluid mb-3"
+                      />
+                      <div className="w-100 fw-semibold etxt-center">
+                        Click here or drag an image file
+                      </div>
                     </div>
-                  </div>
-                </label>
-                <input
-                  id="input-file"
-                  ref={image}
-                  onChange={(e) => handleChange(e)}
-                  type="file"
-                  disabled={isGettingImage}
-                  accept="image/*"
-                />
-              </div>
-              {localSrc && (
+                  </label>
+                  <input
+                    id="input-file"
+                    ref={image}
+                    onChange={(e) => handleChange(e)}
+                    type="file"
+                    disabled={isGettingImage}
+                    accept="image/*"
+                  />
+                </div>
+              ) : (
                 <div>
                   <div>
                     <img
                       src={localSrc}
-                      className="image-container mt-5 mh-50"
+                      className="image-container mt-5 mh-local"
                       id="imgCon"
                       alt="img"
                     />
@@ -173,7 +177,7 @@ function UploadImage({ isGettingImage }) {
                           "Uploading...."
                         ) : (
                           <>
-                            <span>Proceed To Remove Objects</span>
+                            <span>Redesign the room</span>
                             <i className="bi bi-arrow-right ms-2"></i>
                           </>
                         )}

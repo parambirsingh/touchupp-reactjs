@@ -184,6 +184,10 @@ html{
   max-height: 300px !important;
 }
 
+.mh-local {
+  max-height: 500px !important;
+}
+
 .loading-image{
   opacity: 0.7;
 }
