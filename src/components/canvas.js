@@ -30,6 +30,7 @@ function Canvas({ brushData }) {
      let img = new Image();
      img.onload = function(){
       setOriginalDimention([img.width, img.height])
+       handleResize();
        setCanvasDimention([img.width, img.height]);
         window.addEventListener("resize", () => {
           handleResize();
@@ -174,7 +175,7 @@ function Canvas({ brushData }) {
           preserveBackgroundImageAspectRatio="none"
           backgroundImage={imageData.base64Start + imageData.originalImage}
         />
-        <canvas id="CANVAS"></canvas>
+        {/* <canvas id="CANVAS"></canvas> */}
       </div>
       {/* </TransformComponent>
       </TransformWrapper> */}
