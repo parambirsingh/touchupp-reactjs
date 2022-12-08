@@ -206,3 +206,7 @@ html{
 .side-image .react-transform-component{height: 100%; width: 100%;}
 
 .side-image .react-transform-component img{width: 100%;}
+
+.react-transform-wrapper:active {
+  cursor:grab;
+}

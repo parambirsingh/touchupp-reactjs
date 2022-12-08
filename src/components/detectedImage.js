@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { ImageContext } from "../context/imageContext";
+import ZoomTools from "./zoomTools";
 
 let originalHeight = 0;
 let originalWidth = 0;
@@ -77,48 +78,62 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject }) {
   }, []);
 
   return (
-    <div className="d-flex justify-content-center">
-      <TransformWrapper doubleClick={{ disabled: true }}>
-        <TransformComponent>
-          <div
-            ref={boxRef}
-            className="mt-2 d-flex justify-content-center position-relative"
-            // style={{ transform: `scale(${imageData?.scale})` }}
-          >
-            {imageData.coords.map((c) => (
-              <div
-                className="position-absolute"
-                key={c.key}
-                style={{
-                  top: c.coordinates[1] + "px",
-                  left: c.coordinates[2] + "px",
-                }}
-              >
-                <span
-                  className="hover-danger text-primary cursor-pointer"
-                  onClick={() =>
-                    !isDeletingObject ? handleObjectClick(c) : ""
-                  }
+    // <div className="d-flex justify-content-center">
+    <TransformWrapper
+      doubleClick={{ disabled: true }}
+      centerOnInit={true}
+      centerZoomedOut={true}
+      wheel={{ disabled: true }}
+      // pinch={{ disabled: true }}
+    >
+      {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
+        <>
+          <TransformComponent>
+            <div
+              ref={boxRef}
+              className="mt-2 d-flex justify-content-center position-relative"
+              // style={{ transform: `scale(${imageData?.scale})` }}
+            >
+              {imageData.coords.map((c) => (
+                <div
+                  className="position-absolute"
+                  key={c.key}
+                  style={{
+                    top: c.coordinates[1] + "px",
+                    left: c.coordinates[2] + "px",
+                  }}
                 >
-                  <i className="bi bi-x-circle-fill"></i>
-                  {/* <span className='text-white text-wrap'>
+                  <span
+                    className="hover-danger text-primary cursor-pointer"
+                    onClick={() =>
+                      !isDeletingObject ? handleObjectClick(c) : ""
+                    }
+                  >
+                    <i className="bi bi-x-circle-fill"></i>
+                    {/* <span className='text-white text-wrap'>
                                     {c.key}
                                 </span> */}
-                </span>
-              </div>
-            ))}
+                  </span>
+                </div>
+              ))}
 
-            <img
-              ref={imageRef}
-              src={imageData.base64Start + imageData.image}
-              className="h-max-80vh object-fit rounded-2"
-              style={{ objectFit: "contain", maxWidth: "100%" }}
-              alt="img"
-            />
-          </div>
-        </TransformComponent>
-      </TransformWrapper>
-    </div>
+              <img
+                ref={imageRef}
+                src={imageData.base64Start + imageData.image}
+                className="h-max-80vh object-fit rounded-2"
+                style={{ objectFit: "contain", maxWidth: "100%" }}
+                alt="img"
+              />
+            </div>
+          </TransformComponent>
+          <ZoomTools
+            zoomIn={zoomIn}
+            zoomOut={zoomOut}
+            resetTransform={resetTransform}
+          />
+        </>
+      )}
+    </TransformWrapper>
   );
 }
 

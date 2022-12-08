@@ -58,7 +58,6 @@ export default function Home() {
 
   const getImageData = async () => {
     try {
-      console.log(imageData);
       if(!imageData.originalImage) return;
       let form = new FormData();
       form.append("photoBase64", imageData?.originalImage);
@@ -85,7 +84,11 @@ export default function Home() {
       setIsGettingImage(false);
     } catch (ex) {
       setIsGettingImage(false);
-      setImageData({...imageData,originalImage:''})
+       setImageData({
+         ...imageData,
+         originalImage: "",
+       });
+      // setImageData({...imageData,originalImage:''})
       toast.error(ex);
     }
   };

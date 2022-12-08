@@ -49,12 +49,12 @@ function UploadImage({ isGettingImage }) {
   const proceed=()=>{
     let data = localSrc.slice(localSrc?.indexOf(",") + 1);
     let start = localSrc.slice(0,localSrc?.indexOf(",") + 1);
-
+    
     setImageData({
       ...imageData,
       originalImage: data,
       base64Start:start,
-      getImage: !imageData.getImage,
+      getImage:!imageData.getImage
     });
   }
 
