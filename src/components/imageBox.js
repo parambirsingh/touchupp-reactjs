@@ -14,26 +14,6 @@ function ImageBox({ isDeletingObject, brushData, setBrushData }) {
 
   const handleResize = () => {
     if (!imageRef || !boxRef) return;
-    // let arr = [imageRef.current.clientWidth, imageRef.current.clientHeight]
-    // setImage2Dimension([imageRef.current.clientWidth, imageRef.current.clientHeight])
-    // setImageDimension(arr)
-    // let percentDecreaseHeight = 0
-    // let percentDecreaseWidth = 0
-    // let xStart = 0
-    // let yStart = 0
-    // let coords = [...coord]
-    // coords.map((v, i) => {
-    //     xStart = (boxRef.current.clientWidth - imageRef.current.clientWidth) / 2
-    //     yStart = (boxRef.current.clientHeight - imageRef.current.clientHeight) / 2
-    //     percentDecreaseHeight = 100 - ((imageRef.current.clientHeight / originalHeight) * 100)
-    //     percentDecreaseWidth = 100 - ((imageRef.current.clientWidth / originalWidth) * 100)
-    //     let decreaseY = (originalCoord[i].coordinates[1] / 100) * percentDecreaseHeight
-    //     let decreaseX = (originalCoord[i].coordinates[0] / 100) * percentDecreaseWidth
-    //     v.coordinates[1] = yStart + (originalCoord[i].coordinates[1] - decreaseY)
-    //     v.coordinates[0] = xStart + (originalCoord[i].coordinates[0] - decreaseX)
-    // return v
-    // })
-    // setCoord(coords)
   };
 
   useEffect(() => {

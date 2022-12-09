@@ -18,17 +18,21 @@ export default function Home() {
     brushStock: 30,
     brushMode: false,
   });
+  const [imageDimension,setImageDimension] = useState({height:0,width:0})
 
    const [localSrc, setLocalSrc] = useState(imageData.originalImage);
 
-  // useEffect(() => {
-  //   console.log(imageData.imageHistory,imageData.currentIndex);
-  //   if (imageData.imageHistory[imageData.currentIndex])
-  //     setImageData({
-  //       ...imageData,
-  //       image: imageData.imageHistory[imageData.currentIndex],
-  //     });
-  // }, [imageData?.currentIndex])
+  useEffect(() => {
+    if(imageData?.originalImage){
+      let img = new Image();
+      img.onload = function () {
+        setImageDimension({height: imageData?.height, width: imageData?.width});
+      };
+      img.src = imageData.base64Start + imageData.originalImage;
+    } 
+
+    
+  }, [imageData?.originalImage])
 
   useEffect(() => {
     handleBrushUpdate();
@@ -158,6 +162,7 @@ export default function Home() {
         brushedImage={brushedImage}
         isBrushing={isBrushing}
         setBrushedImage={setBrushedImage}
+        imageDimension={imageDimension}
       />
     </div>
   );

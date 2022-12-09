@@ -5,7 +5,7 @@ import "custom-cursor-react/dist/index.css";
 import { ImageContext } from "../context/imageContext";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 import { TailSpin } from "react-loader-spinner";
- 
+
 function Canvas({
   brushData,
   canvasDimention,
@@ -14,6 +14,7 @@ function Canvas({
   setBrushedImage,
   isBrushing,
   setPaths,
+  imageDimension,
 }) {
   const [imageData] = useContext(ImageContext);
 
@@ -21,9 +22,9 @@ function Canvas({
   const boxRef = useRef();
 
   useEffect(() => {
-    if (!brushedImage) { 
+    if (!brushedImage) {
       canvas.current?.clearCanvas();
-      setPaths([])
+      setPaths([]);
     }
   }, [brushedImage]);
 
@@ -31,8 +32,7 @@ function Canvas({
   const handlePath = async () => {
     if (canvas?.current) {
       let path = await canvas?.current?.exportPaths();
-        if (path?.[0]?.paths)
-      setPaths(path);
+      if (path?.[0]?.paths) setPaths(path);
       // clearTimeout(setTimoutHandle);
       // setTimoutHandle = setTimeout(async () => {
       //   let path;
@@ -67,7 +67,7 @@ function Canvas({
     }
   };
   return (
-    <div className="mt-2 d-flex justify-content-center h-100">
+    <div className="mt-2">
       <div
         ref={boxRef}
         className="row align-items-center  cursor-area justify-content-center position-relative h-100 w-100"
@@ -87,14 +87,16 @@ function Canvas({
           />
         )} */}
         <ReactSketchCanvas
-          height={actualDimention.height}
-          width={actualDimention.width}
-          className={"cursor-area " + (isBrushing ? "loading-image" : "")}
+          height={imageDimension?.height}
+          width={imageDimension?.width}
+          className={
+            "cursor-area canvas-con" + (isBrushing ? "loading-image" : "")
+          }
           ref={canvas}
           style={{
             // height: canvasDimention?.height,
             // width: canvasDimention?.width,
-            objectFit: "cover",
+            // objectFit: "contain",
             margin: "0 auto",
             cursor: "none",
           }}
