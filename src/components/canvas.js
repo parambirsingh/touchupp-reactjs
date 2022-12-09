@@ -13,6 +13,7 @@ function Canvas({
   brushedImage,
   setBrushedImage,
   isBrushing,
+  setPaths,
 }) {
   const [imageData] = useContext(ImageContext);
 
@@ -20,7 +21,10 @@ function Canvas({
   const boxRef = useRef();
 
   useEffect(() => {
-    if (!brushedImage) canvas.current?.clearCanvas();
+    if (!brushedImage) {
+      canvas.current?.clearCanvas();
+      setPaths([]);
+    }
   }, [brushedImage]);
   const draw = (ctx, img, paths) => {
     ctx.drawImage(img, 0, 0);
@@ -115,49 +119,51 @@ function Canvas({
   };
 
   const handlePath = async () => {
-    if (canvas) {
-      clearTimeout(setTimoutHandle);
-      setTimoutHandle = setTimeout(async () => {
-        let path;
-        path = await canvas.current.exportPaths();
+    if (canvas?.current) {
+      let path = await canvas?.current?.exportPaths();
+      if (path?.[0]?.paths) setPaths(path);
+      // clearTimeout(setTimoutHandle);
+      // setTimoutHandle = setTimeout(async () => {
+      //   let path;
+      //   path = await canvas?.current?.exportPaths();
 
-        if (path?.[0]?.paths) removeSelectedPath(path?.[0]?.paths);
-        if (path.length && false) {
-          // console.log('return:', path)
-          let data = await canvas.current.exportImage("png");
-          if (!data) return;
-          data = data.slice(data?.indexOf(",") + 1);
-          const h = (arr) => {
-            if (imageData.currentIndex < arr.length - 1)
-              arr.splice(
-                imageData.currentIndex + 1,
-                arr.length - imageData.currentIndex,
-                data
-              );
-            else arr.push(data);
-            // setImageData({ ...imageData, currentIndex: arr.length - 1 });
-            return arr;
-          };
-          let history = h(imageData.imageHistory);
-          console.log(history[history?.length - 1]);
-          // setImageData({
-          //   ...imageData,
-          //   image:history[history?.length-1],
-          //   currentIndex: history.length-1
-          // });
-        }
-      }, 1000);
+      //   if (path?.[0]?.paths) removeSelectedPath(path?.[0]?.paths);
+      //   if (path.length && false) {
+      //     // console.log('return:', path)
+      //     let data = await canvas.current.exportImage("png");
+      //     if (!data) return;
+      //     data = data.slice(data?.indexOf(",") + 1);
+      //     const h = (arr) => {
+      //       if (imageData.currentIndex < arr.length - 1)
+      //         arr.splice(
+      //           imageData.currentIndex + 1,
+      //           arr.length - imageData.currentIndex,
+      //           data
+      //         );
+      //       else arr.push(data);
+      //       // setImageData({ ...imageData, currentIndex: arr.length - 1 });
+      //       return arr;
+      //     };
+      //     let history = h(imageData.imageHistory);
+      //     console.log(history[history?.length - 1]);
+      //     // setImageData({
+      //     //   ...imageData,
+      //     //   image:history[history?.length-1],
+      //     //   currentIndex: history.length-1
+      //     // });
+      //   }
+      // }, 1000);
     }
   };
   return (
     <div className="mt-2">
       <div
         ref={boxRef}
-        className="row align-items-center  position-relative"
+        className="row align-items-center  cursor-area justify-content-center position-relative h-100 w-100"
         onMouseUp={() => handlePath()}
         onTouchStart={() => handlePath()}
       >
-        {isBrushing && (
+        {/* {isBrushing && (
           <TailSpin
             height="50"
             width="50"
@@ -168,7 +174,7 @@ function Canvas({
             wrapperClass="position-absolute justify-content-center"
             visible={true}
           />
-        )}
+        )} */}
         <ReactSketchCanvas
           height={actualDimention.height}
           width={actualDimention.width}

@@ -1,10 +1,10 @@
 
 import {   RouterProvider } from 'react-router-dom';
+import "react-toastify/dist/ReactToastify.css";
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import './assets/css/style.css'
 import './App.css';
-import "react-toastify/dist/ReactToastify.css";
 import { ImageContext } from './context/imageContext';
 import { useEffect, useState } from 'react';
 import { Constants } from './data/constants';

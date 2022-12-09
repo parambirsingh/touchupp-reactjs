@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { ImageContext } from "../context/imageContext";
 
-function Toolbar({ brushData, setBrushData }) {
+function Toolbar({ brushData, setBrushData, paths, handleDone }) {
   const [imageData, setImageData] = useContext(ImageContext);
 
   const handleUndo = () => {
@@ -105,12 +105,10 @@ function Toolbar({ brushData, setBrushData }) {
           </div>
           <div className="ms-4">
             <button
+              disabled={paths?.length===0}
               className="btn btn-primary "
               onClick={() => {
-                setBrushData({
-                  ...brushData,
-                  brushMode: false,
-                });
+                handleDone();
               }}
             >
               Done
