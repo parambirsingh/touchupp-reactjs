@@ -226,10 +226,13 @@ html{
   overflow: hidden;
 }
 .form-range::-webkit-slider-thumb {
-
   background-color: #e4c725bf;
   
 }
+
+
+
+/* .cursor-area.canvas-con{width: auto !important; height: auto !important;} */
 
 
 

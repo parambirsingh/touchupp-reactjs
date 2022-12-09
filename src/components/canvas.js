@@ -5,7 +5,7 @@ import "custom-cursor-react/dist/index.css";
 import { ImageContext } from "../context/imageContext";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 import { TailSpin } from "react-loader-spinner";
- 
+
 function Canvas({
   brushData,
   canvasDimention,
@@ -150,10 +150,10 @@ function Canvas({
     }
   };
   return (
-    <div className="mt-2 d-flex justify-content-center h-100">
+    <div className="mt-2">
       <div
         ref={boxRef}
-        className="row align-items-center  justify-content-center position-relative h-100 w-100"
+        className="row align-items-center  position-relative"
         onMouseUp={() => handlePath()}
         onTouchStart={() => handlePath()}
       >
@@ -172,12 +172,14 @@ function Canvas({
         <ReactSketchCanvas
           height={actualDimention.height}
           width={actualDimention.width}
-          className={'cursor-area '+(isBrushing?'loading-image':'')}
+          className={
+            "cursor-area canvas-con" + (isBrushing ? "loading-image" : "")
+          }
           ref={canvas}
           style={{
             // height: canvasDimention?.height,
             // width: canvasDimention?.width,
-            objectFit: "contain",
+            // objectFit: "contain",
             margin: "0 auto",
             cursor: "none",
           }}
