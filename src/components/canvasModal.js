@@ -12,67 +12,11 @@ function CanvasModal({
   isBrushing,
   imageDimension,
 }) {
-  const [canvasDimention, setCanvasDimention] = useState({
-    height: 400,
-    width: 400,
-  });
   const [paths, setPaths] = useState([]);
   const [imageData] = useContext(ImageContext);
 
-  const [originalDimention, setOriginalDimention] = useState({
-    height: 400,
-    width: 400,
-  });
   const boxRef = useRef();
-  const handleResize = () => {
-    if (!boxRef?.current) return;
-    //  let percentDecreaseHeight =
-    //    100- (boxRef?.current?.clientHeight / originalDimention?.height) * 100;
-    //  let percentDecreaseWidth =
-    //     100-(boxRef?.current?.clientWidth / originalDimention?.width) * 100;
-    // let newHeight =
-    //   boxRef?.current?.clientWidth /
-    //   (originalDimention.width / originalDimention?.height);
 
-    // let newWidth =
-    //   newHeight * (originalDimention.width / originalDimention?.height);
-    let data = {
-      height:
-        boxRef?.current?.clientHeight > originalDimention?.height
-          ? originalDimention.height
-          : boxRef?.current?.clientHeight,
-      width:
-        boxRef?.current?.clientWidth > originalDimention?.width
-          ? originalDimention.width
-          : boxRef?.current?.clientWidth,
-    };
-
-    // let data = {
-    //   height:
-    //     boxRef?.current?.clientWidth /
-    //       (originalDimention.height / originalDimention?.width),
-    //   width: boxRef?.current?.clientWidth/((originalDimention.height/originalDimention?.width)),
-    // };
-
-    setCanvasDimention(data);
-  };
-
-  const initCanvas = () => {
-    // let img = new Image();
-    // img.onload = function () {
-    //   setOriginalDimention({ width: img.width, height: img.height });
-    //   handleResize();
-    //   window.addEventListener("resize", () => {
-    //     handleResize();
-    //   });
-    // };
-    // img.src = imageData.base64Start + imageData.originalImage;
-  };
-  useEffect(() => {
-    setTimeout(() => {
-      initCanvas();
-    });
-  }, [brushedImage]);
 
   const handleDone = () => {
     if (!paths?.length || !paths?.[0]?.paths?.length) return;
@@ -173,9 +117,6 @@ function CanvasModal({
     };
     img.src = imageData.base64Start + imageData.originalImage;
   };
-  //  useEffect(() => {
-  //     setPaths([]);
-  //  }, []);
 
   return (
     <>
@@ -194,8 +135,6 @@ function CanvasModal({
         <Modal.Body ref={boxRef}>
           <Canvas
             brushData={brushData}
-            canvasDimention={canvasDimention}
-            actualDimention={originalDimention}
             brushedImage={brushedImage}
             isBrushing={isBrushing}
             setBrushedImage={setBrushedImage}

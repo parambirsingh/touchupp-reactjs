@@ -8,8 +8,6 @@ import { TailSpin } from "react-loader-spinner";
 
 function Canvas({
   brushData,
-  canvasDimention,
-  actualDimention,
   brushedImage,
   setBrushedImage,
   isBrushing,
@@ -20,6 +18,8 @@ function Canvas({
 
   const canvas = useRef();
   const boxRef = useRef();
+
+  
 
   useEffect(() => {
     if (!brushedImage) {
@@ -73,7 +73,7 @@ function Canvas({
         onMouseUp={() => handlePath()}
         onTouchStart={() => handlePath()}
       >
-        {/* {isBrushing && (
+        {isBrushing && (
           <TailSpin
             height="50"
             width="50"
@@ -84,7 +84,7 @@ function Canvas({
             wrapperClass="position-absolute justify-content-center"
             visible={true}
           />
-        )} */}
+        )}
         <ReactSketchCanvas
           height={imageDimension?.height}
           width={imageDimension?.width}

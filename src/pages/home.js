@@ -18,7 +18,7 @@ export default function Home() {
     brushStock: 30,
     brushMode: false,
   });
-  const [imageDimension,setImageDimension] = useState({height:0,width:0})
+  const [imageDimension,setImageDimension] = useState({height:700,width:700})
 
    const [localSrc, setLocalSrc] = useState(imageData.originalImage);
 
@@ -30,8 +30,6 @@ export default function Home() {
       };
       img.src = imageData.base64Start + imageData.originalImage;
     } 
-
-    
   }, [imageData?.originalImage])
 
   useEffect(() => {
