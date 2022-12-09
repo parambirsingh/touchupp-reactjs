@@ -26,7 +26,7 @@ export default function Home() {
     if(imageData?.originalImage){
       let img = new Image();
       img.onload = function () {
-        setImageDimension({height: imageData?.height, width: imageData?.width});
+        setImageDimension({height: img?.height, width: img?.width});
       };
       img.src = imageData.base64Start + imageData.originalImage;
     } 
