@@ -89,7 +89,7 @@ function Canvas({
           height={imageDimension?.height}
           width={imageDimension?.width}
           className={
-            "cursor-area canvas-con" + (isBrushing ? "loading-image" : "")
+            "cursor-area canvas-con " + (isBrushing ? "loading-image" : "")
           }
           ref={canvas}
           style={{
