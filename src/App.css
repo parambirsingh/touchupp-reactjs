@@ -222,3 +222,15 @@ html{
 .cursor-pan{width: 100%;}
 .file-upload > label:hover .etxt-center{color: #fff;}
 .cursor-pan img{width: 100%; object-fit: cover !important;}
+
+.modal-fullscreen .modal-body{
+  overflow: hidden;
+}
+
+
+.form-range::-webkit-slider-thumb {
+  
+  background-color: #e4c725bf;
+  
+}
+
