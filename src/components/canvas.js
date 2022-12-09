@@ -4,14 +4,97 @@ import CustomCursor from "custom-cursor-react";
 import "custom-cursor-react/dist/index.css";
 import { ImageContext } from "../context/imageContext";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
+import { TailSpin } from "react-loader-spinner";
  
-function Canvas({ brushData, canvasDimention }) {
+function Canvas({
+  brushData,
+  canvasDimention,
+  actualDimention,
+  brushedImage,
+  setBrushedImage,
+  isBrushing,
+}) {
   const [imageData] = useContext(ImageContext);
 
   const canvas = useRef();
   const boxRef = useRef();
 
+  useEffect(() => {
+    if (!brushedImage) canvas.current?.clearCanvas();
+  }, [brushedImage]);
+  const draw = (ctx, img, paths) => {
+    ctx.drawImage(img, 0, 0);
+    ctx.fillStyle = "black";
+    ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    ctx.fill();
+    // ctx.save();
 
+    // let xStart = (boxRef.current.clientWidth - img.width) / 2;
+    // let yStart = (boxRef.current.clientHeight - img.height) / 2;
+
+    //  ctx.translate(0.5, 0.5);
+    ctx.beginPath();
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+    ctx.lineWidth = brushData.brushStock;
+
+    ctx.moveTo(paths[0]?.x, paths[0]?.y);
+    for (let i = 1; i < paths?.length; i++) {
+      // let decreaseY = (paths[i]?.y / 100) * percentDecreaseHeight;
+      // let decreaseX = (paths[i]?.x / 100) * percentDecreaseWidth;
+
+      // paths[i].y =  paths[i]?.y + decreaseY;
+      // paths[i].x =  paths[i]?.x + decreaseX;
+
+      //  ctx.moveTo(paths[i]?.x, paths[i]?.y);
+      ctx.lineTo(Math.round(paths[i]?.x), Math.round(paths[i]?.y));
+    }
+    ctx.closePath();
+    ctx.strokeStyle = "white";
+    ctx.stroke();
+
+    // let percentDecreaseHeight =
+    //   100 - (rect.height / img.height) * 100;
+    // let percentDecreaseWidth =
+    //   100 - (rect.width / img.width) * 100;
+
+    // let decreaseY = (paths[0]?.y / 100) * percentDecreaseHeight;
+    // let decreaseX = (paths[0]?.x / 100) * percentDecreaseWidth;
+    // // console.log(paths[0]?.x, paths[0]?.y);
+    // paths[0].y =   paths[0]?.y +decreaseY;
+    // paths[0].x =  paths[0]?.x + decreaseX;
+
+    // // console.log(decreaseY, decreaseX);
+    // ctx.moveTo(paths[0]?.x, paths[0]?.y);
+    // //  console.log(paths[0]?.x, paths[0]?.y)
+    // //   ctx.lineTo(paths[0 + 1]?.x, paths[0 + 1]?.y);
+    // // ctx.moveTo(paths[i]?.x, paths[i]?.y);
+
+    // for (let i = 1; i < paths?.length; i++) {
+    //   let decreaseY = (paths[i]?.y / 100) * percentDecreaseHeight;
+    //   let decreaseX = (paths[i]?.x / 100) * percentDecreaseWidth;
+
+    //   paths[i].y =  paths[i]?.y + decreaseY;
+    //   paths[i].x =  paths[i]?.x + decreaseX;
+
+    //   //  ctx.moveTo(paths[i]?.x, paths[i]?.y);
+    //   ctx.lineTo(Math.round(paths[i]?.x), Math.round(paths[i]?.y));
+    // }
+    // ctx.closePath();
+    // ctx.strokeStyle = "blue";
+    // ctx.stroke();
+    // ctx.clip();
+
+    // //  ctx.fillStyle = "white";
+    // //  ctx.fill();
+    // ctx.restore();
+
+    var jpegUrl = ctx.canvas.toDataURL("image/jpeg");
+    // console.log(jpegUrl);
+    let brushedSrc = jpegUrl.slice(jpegUrl?.indexOf(",") + 1);
+    setBrushedImage(brushedSrc);
+    // canvas.current?.clearCanvas();
+  };
 
   let setTimoutHandle;
 
@@ -20,65 +103,15 @@ function Canvas({ brushData, canvasDimention }) {
     let dyanmicCanvas = document.createElement("CANVAS");
     // dyanmicCanvas.height = 614;
     // dyanmicCanvas.width = 1024;
-    let ctx = dyanmicCanvas.getContext("2d");
     var img = document.createElement("IMG");
     img.onload = function () {
       dyanmicCanvas.height = img.height;
       dyanmicCanvas.width = img.width;
-      console.log(img.height, img.width);
-      ctx.drawImage(img, 0, 0);
-      //  ctx.fillStyle = "black";
-      //  ctx.fillRect(0, 0, dyanmicCanvas.width, dyanmicCanvas.height);
-      ctx.fill();
-      ctx.save();
-
-      let percentDecreaseHeight =
-        100 - (imageData.imageDimension[0] / img.height) * 100;
-      let percentDecreaseWidth =
-        100 - (imageData.imageDimension[1] / img.width) * 100;
-
-      //  ctx.translate(0.5, 0.5);
-      ctx.beginPath();
-      ctx.lineCap = "round";
-      ctx.lineJoin = "round";
-      ctx.lineWidth = 30;
-      let decreaseY = (paths[0]?.y / 100) * percentDecreaseHeight;
-      let decreaseX = (paths[0]?.x / 100) * percentDecreaseWidth;
-      console.log(paths[0]?.x, paths[0]?.y);
-      paths[0].y = paths[0]?.y + decreaseY;
-      paths[0].x = paths[0]?.x + decreaseX;
-
-      console.log(decreaseY, decreaseX);
-      ctx.moveTo(paths[0]?.x, paths[0]?.y);
-      //  console.log(paths[0]?.x, paths[0]?.y)
-      //   ctx.lineTo(paths[0 + 1]?.x, paths[0 + 1]?.y);
-      // ctx.moveTo(paths[i]?.x, paths[i]?.y);
-
-      for (let i = 1; i < paths?.length; i++) {
-        let decreaseY = (paths[i]?.y / 100) * percentDecreaseHeight;
-        let decreaseX = (paths[i]?.x / 100) * percentDecreaseWidth;
-
-        paths[i].y = paths[i]?.y + decreaseY;
-        paths[i].x = paths[i]?.x + decreaseX;
-
-        //  ctx.moveTo(paths[i]?.x, paths[i]?.y);
-        ctx.lineTo(Math.round(paths[i]?.x), Math.round(paths[i]?.y));
-      }
-      ctx.closePath();
-      ctx.strokeStyle = "white";
-      ctx.stroke();
-      ctx.clip();
-
-      //  ctx.fillStyle = "white";
-      //  ctx.fill();
-      ctx.restore();
+      let ctx = dyanmicCanvas.getContext("2d");
+      // console.log(img.height, img.width);
+      draw(ctx, img, paths, dyanmicCanvas);
     };
     img.src = imageData.base64Start + imageData.originalImage;
-    // setTimeout(() => {
-
-    //   var jpegUrl = dyanmicCanvas.toDataURL();
-    //   console.log(jpegUrl);
-    // }, 5000);
   };
 
   const handlePath = async () => {
@@ -87,8 +120,8 @@ function Canvas({ brushData, canvasDimention }) {
       setTimoutHandle = setTimeout(async () => {
         let path;
         path = await canvas.current.exportPaths();
-        // console.log(path)
-        // removeSelectedPath(path[0].paths);
+
+        if (path?.[0]?.paths) removeSelectedPath(path?.[0]?.paths);
         if (path.length && false) {
           // console.log('return:', path)
           let data = await canvas.current.exportImage("png");
@@ -118,18 +151,28 @@ function Canvas({ brushData, canvasDimention }) {
   };
   return (
     <div className="mt-2 d-flex justify-content-center h-100">
-      {/* <TransformWrapper doubleClick={{ disabled: true }}>
-        <TransformComponent> */}
       <div
         ref={boxRef}
         className="row align-items-center  justify-content-center position-relative h-100 w-100"
         onMouseUp={() => handlePath()}
         onTouchStart={() => handlePath()}
       >
+        {isBrushing && (
+          <TailSpin
+            height="50"
+            width="50"
+            color="#4fa94d"
+            ariaLabel="tail-spin-loading"
+            radius="1"
+            wrapperStyle={{}}
+            wrapperClass="position-absolute justify-content-center"
+            visible={true}
+          />
+        )}
         <ReactSketchCanvas
-          height={canvasDimention?.height}
-          width={canvasDimention?.width}
-          className="cursor-area"
+          height={actualDimention.height}
+          width={actualDimention.width}
+          className={'cursor-area '+(isBrushing?'loading-image':'')}
           ref={canvas}
           style={{
             // height: canvasDimention?.height,
@@ -144,10 +187,8 @@ function Canvas({ brushData, canvasDimention }) {
           // preserveBackgroundImageAspectRatio="xMidYMid meet"
           backgroundImage={imageData.base64Start + imageData.originalImage}
         />
-        {/* <canvas id="CANVAS"></canvas> */}
       </div>
-      {/* </TransformComponent>
-      </TransformWrapper> */}
+
       <CustomCursor
         targets={[".cursor-area"]}
         customClass="custom-cursor"

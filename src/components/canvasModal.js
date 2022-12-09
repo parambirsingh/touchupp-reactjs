@@ -4,12 +4,18 @@ import { ImageContext } from "../context/imageContext";
 import Canvas from "./canvas";
 import Toolbar from "./toolbar";
 
-function CanvasModal({ brushData, setBrushData }) {
+function CanvasModal({
+  brushData,
+  setBrushData,
+  brushedImage,
+  setBrushedImage,
+  isBrushing,
+}) {
   const [canvasDimention, setCanvasDimention] = useState({
-    height: window.innerHeight-50,
-    width: window.innerWidth-50,
+    height: window.innerHeight - 50,
+    width: window.innerWidth - 50,
   });
-   const [imageData] = useContext(ImageContext);
+  const [imageData] = useContext(ImageContext);
 
   const [originalDimention, setOriginalDimention] = useState({
     height: window.innerHeight - 50,
@@ -17,49 +23,55 @@ function CanvasModal({ brushData, setBrushData }) {
   });
   const boxRef = useRef();
   const handleResize = () => {
-    if(!boxRef?.current) return;
-    console.log(boxRef)
-  //  let percentDecreaseHeight =
-  //    100- (boxRef?.current?.clientHeight / originalDimention?.height) * 100;
-  //  let percentDecreaseWidth =
-  //     100-(boxRef?.current?.clientWidth / originalDimention?.width) * 100;
-  // let newHeight =
-  //   boxRef?.current?.clientWidth /
-  //   (originalDimention.width / originalDimention?.height);
+    if (!boxRef?.current) return;
+    //  let percentDecreaseHeight =
+    //    100- (boxRef?.current?.clientHeight / originalDimention?.height) * 100;
+    //  let percentDecreaseWidth =
+    //     100-(boxRef?.current?.clientWidth / originalDimention?.width) * 100;
+    // let newHeight =
+    //   boxRef?.current?.clientWidth /
+    //   (originalDimention.width / originalDimention?.height);
 
-  // let newWidth =
-  //   newHeight * (originalDimention.width / originalDimention?.height);
-  // let data = {
-  //   height: newHeight,
-  //   width: newWidth,
-  // };
-
+    // let newWidth =
+    //   newHeight * (originalDimention.width / originalDimention?.height);
     let data = {
       height:
-        boxRef?.current?.clientWidth /
-          (originalDimention.height / originalDimention?.width),
-      width: boxRef?.current?.clientWidth/((originalDimention.height/originalDimention?.width)),
+        boxRef?.current?.clientHeight > originalDimention?.height
+          ? originalDimention.height
+          : boxRef?.current?.clientHeight,
+      width:
+        boxRef?.current?.clientWidth > originalDimention?.width
+          ? originalDimention.width
+          : boxRef?.current?.clientWidth,
     };
-    
+
+    // let data = {
+    //   height:
+    //     boxRef?.current?.clientWidth /
+    //       (originalDimention.height / originalDimention?.width),
+    //   width: boxRef?.current?.clientWidth/((originalDimention.height/originalDimention?.width)),
+    // };
+
     setCanvasDimention(data);
   };
 
-   const initCanvas = () => {
-     let img = new Image();
-     img.onload = function () {
-       setOriginalDimention({width:img.width,height:img.height});
+  const initCanvas = () => {
+    let img = new Image();
+    img.onload = function () {
+      setOriginalDimention({ width: img.width, height: img.height });
+      handleResize();
+      window.addEventListener("resize", () => {
         handleResize();
-        window.addEventListener("resize", () => {
-          handleResize();
-        });
-     };
-     img.src = imageData.base64Start + imageData.originalImage;
-   };
+      });
+    };
+    img.src = imageData.base64Start + imageData.originalImage;
+  };
   useEffect(() => {
-    setTimeout(() =>{
+    setTimeout(() => {
       initCanvas();
-    })
-  }, []);
+    });
+  }, [brushedImage]);
+
   return (
     <>
       <Modal
@@ -75,7 +87,14 @@ function CanvasModal({ brushData, setBrushData }) {
           <Modal.Title>Brush Image</Modal.Title>
         </Modal.Header>
         <Modal.Body ref={boxRef}>
-          <Canvas brushData={brushData} canvasDimention={canvasDimention}/>
+          <Canvas
+            brushData={brushData}
+            canvasDimention={canvasDimention}
+            actualDimention={originalDimention}
+            brushedImage={brushedImage}
+            isBrushing={isBrushing}
+            setBrushedImage={setBrushedImage}
+          />
         </Modal.Body>
         <Modal.Footer>
           <Toolbar brushData={brushData} setBrushData={setBrushData} />
