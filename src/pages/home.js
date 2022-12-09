@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import UploadImage from "../components/uploadImage";
 import ImagePreview from "../components/ImagePreview";
-import { getImage, removeObject } from "../services/imageServices";
+import { getImage, removeFromBrush, removeObject } from "../services/imageServices";
 import { toast } from "react-toastify";
 import { ImageContext } from "../context/imageContext";
 import CanvasModal from "../components/canvasModal";
@@ -11,6 +11,8 @@ export default function Home() {
   const [imageData, setImageData] = useContext(ImageContext);
   const [isGettingImage, setIsGettingImage] = useState(false);
   const [isDeletingObject, setIsDeletingObject] = useState(false);
+  const [isBrushing, setIsBrushing] = useState(false);
+  const [brushedImage, setBrushedImage] = useState('');
 
   const [brushData, setBrushData] = useState({
     brushStock: 30,
@@ -27,6 +29,10 @@ export default function Home() {
   //       image: imageData.imageHistory[imageData.currentIndex],
   //     });
   // }, [imageData?.currentIndex])
+
+  useEffect(() => {
+    handleBrushUpdate();
+  }, [brushedImage]);
 
   useEffect(() => {
      getImageData();
@@ -58,6 +64,30 @@ export default function Home() {
       toast.error(ex);
     }
   };
+
+   const handleBrushUpdate = async () => {
+     try {
+      if(!brushedImage) return;
+       setIsBrushing(true);
+       let form = new FormData();
+       form.append("original_image", imageData?.originalImage);
+       form.append("image_mask", brushedImage);
+       
+       const { data } = await removeFromBrush(form);
+       setImageData({
+         ...imageData,
+         originalImage: data[1].Output_image_using_brush,
+       });
+       setBrushedImage('')
+      //  toast.success(object.key + " deleted successfully");
+       setIsBrushing(false);
+     } catch (ex) {
+       setIsBrushing(false);
+        setBrushedImage("");
+     
+       toast.error(ex);
+     }
+   };
 
   const getImageData = async () => {
     try {
@@ -122,7 +152,13 @@ export default function Home() {
           setLocalSrc={setLocalSrc}
         ></ImagePreview>
       )}
-      <CanvasModal brushData={brushData} setBrushData={setBrushData} />
+      <CanvasModal
+        brushData={brushData}
+        setBrushData={setBrushData}
+        brushedImage={brushedImage}
+        isBrushing={isBrushing}
+        setBrushedImage={setBrushedImage}
+      />
     </div>
   );
 }
