@@ -28,7 +28,6 @@ function Canvas({
     }
   }, [brushedImage]);
 
-
   const handlePath = async () => {
     if (canvas?.current) {
       let path = await canvas?.current?.exportPaths();
@@ -70,7 +69,7 @@ function Canvas({
     <div className="mt-2">
       <div
         ref={boxRef}
-        className="row align-items-center  cursor-area justify-content-center position-relative h-100 w-100"
+        className="row align-items-center  cursor-area justify-content-center position-relative"
         onMouseUp={() => handlePath()}
         onTouchStart={() => handlePath()}
       >
