@@ -148,6 +148,7 @@ function CanvasModal({
             setBrushData={setBrushData}
             paths={paths}
             handleDone={handleDone}
+            isBrushing={isBrushing}
           />
         </Modal.Footer>
       </Modal>
