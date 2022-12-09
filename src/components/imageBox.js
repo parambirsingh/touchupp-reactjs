@@ -88,10 +88,7 @@ function ImageBox({ isDeletingObject, brushData, setBrushData }) {
               <img
                 ref={imageRef}
                 src={imageData.base64Start + imageData.originalImage}
-                className={
-                  "object-fit  rounded-2 " +
-                  (isDeletingObject && "loading-image")
-                }
+                className={"rounded-2" + (isDeletingObject && "loading-image")}
                 style={{ objectFit: "contain", maxWidth: "100%" }}
                 alt="img"
               />

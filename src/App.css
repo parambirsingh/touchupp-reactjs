@@ -205,7 +205,7 @@ html{
 .side-image .react-transform-wrapper{height: 100%; width: 100%;}
 .side-image .react-transform-component{height: 100%; width: 100%;}
 
-.side-image .react-transform-component img{width: 100%;}
+.side-image .react-transform-component img{width: 100%; object-fit: cover !important; height: 100%;}
 
 .cursor-pan:active {
   cursor:grab;
@@ -226,11 +226,11 @@ html{
 .modal-fullscreen .modal-body{
   overflow: hidden;
 }
-
-
 .form-range::-webkit-slider-thumb {
   
   background-color: #e4c725bf;
   
 }
+
+
 
