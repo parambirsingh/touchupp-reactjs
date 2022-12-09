@@ -217,17 +217,16 @@ html{
 .file-upload > label:hover svg{fill: #fff;}
 .file-upload > label:hover{background-color: #dc3545; border-color: #6d0c15; transition: all 0.5s ease-in 0;}
 .file-upload > label:hover .etxt-center{color: #fff;}
-.react-transform-wrapper{width: 100%;}
-.react-transform-component{width: 100%;}
+.react-transform-wrapper{width: 100% !important;}
+.react-transform-component{width: 100% !important;}
 .cursor-pan{width: 100%;}
 .file-upload > label:hover .etxt-center{color: #fff;}
 .cursor-pan img{width: 100%; object-fit: cover !important;}
-
 .modal-fullscreen .modal-body{
   overflow: hidden;
 }
 .form-range::-webkit-slider-thumb {
-  
+
   background-color: #e4c725bf;
   
 }
