@@ -1,6 +1,8 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 
+const controller = new AbortController();
+
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 axios.interceptors.response.use(null, (error) => {
@@ -13,13 +15,13 @@ axios.interceptors.response.use(null, (error) => {
 });
 
 axios.interceptors.request.use((request)=>{
- request.headers = {'Access-Control-Allow-Origin':'*'}
  return request;
 })
 
 // const setJwt = (jwt) => {
 //   axios.defaults.headers.common["x-auth-token"] = jwt;
 // };
+
 
 const http = {
   get: axios.get,

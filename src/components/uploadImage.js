@@ -3,7 +3,7 @@ import headingImg from "../assets/img/underline.svg";
 import { ImageContext } from "../context/imageContext";
 import { Constants } from "../data/constants";
 // import { Constants } from '../data/constants';
-
+import {testApi} from "../services/imageServices"
 function UploadImage({ isGettingImage, localSrc, setLocalSrc }) {
   const [imageData, setImageData] = useContext(ImageContext);
 
@@ -195,6 +195,7 @@ function UploadImage({ isGettingImage, localSrc, setLocalSrc }) {
                 </div>
               )}
             </div>
+            <button className="mt-5 btn btn-primary" onClick={testApi}>testApi</button>
           </div>
         </div>
       </div>
