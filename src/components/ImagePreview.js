@@ -5,6 +5,7 @@ import ImageBox from "./imageBox";
 import Share from "./share";
 import Toolbar from "./toolbar";
 import DetectedImageBox from "./detectedImage";
+import { abortImgageServices } from "../services/imageServices";
 
 function ImagePreview({
   handleObjectClick,
@@ -24,6 +25,7 @@ function ImagePreview({
       currentIndex: 0,
       coords: [],
     });
+    abortImgageServices();
   };
   return (
     <section className="py-5 text-center">

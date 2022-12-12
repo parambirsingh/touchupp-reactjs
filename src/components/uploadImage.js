@@ -18,18 +18,19 @@ function UploadImage({ isGettingImage, localSrc, setLocalSrc }) {
     if (e.target.files[0]) handleFile(e.target.files[0]);
   };
 
-  const handleFile = (file) => {
-    var reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = function () {
-      //  let data = reader.result;
-      setLocalSrc(reader.result);
+  const previewImage = (data)=>{
+     setLocalSrc(data);
       setTimeout(() => {
         let element = document.getElementById("imgCon");
         element?.scrollIntoView({ block: "start", behavior: "smooth" });
       });
-      //  data = data.slice(data?.indexOf(",") + 1);
-      //  setImageData({ ...imageData, originalImage: data });
+  }
+
+  const handleFile = (file) => {
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function () {
+     previewImage(reader.result);
     };
     reader.onerror = function (error) {
       //  console.log("Error: ", error);
@@ -47,9 +48,9 @@ function UploadImage({ isGettingImage, localSrc, setLocalSrc }) {
     });
   };
 
-  const proceed = (base64) => {
-    let data = base64.slice(base64?.indexOf(",") + 1);
-    let start = base64.slice(0, base64?.indexOf(",") + 1);
+  const proceed = () => {
+    let data = localSrc?.slice(localSrc?.indexOf(",") + 1);
+    let start = localSrc?.slice(0, localSrc?.indexOf(",") + 1);
 
     setImageData({
       ...imageData,
@@ -124,7 +125,7 @@ function UploadImage({ isGettingImage, localSrc, setLocalSrc }) {
               </button> */}
               {!localSrc && (
                 <div>
-                  <div className="file file-upload mt-5 position-relative ">
+                  <div className="file file-upload mt-5 mb-5 position-relative ">
                     <label
                       htmlFor="input-file"
                       className="w-100 cursor-pointer d-flex align-items-center justify-content-center flex-wrap"
@@ -169,22 +170,23 @@ function UploadImage({ isGettingImage, localSrc, setLocalSrc }) {
                       accept="image/*"
                     />
                   </div>
-                  <div className="sample-images">
-                    <div className="mt-4 fw-semibold etxt-center fs-5">
+                  <div className="sample-images mt-5 pt-2">
+                    <div className="mt-5 fw-semibold etxt-center fs-5">
                       <i className="bi bi-arrow-down"></i>
                       <span> Try with an example </span>
-                    </div>
+                    </div>  
                     <div className="mt-3 row justify-content-center">
                       {Constants.sampleImages?.map((sample) => {
                         return (
                           <div className="col-2" key={sample.name}>
                             <img
                               onClick={() =>
-                                proceed(Constants.base64Start + sample?.src)
+                                previewImage(
+                                  Constants.base64Start + sample?.src
+                                )
                               }
                               src={Constants.base64Start + sample?.src}
                               className="img-fluid sample-img rounded"
-                              id="imgCon"
                               alt="img"
                             />
                           </div>
@@ -218,7 +220,7 @@ function UploadImage({ isGettingImage, localSrc, setLocalSrc }) {
             </button>
             <button
               className="btn btn-primary"
-              onClick={() => proceed(localSrc)}
+              onClick={() => proceed()}
               disabled={isGettingImage}
             >
               <div className="w-100 fw-semibold etxt-center">

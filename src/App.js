@@ -22,9 +22,7 @@ function App({router}) {
     scale:1,
     getImage: false,
   });
-  useEffect(()=>{
-    // console.log(imageData)
-  })
+
   return (
     <div>
       <ImageContext.Provider value={[imageData, setImageData]}>

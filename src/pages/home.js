@@ -67,7 +67,7 @@ export default function Home() {
     }
   };
 
-   const handleBrushUpdate = async () => {
+  const handleBrushUpdate = async () => {
      try {
       if(!brushedImage) return;
        setIsBrushing(true);
@@ -89,7 +89,7 @@ export default function Home() {
      
        toast.error(ex);
      }
-   };
+  };
 
   const getImageData = async () => {
     try {

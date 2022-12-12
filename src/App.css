@@ -246,3 +246,27 @@ html{
 .sample-img:hover{
   opacity: 0.8;
 }
+
+
+.object-button{
+  height: 8px;
+  width: 8px;
+  margin-top: -4px;
+  margin-left: -4px;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
