@@ -25,7 +25,7 @@ export const removeFromBrush = (data) => {
   });
 };
 
-export const abortImgageServices = (data) => {
+export const abortImageServices = (data) => {
   controller.abort();
   controller = new AbortController();
 };

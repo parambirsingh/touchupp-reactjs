@@ -1,5 +1,6 @@
 import axios from "axios";
 import { toast } from "react-toastify";
+import { Constants } from "../data/constants";
 
 const controller = new AbortController();
 
@@ -9,8 +10,13 @@ axios.interceptors.response.use(null, (error) => {
   const expectedError =
     error.response &&
     error.response.status >= 400 &&
-    error.response.status < 500;
-  if (!expectedError) toast.error("An unexpected error occurred.");
+    error.response.status < 500 
+
+      if (
+        !expectedError &&
+        error?.code !== Constants.ERRORS.CANCELED_ERROR.code
+      )
+        toast.error(Constants.ERRORS.UNEXPECTED_ERROR.message);
   return Promise.reject(error);
 });
 

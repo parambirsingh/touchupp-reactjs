@@ -3,7 +3,7 @@ import { Modal } from "react-bootstrap";
 import { ImageContext } from "../context/imageContext";
 import Canvas from "./canvas";
 import Toolbar from "./toolbar";
-import {abortImgageServices} from "../services/imageServices"
+import {abortImageServices} from "../services/imageServices"
 
 function CanvasModal({
   brushData,
@@ -82,7 +82,7 @@ function CanvasModal({
       <Modal
         show={brushData?.brushMode}
         fullscreen={true}
-        onHide={() => {setBrushData({ ...brushData, brushMode: false });abortImgageServices()}}
+        onHide={() => {setBrushData({ ...brushData, brushMode: false });abortImageServices()}}
         backdrop="static"
         keyboard={false}
         animation={false}
