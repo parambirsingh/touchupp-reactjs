@@ -246,3 +246,8 @@ html{
 .sample-img:hover{
   opacity: 0.8;
 }
+
+
+.hover-effect > .canvas-con:hover + ._12c4J > .custom-cursor {
+  opacity: 1 !important;
+}

@@ -17,7 +17,7 @@ function Canvas({
   const canvas = useRef();
   const boxRef = useRef();
 
-  
+
 
   useEffect(() => {
     if (!brushedImage) {
@@ -67,11 +67,11 @@ function Canvas({
     <div className="mt-2 h-100">
       <div
         ref={boxRef}
-        className="row align-items-center  justify-content-center position-relative h-100"
+        className="row align-items-center justify-content-center position-relative h-100 hover-effect"
         onMouseUp={() => handlePath()}
         onTouchStart={() => handlePath()}
       >
-        {isBrushing && (
+        {/* {isBrushing && (
           <TailSpin
             height="50"
             width="50"
@@ -82,12 +82,12 @@ function Canvas({
             wrapperClass="position-absolute justify-content-center"
             visible={true}
           />
-        )}
+        )} */}
         <ReactSketchCanvas
           height={imageDimension?.height}
           width={imageDimension?.width}
           className={
-            "cursor-area canvas-con " + (isBrushing ? "loading-image" : "")
+            "canvas-con " + (isBrushing ? "loading-image" : "")
           }
           ref={canvas}
           style={{
@@ -103,23 +103,23 @@ function Canvas({
           // preserveBackgroundImageAspectRatio="xMidYMid meet"
           backgroundImage={imageData.base64Start + imageData.originalImage}
         />
+        <CustomCursor
+          targets={[".cursor-area"]}
+          customClass="custom-cursor"
+          dimensions={brushData.brushStock * 2}
+          strokeColor="#e4c725bf"
+          fill="#e4c725bf"
+          smoothness={{
+            movement: 0.2,
+            scale: 1,
+            opacity: 0.4,
+          }}
+          opacity={0}
+          // targetScale={1}
+          targetOpacity={1}
+        />
       </div>
 
-      <CustomCursor
-        targets={[".cursor-area"]}
-        customClass="custom-cursor"
-        dimensions={brushData.brushStock * 2}
-        strokeColor="#e4c725bf"
-        fill="#e4c725bf"
-        smoothness={{
-          movement: 0.2,
-          scale: 0.1,
-          opacity: 0.4,
-        }}
-        opacity={0}
-        targetScale={1}
-        // targetOpacity={0.4}
-      />
     </div>
   );
 }
