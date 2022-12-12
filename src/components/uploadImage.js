@@ -122,6 +122,7 @@ function UploadImage({ isGettingImage, localSrc, setLocalSrc }) {
                 )}
               </button> */}
               {!localSrc && (
+                <div>
                 <div className="file file-upload mt-5 position-relative ">
                   <label
                     htmlFor="input-file"
@@ -166,6 +167,13 @@ function UploadImage({ isGettingImage, localSrc, setLocalSrc }) {
                     disabled={isGettingImage}
                     accept="image/*"
                   />
+                </div>
+                <div className="sample-images">
+                      <div>
+                        
+                        Try with an example
+                        </div>
+                </div>
                 </div>
               )}
             </div>

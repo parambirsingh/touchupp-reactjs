@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef } from "react";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { ImageContext } from "../context/imageContext";
 import { TailSpin } from "react-loader-spinner";
-import ZoomTools from "./zoomTools";
+
 
 let originalHeight = 486;
 let originalWidth = 864;
@@ -48,11 +48,6 @@ function ImageBox({ isDeletingObject, brushData, setBrushData }) {
               className="mt-2 w-100 d-grid place-items-center position-relative h-100"
               // style={{ transform: `scale(${imageData.scale})` }}
             >
-              {/* {coord.map((c) => (<div className='position-absolute' key={c.key} style={{ top: (c.coordinates[1]) + 'px', left: c.coordinates[0] + 'px' }}>
-                            <span className='hover-danger text-primary cursor-pointer' onClick={()=>handleObjectClick(c)}>
-                                <i className="bi bi-x-circle-fill"></i>
-                            </span>
-                        </div>))} */}
               {isDeletingObject && (
                 <TailSpin
                   height="50"

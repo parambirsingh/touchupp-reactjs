@@ -17,7 +17,6 @@ function Toolbar({ brushData, setBrushData, paths, handleDone,isBrushing }) {
       {!brushData.brushMode ? (
         <div className="priority-top float-start">
           <div className="w-auto bg-white rounded-2 d-flex align-items-center">
-            <>
               <div
                 className="btn btn-warning rounded-circle icon-brush mt-3"
                 onClick={() => {
@@ -60,7 +59,6 @@ function Toolbar({ brushData, setBrushData, paths, handleDone,isBrushing }) {
                         <div className='btn' onClick={() => { setScale((s) => s > 1 ? s - 0.1 : s) }}>
                             <i className="bi bi-zoom-out"></i>
                         </div> */}
-            </>
           </div>
         </div>
       ) : (

@@ -1,15 +1,13 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { ReactSketchCanvas } from "react-sketch-canvas";
 import CustomCursor from "custom-cursor-react";
 import "custom-cursor-react/dist/index.css";
 import { ImageContext } from "../context/imageContext";
-import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 import { TailSpin } from "react-loader-spinner";
 
 function Canvas({
   brushData,
   brushedImage,
-  setBrushedImage,
   isBrushing,
   setPaths,
   imageDimension,
