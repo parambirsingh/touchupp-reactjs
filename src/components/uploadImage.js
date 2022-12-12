@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import headingImg from "../assets/img/underline.svg";
 import { ImageContext } from "../context/imageContext";
 // import { Constants } from '../data/constants';
