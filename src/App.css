@@ -264,6 +264,7 @@ h3,
   background-color: #e4c725bf;
 }
 
+
 /* .cursor-area.canvas-con{width: auto !important; height: auto !important;} */
 
 .sample-img {
@@ -303,4 +304,8 @@ h3,
 
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+.bg-default{
+  background-color: #e4c725bf;
 }
