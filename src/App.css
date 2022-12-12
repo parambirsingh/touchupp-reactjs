@@ -127,6 +127,10 @@ html{
     color: #656565;
     border-color: #656565;
 }
+.text-upload{
+  color: #656565 !important;
+}
+
 .share-media{
     width: 36px;
     height: 38px;
