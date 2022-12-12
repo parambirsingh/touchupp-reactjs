@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { ImageContext } from "../context/imageContext";
+import {abortImageServices} from "../services/imageServices";
 
 function Toolbar({ brushData, setBrushData, paths, handleDone,isBrushing }) {
   const [imageData, setImageData] = useContext(ImageContext);
@@ -25,6 +26,7 @@ function Toolbar({ brushData, setBrushData, paths, handleDone,isBrushing }) {
                     brushMode: true,
                     brushStock: 30,
                   });
+                  abortImageServices();
                 }}
               >
                 <svg

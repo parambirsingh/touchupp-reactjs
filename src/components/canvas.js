@@ -64,7 +64,7 @@ function Canvas({
     }
   };
   return (
-    <div className="mt-2 h-100">
+    <div className="h-100">
       <div
         ref={boxRef}
         className="row align-items-center justify-content-center position-relative h-100 hover-effect"

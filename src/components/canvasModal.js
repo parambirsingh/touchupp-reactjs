@@ -3,6 +3,7 @@ import { Modal } from "react-bootstrap";
 import { ImageContext } from "../context/imageContext";
 import Canvas from "./canvas";
 import Toolbar from "./toolbar";
+import {abortImageServices} from "../services/imageServices"
 
 function CanvasModal({
   brushData,
@@ -55,7 +56,7 @@ function CanvasModal({
     }
 
        var jpegUrl = ctx.canvas.toDataURL("image/jpeg");
-    console.log(jpegUrl);
+   
     let brushedSrc = jpegUrl.slice(jpegUrl?.indexOf(",") + 1);
     setBrushedImage(brushedSrc);
     // canvas.current?.clearCanvas();
@@ -81,7 +82,7 @@ function CanvasModal({
       <Modal
         show={brushData?.brushMode}
         fullscreen={true}
-        onHide={() => setBrushData({ ...brushData, brushMode: false })}
+        onHide={() => {setBrushData({ ...brushData, brushMode: false });abortImageServices()}}
         backdrop="static"
         keyboard={false}
         animation={false}

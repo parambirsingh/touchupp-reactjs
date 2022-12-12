@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { ImageContext } from "../context/imageContext";
 import CanvasModal from "../components/canvasModal";
 import HomeShimmer from "../components/shimmer/homeShimmer";
+import { Constants } from "../data/constants";
 
 export default function Home() {
   const [imageData, setImageData] = useContext(ImageContext);
@@ -63,11 +64,16 @@ export default function Home() {
        setIsDeletingObject(false);
     } catch (ex) {
        setIsDeletingObject(false);
-      toast.error(ex);
+
+       if (
+         ex?.code !== Constants.ERRORS.CANCELED_ERROR.code &&
+         ex.response.status>400 && ex?.response?.status<500
+       )
+         toast.error(ex);
     }
   };
 
-   const handleBrushUpdate = async () => {
+  const handleBrushUpdate = async () => {
      try {
       if(!brushedImage) return;
        setIsBrushing(true);
@@ -87,9 +93,14 @@ export default function Home() {
        setIsBrushing(false);
         setBrushedImage("");
      
-       toast.error(ex);
+         if (
+           ex?.code !== Constants.ERRORS.CANCELED_ERROR.code &&
+           ex.response.status > 400 &&
+           ex?.response?.status < 500
+         )
+           toast.error(ex);
      }
-   };
+  };
 
   const getImageData = async () => {
     try {
@@ -129,7 +140,12 @@ export default function Home() {
       });
       setIsGettingImage(false);
       // setImageData({...imageData,originalImage:''})
-      toast.error(ex);
+       if (
+         ex?.code !== Constants.ERRORS.CANCELED_ERROR.code &&
+         ex.response.status > 400 &&
+         ex?.response?.status < 500
+       )
+         toast.error(ex);
     }
   };
 

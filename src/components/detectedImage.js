@@ -93,7 +93,7 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject }) {
             >
               {imageData.coords.map((c) => (
                 <div
-                  className="position-absolute"
+                  className="position-absolute object-button"
                   key={c.key}
                   style={{
                     top: c.coordinates[1] + "px",

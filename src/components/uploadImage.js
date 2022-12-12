@@ -18,18 +18,19 @@ function UploadImage({ isGettingImage, localSrc, setLocalSrc }) {
     if (e.target.files[0]) handleFile(e.target.files[0]);
   };
 
-  const handleFile = (file) => {
-    var reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = function () {
-      //  let data = reader.result;
-      setLocalSrc(reader.result);
+  const previewImage = (data)=>{
+     setLocalSrc(data);
       setTimeout(() => {
         let element = document.getElementById("imgCon");
         element?.scrollIntoView({ block: "start", behavior: "smooth" });
       });
-      //  data = data.slice(data?.indexOf(",") + 1);
-      //  setImageData({ ...imageData, originalImage: data });
+  }
+
+  const handleFile = (file) => {
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function () {
+     previewImage(reader.result);
     };
     reader.onerror = function (error) {
       //  console.log("Error: ", error);
@@ -47,9 +48,9 @@ function UploadImage({ isGettingImage, localSrc, setLocalSrc }) {
     });
   };
 
-  const proceed = (base64) => {
-    let data = base64.slice(base64?.indexOf(",") + 1);
-    let start = base64.slice(0, base64?.indexOf(",") + 1);
+  const proceed = () => {
+    let data = localSrc?.slice(localSrc?.indexOf(",") + 1);
+    let start = localSrc?.slice(0, localSrc?.indexOf(",") + 1);
 
     setImageData({
       ...imageData,
@@ -88,9 +89,9 @@ function UploadImage({ isGettingImage, localSrc, setLocalSrc }) {
     });
   }, [localSrc]);
   return (
-    <section className={`py-xl-5 text-center ${!localSrc ? "my-xxl-5" : ""}`}>
+    <section className={` text-center ${!localSrc ? "my-xxl-5" : ""}`}>
       <div className={`container py-lg-5  ${!localSrc ? "my-xxl-5" : ""}`}>
-        <div className={`row ${!localSrc ? "py-xxl-5" : ""}`}>
+        <div className={`row`}>
           <div className="col-md-8 mx-auto">
             <div className="position-relative d-inline-block mb-4 py-1">
               <h2 className="fw-bold mb-3 d-flex">
@@ -169,10 +170,10 @@ function UploadImage({ isGettingImage, localSrc, setLocalSrc }) {
                       accept="image/*"
                     />
                   </div>
-                  <div className="sample-images">
-                    <div className="mt-4 fw-semibold etxt-center fs-5">
-                      <i className="bi bi-arrow-down"></i>
-                      <span> Try with an example </span>
+                  <div className="sample-images mt-4 pt-1">
+                    <div className="mt-5 fw-semibold etxt-center fs-5">
+                      <i className="text-upload bi bi-arrow-down"></i>
+                      <span className="text-upload"> Try with an example </span>
                     </div>
                     <div className="mt-3 row justify-content-center">
                       {Constants.sampleImages?.map((sample) => {
@@ -180,11 +181,12 @@ function UploadImage({ isGettingImage, localSrc, setLocalSrc }) {
                           <div className="col-2" key={sample.name}>
                             <img
                               onClick={() =>
-                                proceed(Constants.base64Start + sample?.src)
+                                previewImage(
+                                  Constants.base64Start + sample?.src
+                                )
                               }
                               src={Constants.base64Start + sample?.src}
                               className="img-fluid sample-img rounded"
-                              id="imgCon"
                               alt="img"
                             />
                           </div>
@@ -203,7 +205,7 @@ function UploadImage({ isGettingImage, localSrc, setLocalSrc }) {
           <div className="col-10 mx-auto">
             <img
               src={localSrc}
-              className="image-container img-fluid"
+              className="image-container img-fluid rounded"
               id="imgCon"
               alt="img"
             />
@@ -218,7 +220,7 @@ function UploadImage({ isGettingImage, localSrc, setLocalSrc }) {
             </button>
             <button
               className="btn btn-primary"
-              onClick={() => proceed(localSrc)}
+              onClick={() => proceed()}
               disabled={isGettingImage}
             >
               <div className="w-100 fw-semibold etxt-center">
