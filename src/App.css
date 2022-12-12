@@ -234,4 +234,15 @@ html{
 
 /* .cursor-area.canvas-con{width: auto !important; height: auto !important;} */
 
+.sample-img{
+   /* height: 100px;  */
+  /* width: auto; */
+  cursor: pointer;
+  object-fit: cover;
 
+  /* min-height: 100px; */
+}
+
+.sample-img:hover{
+  opacity: 0.8;
+}

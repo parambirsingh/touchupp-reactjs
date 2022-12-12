@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import headingImg from "../assets/img/underline.svg";
 import { ImageContext } from "../context/imageContext";
+import { Constants } from "../data/constants";
 // import { Constants } from '../data/constants';
 
 function UploadImage({ isGettingImage, localSrc, setLocalSrc }) {
@@ -46,9 +47,9 @@ function UploadImage({ isGettingImage, localSrc, setLocalSrc }) {
     });
   };
 
-  const proceed = () => {
-    let data = localSrc.slice(localSrc?.indexOf(",") + 1);
-    let start = localSrc.slice(0, localSrc?.indexOf(",") + 1);
+  const proceed = (base64) => {
+    let data = base64.slice(base64?.indexOf(",") + 1);
+    let start = base64.slice(0, base64?.indexOf(",") + 1);
 
     setImageData({
       ...imageData,
@@ -123,20 +124,20 @@ function UploadImage({ isGettingImage, localSrc, setLocalSrc }) {
               </button> */}
               {!localSrc && (
                 <div>
-                <div className="file file-upload mt-5 position-relative ">
-                  <label
-                    htmlFor="input-file"
-                    className="w-100 cursor-pointer d-flex align-items-center justify-content-center flex-wrap"
-                    id="image_drop_area"
-                  >
-                    <div className="text-center">
-                      {/* <img
+                  <div className="file file-upload mt-5 position-relative ">
+                    <label
+                      htmlFor="input-file"
+                      className="w-100 cursor-pointer d-flex align-items-center justify-content-center flex-wrap"
+                      id="image_drop_area"
+                    >
+                      <div className="text-center">
+                        {/* <img
                         src={uploadicon}
                         alt="upload"
                         className="img-fluid mb-3"
                       /> */}
 
-                      {/* <svg
+                        {/* <svg
                         id="pic"
                         width="76"
                         height="76"
@@ -154,26 +155,43 @@ function UploadImage({ isGettingImage, localSrc, setLocalSrc }) {
                         </defs>
                       </svg> */}
 
-                      <div className="w-100 fw-semibold etxt-center">
-                        Click here or drag an image file
-                      </div>
-                    </div>
-                  </label>
-                  <input
-                    id="input-file"
-                    ref={image}
-                    onChange={(e) => handleChange(e)}
-                    type="file"
-                    disabled={isGettingImage}
-                    accept="image/*"
-                  />
-                </div>
-                <div className="sample-images">
-                      <div>
-                        
-                        Try with an example
+                        <div className="w-100 fw-semibold etxt-center">
+                          Click here or drag an image file
                         </div>
-                </div>
+                      </div>
+                    </label>
+                    <input
+                      id="input-file"
+                      ref={image}
+                      onChange={(e) => handleChange(e)}
+                      type="file"
+                      disabled={isGettingImage}
+                      accept="image/*"
+                    />
+                  </div>
+                  <div className="sample-images">
+                    <div className="mt-4 fw-semibold etxt-center fs-5">
+                      <i className="bi bi-arrow-down"></i>
+                      <span> Try with an example </span>
+                    </div>
+                    <div className="mt-3 row justify-content-center">
+                      {Constants.sampleImages?.map((sample) => {
+                        return (
+                          <div className="col-2" key={sample.name}>
+                            <img
+                              onClick={() =>
+                                proceed(Constants.base64Start + sample?.src)
+                              }
+                              src={Constants.base64Start + sample?.src}
+                              className="img-fluid sample-img rounded"
+                              id="imgCon"
+                              alt="img"
+                            />
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
                 </div>
               )}
             </div>
@@ -200,7 +218,7 @@ function UploadImage({ isGettingImage, localSrc, setLocalSrc }) {
             </button>
             <button
               className="btn btn-primary"
-              onClick={proceed}
+              onClick={() => proceed(localSrc)}
               disabled={isGettingImage}
             >
               <div className="w-100 fw-semibold etxt-center">
