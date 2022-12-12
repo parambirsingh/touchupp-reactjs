@@ -67,7 +67,7 @@ export default function Home() {
 
        if (
          ex?.code !== Constants.ERRORS.CANCELED_ERROR.code &&
-         ex.response.status>400 && ex?.response?.status<500
+         ex?.response?.status>400 && ex?.response?.status<500
        )
          toast.error(ex);
     }
@@ -134,10 +134,12 @@ export default function Home() {
 
       setIsGettingImage(false);
     } catch (ex) {
-      setImageData({
-        ...imageData,
-        originalImage: "",
-      });
+      if(isGettingImage){
+        setImageData({
+          ...imageData,
+          originalImage: "",
+        });
+      }
       setIsGettingImage(false);
       // setImageData({...imageData,originalImage:''})
        if (
