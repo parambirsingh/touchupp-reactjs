@@ -125,7 +125,7 @@ function UploadImage({ isGettingImage, localSrc, setLocalSrc }) {
               </button> */}
               {!localSrc && (
                 <div>
-                  <div className="file file-upload mt-5 mb-5 position-relative ">
+                  <div className="file file-upload mt-5 position-relative ">
                     <label
                       htmlFor="input-file"
                       className="w-100 cursor-pointer d-flex align-items-center justify-content-center flex-wrap"
@@ -170,7 +170,7 @@ function UploadImage({ isGettingImage, localSrc, setLocalSrc }) {
                       accept="image/*"
                     />
                   </div>
-                  <div className="sample-images mt-5 pt-2">
+                  <div className="sample-images mt-4 pt-1">
                     <div className="mt-5 fw-semibold etxt-center fs-5">
                       <i className="bi bi-arrow-down"></i>
                       <span> Try with an example </span>
