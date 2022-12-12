@@ -3,7 +3,7 @@ import http from "./httpServices";
 const apiEndpoint = "";
 
 export const getImage = (payload) => {
-  return http.post(apiEndpoint, payload, {
+  return http.post(apiEndpoint + "object_detection", payload, {
     headers: { "Content-Type": "multipart/form-data" },
   });
 };
