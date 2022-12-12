@@ -89,9 +89,9 @@ function UploadImage({ isGettingImage, localSrc, setLocalSrc }) {
     });
   }, [localSrc]);
   return (
-    <section className={`py-xl-5 text-center ${!localSrc ? "my-xxl-5" : ""}`}>
+    <section className={` text-center ${!localSrc ? "my-xxl-5" : ""}`}>
       <div className={`container py-lg-5  ${!localSrc ? "my-xxl-5" : ""}`}>
-        <div className={`row ${!localSrc ? "py-xxl-5" : ""}`}>
+        <div className={`row`}>
           <div className="col-md-8 mx-auto">
             <div className="position-relative d-inline-block mb-4 py-1">
               <h2 className="fw-bold mb-3 d-flex">
@@ -170,11 +170,11 @@ function UploadImage({ isGettingImage, localSrc, setLocalSrc }) {
                       accept="image/*"
                     />
                   </div>
-                  <div className="sample-images mt-5 pt-1">
+                  <div className="sample-images mt-4 pt-1">
                     <div className="mt-5 fw-semibold etxt-center fs-5">
-                      <i className="text-upload bi bi-arrow-down" ></i>
+                      <i className="text-upload bi bi-arrow-down"></i>
                       <span className="text-upload"> Try with an example </span>
-                    </div>  
+                    </div>
                     <div className="mt-3 row justify-content-center">
                       {Constants.sampleImages?.map((sample) => {
                         return (
@@ -205,7 +205,7 @@ function UploadImage({ isGettingImage, localSrc, setLocalSrc }) {
           <div className="col-10 mx-auto">
             <img
               src={localSrc}
-              className="image-container img-fluid"
+              className="image-container img-fluid rounded"
               id="imgCon"
               alt="img"
             />
