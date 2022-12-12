@@ -170,7 +170,7 @@ function UploadImage({ isGettingImage, localSrc, setLocalSrc }) {
                       accept="image/*"
                     />
                   </div>
-                  <div className="sample-images mt-4 pt-1">
+                  <div className="sample-images mt-5 pt-1">
                     <div className="mt-5 fw-semibold etxt-center fs-5">
                       <i className="text-upload bi bi-arrow-down" ></i>
                       <span className="text-upload"> Try with an example </span>
