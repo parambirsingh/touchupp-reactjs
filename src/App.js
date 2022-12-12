@@ -19,7 +19,6 @@ function App({router}) {
     imageHistory: [],
     currentIndex: 0,
     imageDimension:[0,0],
-    image2Dimension:[0,0],
     scale:1,
     getImage: false,
   });

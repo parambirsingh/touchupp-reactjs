@@ -24,10 +24,7 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject }) {
   }, [ref]);
   const handleResize = () => {
     if (!imageRef || !boxRef) return;
-    let arr = [imageRef.current.clientWidth, imageRef.current.clientHeight];
-    let newDimensions = { imageDimension: arr, image2Dimension: arr };
-    //  imageData.imageDimension=arr;
-    //  imageData.image2Dimension=arr
+    // let arr = [imageRef.current.clientWidth, imageRef.current.clientHeight];
 
     let percentDecreaseHeight = 0;
     let percentDecreaseWidth = 0;
@@ -56,7 +53,7 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject }) {
         xStart + (originalCoord[i].coordinates?.[2] - decreaseWidth);
       return v;
     });
-    setRef({ coords, ...newDimensions });
+    setRef({ coords });
   };
 
   useEffect(() => {

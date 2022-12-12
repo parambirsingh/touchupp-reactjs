@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import {
   FacebookShareButton,
   LinkedinShareButton,
@@ -9,7 +9,6 @@ import {
   WhatsappIcon,
   WhatsappShareButton,
 } from "react-share";
-import { ImageContext } from "../context/imageContext";
 
 function Share() {
   // const [imageData, setImageData] = useContext(ImageContext)
