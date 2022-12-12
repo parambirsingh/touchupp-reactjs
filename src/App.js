@@ -11,9 +11,9 @@ import { Constants } from './data/constants';
 import { ToastContainer } from 'react-toastify';
 function App({router}) {
   const [imageData, setImageData] = useState({
-    image:Constants.base64Image,
-    originalImage:Constants.base64Image,
-    base64Start:Constants.base64Start,
+    image:'',
+    originalImage:'',
+    base64Start:'',
     coords: Constants.coordinates,
     Folder_name_for_masks: "",
     imageHistory: [],
