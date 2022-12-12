@@ -123,10 +123,10 @@ export default function Home() {
 
       setIsGettingImage(false);
     } catch (ex) {
-      setImageData({
-        ...imageData,
-        originalImage: "",
-      });
+      // setImageData({
+      //   ...imageData,
+      //   originalImage: "",
+      // });
       setIsGettingImage(false);
       // setImageData({...imageData,originalImage:''})
       toast.error(ex);
