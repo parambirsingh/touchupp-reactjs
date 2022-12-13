@@ -257,9 +257,9 @@ h3,
   width: 100%;
   object-fit: cover !important;
 }
-.modal-fullscreen .modal-body{
+/* .modal-fullscreen .modal-body{
   overflow: hidden;
-}
+} */
 .form-range::-webkit-slider-thumb {
   background-color: #000;
   height: 16px;

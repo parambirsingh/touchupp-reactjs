@@ -69,13 +69,40 @@ function Canvas({
       // }, 1000);
     }
   };
+  const screenDimensions = {
+    sm: {
+      screenWidth: 1368,
+      width: 1280,
+      height: 650,
+    },
+    md: {
+      screenWidth: 1440,
+      width: 1280,
+      height: 840,
+    },
+    lg: {
+      screenWidth: 1680,
+      width: 1600,
+      height: 840,
+    },
+    xl: {
+      screenWidth: 1920,
+      width: 1770,
+      height: 840,
+    },
+  };
+  const getDimention = ()=>{
+    return imageDimension?.width > 1000
+      ? modal?.width >  screenDimensions?.xl?.screenWidth
+        ? screenDimensions?.xl
+        : modal?.width> screenDimensions?.lg?.screenWidth
+        ? screenDimensions?.lg
+        : screenDimensions?.md
+      : imageDimension;
+  }
   return (
     <div className="h-100 d-flex justify-content-center align-items-center w-100">
       <div
-        style={{
-          maxHeight: modal?.height + "px",
-          maxWidth: modal?.width + "px",
-        }}
         ref={boxRef}
         className="row align-items-center justify-content-center position-relative h-100 hover-effect"
         onMouseUp={() => handlePath()}
@@ -113,13 +140,13 @@ function Canvas({
           backgroundImage={imageData.base64Start + imageData.originalImage}
         /> */}
         <ReactSketchCanvas
-          height={imageDimension?.width > 1000 ? 530 : imageDimension?.height}
-          width={imageDimension?.width > 1000 ? 860 : imageDimension?.width}
+          height={getDimention()?.height}
+          width={getDimention()?.width}
           className={"canvas-con " + (isBrushing ? "loading-image" : "")}
           ref={canvas}
           style={{
-            maxHeight: modal?.height + "px",
-            maxWidth: modal?.width + "px",
+            // maxHeight: modal?.height + "px",
+            // maxWidth: modal?.width + "px",
             // position: "absolute",
             // objectFit: "contain",
             margin: "0 auto",
