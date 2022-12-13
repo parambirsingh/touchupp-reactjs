@@ -79,7 +79,7 @@ function CanvasModal({
 
   const handleResize = () => {
     if (!boxRef?.current) return;
-    let ratio = imageDimension.width / imageDimension.height;
+    // let ratio = imageDimension.width / imageDimension.height;
 
     let obj = {
       height: boxRef.current.clientHeight,
@@ -100,17 +100,27 @@ function CanvasModal({
       <Modal
         show={brushData?.brushMode}
         fullscreen={true}
-        onHide={() => {
-          setBrushData({ ...brushData, brushMode: false });
-          abortImageServices();
-        }}
+        // onHide={() => {
+        //   setBrushData({ ...brushData, brushMode: false });
+        //   abortImageServices();
+        // }}
         backdrop="static"
         keyboard={false}
         animation={false}
         centered
       >
-        <Modal.Header closeButton>
+        <Modal.Header closeButton={false}>
           <Modal.Title>Brush Image</Modal.Title>
+          <div
+            className="cursor-pointer modal-title h5"
+            onClick={() => {
+              setBrushData({ ...brushData, brushMode: false });
+              abortImageServices();
+            }}
+          >
+            <i className="bi bi-arrow-right me-1 "></i>
+            <span>Back</span>
+          </div>
         </Modal.Header>
         <Modal.Body ref={boxRef}>
           <Canvas
