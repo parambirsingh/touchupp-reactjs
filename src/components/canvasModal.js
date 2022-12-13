@@ -15,6 +15,7 @@ function CanvasModal({
 }) {
   const [paths, setPaths] = useState([]);
   const [imageData] = useContext(ImageContext);
+  const [modal,setModal] = useState({height:700,width:700});
 
   const boxRef = useRef();
 
@@ -77,12 +78,32 @@ function CanvasModal({
     img.src = imageData.base64Start + imageData.originalImage;
   };
 
+  const handleResize = ()=>{
+    if(!boxRef?.current) return;
+    let ratio = imageDimension.width / imageDimension.height;
+  
+    let obj = {
+      height: boxRef.current.clientHeight,
+      width: boxRef.current.clientWidth,
+    };
+    setModal({...obj})
+  }
+
+  useEffect(()=>{
+   window.addEventListener("resize", handleResize);
+
+   return () => window.removeEventListener("resize", handleResize);
+  },[])
+
   return (
     <>
       <Modal
         show={brushData?.brushMode}
         fullscreen={true}
-        onHide={() => {setBrushData({ ...brushData, brushMode: false });abortImageServices()}}
+        onHide={() => {
+          setBrushData({ ...brushData, brushMode: false });
+          abortImageServices();
+        }}
         backdrop="static"
         keyboard={false}
         animation={false}
@@ -99,6 +120,7 @@ function CanvasModal({
             setBrushedImage={setBrushedImage}
             setPaths={setPaths}
             imageDimension={imageDimension}
+            modal={modal}
           />
         </Modal.Body>
         <Modal.Footer>

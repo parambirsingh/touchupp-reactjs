@@ -11,6 +11,7 @@ function Canvas({
   isBrushing,
   setPaths,
   imageDimension,
+  modal
 }) {
   const [imageData] = useContext(ImageContext);
 
@@ -74,6 +75,10 @@ function Canvas({
   return (
     <div className="h-100">
       <div
+        style={{
+          maxHeight: modal?.height + "px",
+          maxWidth: modal?.width + "px",
+        }}
         ref={boxRef}
         className="row align-items-center justify-content-center position-relative h-100 hover-effect"
         onMouseUp={() => handlePath()}
@@ -91,14 +96,34 @@ function Canvas({
             visible={true}
           />
         )}
+        {/* <ReactSketchCanvas
+          height={imageDimension?.height}
+          width={imageDimension?.width}
+          className={"canvas-con " + (isBrushing ? "loading-image" : "")}
+          ref={canvas}
+          style={{
+            maxHeight: modal?.height+'px',
+            maxWidth: modal?.width+'px',
+            position: 'absolute',
+            // objectFit: "contain",
+            margin: "0 auto",
+            cursor: "none",
+          }}
+          strokeWidth={brushData.brushStock}
+          eraserWidth={brushData.brushStock}
+          strokeColor="#dc3545b3"
+          // preserveBackgroundImageAspectRatio="xMidYMid meet"
+          backgroundImage={imageData.base64Start + imageData.originalImage}
+        /> */}
         <ReactSketchCanvas
           height={imageDimension?.height}
           width={imageDimension?.width}
           className={"canvas-con " + (isBrushing ? "loading-image" : "")}
           ref={canvas}
           style={{
-            // height: canvasDimention?.height,
-            // width: canvasDimention?.width,
+            maxHeight: modal?.height + "px",
+            maxWidth: modal?.width + "px",
+            // position: "absolute",
             // objectFit: "contain",
             margin: "0 auto",
             cursor: "none",
