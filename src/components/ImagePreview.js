@@ -95,7 +95,7 @@ function ImagePreview({
                 </button>
               </div>
             </div>
-            <div className="img-sec position-relative">
+            <div className="mt-3 img-sec  position-relative">
               <div className="row">
                 {/* Original Image */}
                 <div className="col-6">
