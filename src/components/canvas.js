@@ -26,6 +26,14 @@ function Canvas({
     }
   }, [brushedImage]);
 
+    useEffect(() => {
+      if(!canvas?.current) return;
+      
+      canvas.current.height = imageDimension?.height
+      canvas.current.width = imageDimension?.width;
+    }, [imageDimension]);
+
+
   const handlePath = async () => {
     if (canvas?.current) {
       let path = await canvas?.current?.exportPaths();

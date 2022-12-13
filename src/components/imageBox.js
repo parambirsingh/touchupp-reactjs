@@ -24,10 +24,10 @@ function ImageBox({ isDeletingObject, brushData, setBrushData }) {
 
   useEffect(() => {
     if (originalCoord.length === 0)
-      originalCoord = JSON.parse(JSON.stringify(imageData.coords));
+      originalCoord = JSON.parse(JSON.stringify(imageData?.coords));
     setTimeout(() => {
-      originalHeight = imageRef.current.naturalHeight;
-      originalWidth = imageRef.current.naturalWidth;
+      originalHeight = imageRef?.current?.naturalHeight;
+      originalWidth = imageRef?.current?.naturalWidth;
       handleResize();
     });
   }, []);

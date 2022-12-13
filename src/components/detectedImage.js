@@ -32,19 +32,19 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject }) {
     let yStart = 0;
     let coords = JSON.parse(JSON.stringify(imageData?.coords));
     coords.map((v, i) => {
-      xStart = (boxRef.current.clientWidth - imageRef.current.clientWidth) / 2;
+      xStart = (boxRef?.current?.clientWidth - imageRef?.current?.clientWidth) / 2;
       yStart =
-        (boxRef.current.clientHeight - imageRef.current.clientHeight) / 2;
+        (boxRef?.current?.clientHeight - imageRef?.current?.clientHeight) / 2;
       percentDecreaseHeight =
-        100 - (imageRef.current.clientHeight / originalHeight) * 100;
+        100 - (imageRef?.current?.clientHeight / originalHeight) * 100;
       percentDecreaseWidth =
-        100 - (imageRef.current.clientWidth / originalWidth) * 100;
+        100 - (imageRef?.current?.clientWidth / originalWidth) * 100;
       let decreaseY =
-        (originalCoord[i].coordinates?.[1] / 100) * percentDecreaseHeight;
+        (originalCoord[i]?.coordinates?.[1] / 100) * percentDecreaseHeight;
       let decreaseX =
-        (originalCoord[i].coordinates?.[0] / 100) * percentDecreaseWidth;
+        (originalCoord[i]?.coordinates?.[0] / 100) * percentDecreaseWidth;
       let decreaseWidth =
-        (originalCoord[i].coordinates?.[2] / 100) * percentDecreaseWidth;
+        (originalCoord[i]?.coordinates?.[2] / 100) * percentDecreaseWidth;
       v.coordinates[1] =
         yStart + (originalCoord[i].coordinates?.[1] - decreaseY);
       v.coordinates[0] =
@@ -68,8 +68,8 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject }) {
     }
     setTimeout(() => {
       if (originalCoord?.length < 0) return;
-      originalHeight = imageRef.current.naturalHeight;
-      originalWidth = imageRef.current.naturalWidth;
+      originalHeight = imageRef?.current?.naturalHeight;
+      originalWidth = imageRef?.current?.naturalWidth;
       handleResize();
     });
   }, []);
