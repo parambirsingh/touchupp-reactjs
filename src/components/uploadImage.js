@@ -223,7 +223,7 @@ function UploadImage({ isGettingImage, localSrc, setLocalSrc }) {
               onClick={() => proceed()}
               disabled={isGettingImage}
             >
-              <div className="w-100 fw-semibold etxt-center">
+              <div className="w-100  etxt-center">
                 {isGettingImage ? (
                   "Uploading...."
                 ) : (

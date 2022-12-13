@@ -106,7 +106,7 @@ function Toolbar({ brushData, setBrushData, paths, handleDone,isBrushing }) {
           <div className="ms-4">
             <button
               disabled={paths?.length === 0 || isBrushing}
-              className="btn btn-danger fw-bold "
+              className="btn btn-danger fw-bold"
               onClick={() => {
                 handleDone();
               }}
