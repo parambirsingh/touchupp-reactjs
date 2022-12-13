@@ -72,39 +72,41 @@ function Canvas({
   const screenDimensions = {
     sm: {
       screenWidth: 1368,
-      width: 1280,
-      height: 650,
+      width: 950,
+      height: 550,
     },
     md: {
       screenWidth: 1440,
-      width: 1280,
-      height: 840,
+      width: 1200,
+      height: 760,
     },
     lg: {
       screenWidth: 1680,
-      width: 1600,
-      height: 840,
+      width: 850,
+      height: 650,
     },
     xl: {
-      screenWidth: 1920,
-      width: 1770,
-      height: 840,
+      screenWidth: 1800,
+      width: 1200,
+      height: 820,
     },
   };
-  const getDimention = ()=>{
+  const getDimention = () => {
     return imageDimension?.width > 1000
-      ? modal?.width >  screenDimensions?.xl?.screenWidth
+      ? window?.innerWidth >= screenDimensions?.xl?.screenWidth
         ? screenDimensions?.xl
-        : modal?.width> screenDimensions?.lg?.screenWidth
+        : window?.innerWidth >= screenDimensions?.lg?.screenWidth
         ? screenDimensions?.lg
-        : screenDimensions?.md
+        : window?.innerWidth >= screenDimensions?.md?.screenWidth
+        ? screenDimensions?.md
+        : screenDimensions?.sm
       : imageDimension;
-  }
+  };
   return (
     <div className="h-100 d-flex justify-content-center align-items-center w-100">
       <div
         ref={boxRef}
-        className="row align-items-center justify-content-center position-relative h-100 hover-effect"
+        className="row mx-0 align-items-center justify-content-center position-relative h-100 hover-effect"
         onMouseUp={() => handlePath()}
         onTouchStart={() => handlePath()}
       >
@@ -142,7 +144,7 @@ function Canvas({
         <ReactSketchCanvas
           height={getDimention()?.height}
           width={getDimention()?.width}
-          className={"canvas-con " + (isBrushing ? "loading-image" : "")}
+          className={"canvas-con p-0 " + (isBrushing ? "loading-image" : "")}
           ref={canvas}
           style={{
             // maxHeight: modal?.height + "px",
