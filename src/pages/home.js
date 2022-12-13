@@ -95,7 +95,7 @@ export default function Home() {
      
          if (
            ex?.code !== Constants.ERRORS.CANCELED_ERROR.code &&
-           ex.response.status > 400 &&
+           ex?.response?.status > 400 &&
            ex?.response?.status < 500
          )
            toast.error(ex);
@@ -144,7 +144,7 @@ export default function Home() {
       // setImageData({...imageData,originalImage:''})
        if (
          ex?.code !== Constants.ERRORS.CANCELED_ERROR.code &&
-         ex.response.status > 400 &&
+         ex?.response?.status > 400 &&
          ex?.response?.status < 500
        )
          toast.error(ex);
