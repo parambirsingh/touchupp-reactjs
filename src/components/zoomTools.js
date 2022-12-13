@@ -6,7 +6,7 @@ function ZoomTools({ zoomIn, zoomOut, resetTransform }) {
       <button className="btn btn-primary me-2" onClick={() => zoomIn()}>
         <i className="bi bi-zoom-in"></i>
       </button>
-      <button className="btn btn-warning me-2" onClick={() => zoomOut()}>
+      <button className="btn btn-danger me-2" onClick={() => zoomOut()}>
         <i className="bi bi-zoom-out"></i>
       </button>
       <button className="btn btn-secondary" onClick={() => resetTransform()}>

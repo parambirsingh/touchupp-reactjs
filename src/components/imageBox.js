@@ -52,7 +52,7 @@ function ImageBox({ isDeletingObject, brushData, setBrushData }) {
                 <TailSpin
                   height="50"
                   width="50"
-                  color="#e64a19"
+                  color="#dc3545"
                   ariaLabel="tail-spin-loading"
                   radius="1"
                   wrapperStyle={{}}

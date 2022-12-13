@@ -57,7 +57,7 @@
   height: 50vh;
 }
 .hover-danger:hover {
-  color: red;
+  color: #dc3545;
 }
 .cursor-pointer {
   cursor: pointer;
@@ -141,7 +141,7 @@ h3,
   background-color: #2962ff;
 }
 .btn-danger {
-  background-color: #e64a19;
+  background-color: #dc3545;
 }
 
 .icon-brush svg {
@@ -281,8 +281,8 @@ h3,
   -webkit-appearance: none;
   color: #13bba4;
   margin-top: -1px; */
-  background-color: #e4c725bf;
-  color: #e4c725bf;
+  background-color: #dc3545;
+  color: #dc3545;
 }
 
 .bg-scroller{
@@ -304,7 +304,7 @@ h3,
 }
 
 .hover-effect > .canvas-con:hover + ._12c4J > .custom-cursor {
-  opacity: 1 !important;
+  opacity: 0.7 !important;
 }
 .object-button {
   height: 8px;
@@ -330,7 +330,7 @@ h3,
 }
 
 .bg-default{
-  background-color: #e4c725bf;
+  background-color: #dc3545;
 }
 
 

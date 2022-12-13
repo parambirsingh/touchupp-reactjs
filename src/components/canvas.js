@@ -83,7 +83,7 @@ function Canvas({
           <TailSpin
             height="50"
             width="50"
-            color="#e64a19"
+            color="#dc3545"
             ariaLabel="tail-spin-loading"
             radius="1"
             wrapperStyle={{}}
@@ -105,7 +105,7 @@ function Canvas({
           }}
           strokeWidth={brushData.brushStock}
           eraserWidth={brushData.brushStock}
-          strokeColor="#e4c725bf"
+          strokeColor="#dc3545b3"
           // preserveBackgroundImageAspectRatio="xMidYMid meet"
           backgroundImage={imageData.base64Start + imageData.originalImage}
         />
@@ -113,16 +113,16 @@ function Canvas({
           targets={[".cursor-area"]}
           customClass="custom-cursor"
           dimensions={brushData.brushStock * 2}
-          strokeColor="#e4c725bf"
-          fill="#e4c725bf"
+          strokeColor="#dc3545"
+          fill="#dc3545"
           smoothness={{
             movement: 0.2,
             scale: 1,
-            opacity: 0.4,
+            opacity: 0.7,
           }}
           opacity={0}
           // targetScale={1}
-          targetOpacity={1}
+          targetOpacity={0.7}
         />
       </div>
     </div>
