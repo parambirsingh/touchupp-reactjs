@@ -87,7 +87,7 @@ function Toolbar({ brushData, setBrushData, paths, handleDone,isBrushing }) {
               </svg>
             </button>
           </div>
-          <div className="text-bg-secondary px-4 py-2 rounded">
+          <div className="bg-scroller px-4 py-2 rounded">
             <input
               min="8"
               max="100"

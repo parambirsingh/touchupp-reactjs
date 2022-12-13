@@ -261,21 +261,33 @@ h3,
   overflow: hidden;
 } */
 .form-range::-webkit-slider-thumb {
-  background-color: #e4c725bf;
+  background-color: #000;
   height: 16px;
   width: 16px;
   margin-top: -5px;
 }
 
 .form-range:focus::-webkit-slider-thumb{
-  background-color: #e4c725bf;
+  background-color: #000;
   box-shadow: none !important
 }
 
 .form-range:active::-webkit-range-thumb {
-  background-color: #e4c725bf;
+  background-color: #000;
 }
 
+.form-range::-webkit-slider-runnable-track {
+  /* height: 10px;
+  -webkit-appearance: none;
+  color: #13bba4;
+  margin-top: -1px; */
+  background-color: #e4c725bf;
+  color: #e4c725bf;
+}
+
+.bg-scroller{
+  background-color: #e5e7eb80;
+}
 /* .cursor-area.canvas-con{width: auto !important; height: auto !important;} */
 
 .sample-img {
