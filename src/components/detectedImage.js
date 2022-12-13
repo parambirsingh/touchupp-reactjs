@@ -88,7 +88,7 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject }) {
           <TransformComponent>
             <div
               ref={boxRef}
-              className="mt-2 d-flex justify-content-center position-relative cursor-pan"
+              className="d-flex justify-content-center position-relative cursor-pan"
               // style={{ transform: `scale(${imageData?.scale})` }}
             >
               {imageData.coords.map((c) => (

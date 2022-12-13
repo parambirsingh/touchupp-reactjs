@@ -83,7 +83,7 @@ function Canvas({
           <TailSpin
             height="50"
             width="50"
-            color="#4fa94d"
+            color="#e64a19"
             ariaLabel="tail-spin-loading"
             radius="1"
             wrapperStyle={{}}
@@ -94,9 +94,7 @@ function Canvas({
         <ReactSketchCanvas
           height={imageDimension?.height}
           width={imageDimension?.width}
-          className={
-            "canvas-con " + (isBrushing ? "loading-image" : "")
-          }
+          className={"canvas-con " + (isBrushing ? "loading-image" : "")}
           ref={canvas}
           style={{
             // height: canvasDimention?.height,
@@ -127,7 +125,6 @@ function Canvas({
           targetOpacity={1}
         />
       </div>
-
     </div>
   );
 }

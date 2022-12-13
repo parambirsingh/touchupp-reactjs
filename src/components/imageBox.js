@@ -45,14 +45,14 @@ function ImageBox({ isDeletingObject, brushData, setBrushData }) {
           <TransformComponent>
             <div
               ref={boxRef}
-              className="mt-2 w-100 d-grid place-items-center position-relative h-100"
+              className="w-100 d-grid place-items-center position-relative h-100"
               // style={{ transform: `scale(${imageData.scale})` }}
             >
               {isDeletingObject && (
                 <TailSpin
                   height="50"
                   width="50"
-                  color="#4fa94d"
+                  color="#e64a19"
                   ariaLabel="tail-spin-loading"
                   radius="1"
                   wrapperStyle={{}}
