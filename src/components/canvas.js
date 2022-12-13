@@ -11,14 +11,12 @@ function Canvas({
   isBrushing,
   setPaths,
   imageDimension,
-  modal
+  modal,
 }) {
   const [imageData] = useContext(ImageContext);
 
   const canvas = useRef();
   const boxRef = useRef();
-
-
 
   useEffect(() => {
     if (!brushedImage) {
@@ -27,13 +25,12 @@ function Canvas({
     }
   }, [brushedImage]);
 
-    useEffect(() => {
-      if(!canvas?.current) return;
-      
-      canvas.current.height = imageDimension?.height
-      canvas.current.width = imageDimension?.width;
-    }, [imageDimension]);
+  useEffect(() => {
+    if (!canvas?.current) return;
 
+    canvas.current.height = imageDimension?.height;
+    canvas.current.width = imageDimension?.width;
+  }, [imageDimension]);
 
   const handlePath = async () => {
     if (canvas?.current) {
@@ -73,7 +70,7 @@ function Canvas({
     }
   };
   return (
-    <div className="h-100">
+    <div className="h-100 d-flex justify-content-center align-items-center w-100">
       <div
         style={{
           maxHeight: modal?.height + "px",
@@ -116,8 +113,8 @@ function Canvas({
           backgroundImage={imageData.base64Start + imageData.originalImage}
         /> */}
         <ReactSketchCanvas
-          height={imageDimension?.height}
-          width={imageDimension?.width}
+          height={imageDimension?.width > 1000 ? 530 : imageDimension?.height}
+          width={imageDimension?.width > 1000 ? 860 : imageDimension?.width}
           className={"canvas-con " + (isBrushing ? "loading-image" : "")}
           ref={canvas}
           style={{

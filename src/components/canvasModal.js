@@ -3,7 +3,7 @@ import { Modal } from "react-bootstrap";
 import { ImageContext } from "../context/imageContext";
 import Canvas from "./canvas";
 import Toolbar from "./toolbar";
-import {abortImageServices} from "../services/imageServices"
+import { abortImageServices } from "../services/imageServices";
 
 function CanvasModal({
   brushData,
@@ -15,10 +15,9 @@ function CanvasModal({
 }) {
   const [paths, setPaths] = useState([]);
   const [imageData] = useContext(ImageContext);
-  const [modal,setModal] = useState({height:700,width:700});
+  const [modal, setModal] = useState({ height: 700, width: 700 });
 
   const boxRef = useRef();
-
 
   const handleDone = () => {
     if (!paths?.length || !paths?.[0]?.paths?.length) return;
@@ -56,8 +55,8 @@ function CanvasModal({
       ctx.stroke();
     }
 
-       var jpegUrl = ctx.canvas.toDataURL("image/jpeg");
-   
+    var jpegUrl = ctx.canvas.toDataURL("image/jpeg");
+
     let brushedSrc = jpegUrl.slice(jpegUrl?.indexOf(",") + 1);
     setBrushedImage(brushedSrc);
     // canvas.current?.clearCanvas();
@@ -78,22 +77,23 @@ function CanvasModal({
     img.src = imageData.base64Start + imageData.originalImage;
   };
 
-  const handleResize = ()=>{
-    if(!boxRef?.current) return;
+  const handleResize = () => {
+    if (!boxRef?.current) return;
     let ratio = imageDimension.width / imageDimension.height;
-  
+
     let obj = {
       height: boxRef.current.clientHeight,
       width: boxRef.current.clientWidth,
     };
-    setModal({...obj})
-  }
+    setModal({ ...obj });
+  };
 
-  useEffect(()=>{
-   window.addEventListener("resize", handleResize);
+  useEffect(() => {
+    handleResize();
+    window.addEventListener("resize", handleResize);
 
-   return () => window.removeEventListener("resize", handleResize);
-  },[])
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <>
