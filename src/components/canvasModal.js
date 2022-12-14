@@ -118,7 +118,7 @@ function CanvasModal({
               abortImageServices();
             }}
           >
-            <i className="bi bi-arrow-right me-1 "></i>
+            <i className="bi bi-arrow-left me-1 "></i>
             <span>Back</span>
           </div>
         </Modal.Header>
