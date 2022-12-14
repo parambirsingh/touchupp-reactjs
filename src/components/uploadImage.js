@@ -1,4 +1,5 @@
-import React, { useContext, useEffect, useRef } from "react";
+import html2canvas from "html2canvas";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import headingImg from "../assets/img/underline.svg";
 import { ImageContext } from "../context/imageContext";
 import { Constants } from "../data/constants";
@@ -6,7 +7,7 @@ import { Constants } from "../data/constants";
 
 function UploadImage({ isGettingImage, localSrc, setLocalSrc }) {
   const [imageData, setImageData] = useContext(ImageContext);
-
+  const [isConverting,setIsConverting] = useState(false)
   const image = useRef();
 
   useEffect(() => {
@@ -36,6 +37,38 @@ function UploadImage({ isGettingImage, localSrc, setLocalSrc }) {
       //  console.log("Error: ", error);
     };
   };
+  const handleConversion =async ()=>{
+    let img = new Image();
+    try {
+      img.onload =async function () {
+        setIsConverting(true);
+         document.body.appendChild(img);
+        const canvas = await html2canvas(img);
+         document.body.removeChild(img);
+        const data = canvas.toDataURL('image/jpg');
+        
+        let content = data?.slice(data?.indexOf(",") + 1);
+        let start = data?.slice(
+            0,
+            data?.indexOf(",") + 1
+            );
+
+          setImageData({
+            ...imageData,
+            originalImage: content,
+            base64Start: start,
+            getImage: !imageData.getImage,
+          });
+          setIsConverting(false);
+          
+      };
+      img.src = localSrc;
+      
+    } catch (ex) {
+      setIsConverting(false);
+          document?.body?.removeChild(img);
+    }
+  }
 
   const emptyImage = () => {
     setLocalSrc("");
@@ -48,16 +81,17 @@ function UploadImage({ isGettingImage, localSrc, setLocalSrc }) {
     });
   };
 
-  const proceed = () => {
-    let data = localSrc?.slice(localSrc?.indexOf(",") + 1);
-    let start = localSrc?.slice(0, localSrc?.indexOf(",") + 1);
+  const proceed = async () => {
+  //  await handleConversion();
+     let data = localSrc?.slice(localSrc?.indexOf(",") + 1);
+     let start = localSrc?.slice(0, localSrc?.indexOf(",") + 1);
 
-    setImageData({
-      ...imageData,
-      originalImage: data,
-      base64Start: start,
-      getImage: !imageData.getImage,
-    });
+     setImageData({
+       ...imageData,
+       originalImage: data,
+       base64Start: start,
+       getImage: !imageData.getImage,
+     });    
   };
 
   useEffect(() => {
@@ -230,6 +264,21 @@ function UploadImage({ isGettingImage, localSrc, setLocalSrc }) {
                   <>
                     <span>Redesign the room</span>
                     <i className="bi bi-arrow-right ms-2"></i>
+                    {/* {isConverting ? (
+                      <>
+                        <span
+                          className="spinner-border spinner-border-sm me-2"
+                          role="status"
+                          aria-hidden="true"
+                        ></span>
+                        <span> Converting... </span>
+                      </>
+                    ) : (
+                      <>
+                      <span>Redesign the room</span>
+                      <i className="bi bi-arrow-right ms-2"></i>
+                      </>
+                    )} */}
                   </>
                 )}
               </div>
