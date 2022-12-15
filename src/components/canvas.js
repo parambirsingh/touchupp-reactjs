@@ -127,36 +127,19 @@ function Canvas({
             visible={true}
           />
         )}
-        {/* <ReactSketchCanvas
-          height={imageDimension?.height}
-          width={imageDimension?.width}
-          className={"canvas-con " + (isBrushing ? "loading-image" : "")}
-          ref={canvas}
-          style={{
-            maxHeight: modal?.height+'px',
-            maxWidth: modal?.width+'px',
-            position: 'absolute',
-            // objectFit: "contain",
-            margin: "0 auto",
-            cursor: "none",
-          }}
-          strokeWidth={brushData.brushStock}
-          eraserWidth={brushData.brushStock}
-          strokeColor="#dc3545b3"
-          // preserveBackgroundImageAspectRatio="xMidYMid meet"
-          backgroundImage={imageData.base64Start + imageData.originalImage}
-        /> */}
         <ReactSketchCanvas
           height={getDimention()?.height}
           width={getDimention()?.width}
-          className={"canvas-con p-0 " + (isBrushing ? "loading-image" : "")}
+          className={
+            "canvas-con  " + (isBrushing ? "loading-image" : "")
+          }
           ref={canvas}
           style={{
             // maxHeight: modal?.height + "px",
             // maxWidth: modal?.width + "px",
             // position: "absolute",
             // objectFit: "contain",
-            margin: "0 auto",
+            // margin: "0 auto",
             cursor: "none",
           }}
           strokeWidth={brushData.brushStock}
@@ -172,13 +155,13 @@ function Canvas({
           strokeColor="#dc3545"
           fill="#dc3545"
           smoothness={{
-            movement: 0.2,
+            movement: 0.5,
             scale: 1,
             opacity: 0.7,
           }}
           opacity={0}
           // targetScale={1}
-          targetOpacity={0.7}
+          // targetOpacity={0.7}
         />
       </div>
     </div>
