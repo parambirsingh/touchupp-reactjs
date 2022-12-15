@@ -209,17 +209,17 @@ function UploadImage({ isGettingImage, localSrc, setLocalSrc }) {
                       <i className="text-upload bi bi-arrow-down"></i>
                       <span className="text-upload"> Try with an example </span>
                     </div>
-                    <div className="mt-3 row justify-content-center">
+                    <div className="mt-4 row justify-content-center">
                       {Constants.sampleImages?.map((sample) => {
                         return (
                           <div className="col-2" key={sample.name}>
                             <img
                               onClick={() =>
                                 previewImage(
-                                  Constants.base64Start + sample?.src
+                                  sample?.base64Start + sample?.src
                                 )
                               }
-                              src={Constants.base64Start + sample?.src}
+                              src={sample.base64Start + sample?.src}
                               className="img-fluid sample-img rounded"
                               alt="img"
                             />

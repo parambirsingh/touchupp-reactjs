@@ -104,25 +104,29 @@ export default function Home() {
         });
 
       let { data } = await getImage(form);
-      var newJson = data?.[1]?.Coordinates?.replace(
-        /([a-zA-Z0-9]+?):/g,
-        '"$1":'
-      );
-      newJson = newJson?.replace(/'/g, '"');
-
-      let coords = JSON?.parse(newJson);
-        if (data?.[3]?.Encoded_detected_image){
-          setImageData({
-            ...imageData,
-            imageHistory: [],
-            // image: imageData?.originalImage,
-            image: data?.[3]?.Encoded_detected_image,
-            Folder_name_for_masks: data?.[2]?.Folder_name_for_masks,
-            coords,
-          });
+      if(data?.Status){
+         toast.error(data?.Status);
+      }else{
+        let newJson = data?.[1]?.Coordinates?.replace(
+          /([a-zA-Z0-9]+?):/g,
+          '"$1":'
+        );
+        newJson = newJson?.replace(/'/g, '"');
+  
+        let coords = JSON?.parse(newJson);
+          if (data?.[3]?.Encoded_detected_image){
+            setImageData({
+              ...imageData,
+              imageHistory: [],
+              // image: imageData?.originalImage,
+              image: data?.[3]?.Encoded_detected_image,
+              Folder_name_for_masks: data?.[2]?.Folder_name_for_masks,
+              coords,
+            });
+          }
+  
         }
-
-      setIsGettingImage(false);
+        setIsGettingImage(false);
     } catch (ex) {
       if(isGettingImage){
         setImageData({
