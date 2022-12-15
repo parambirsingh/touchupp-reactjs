@@ -41,16 +41,6 @@ export default function Home() {
      getImageData();
   }, [imageData.getImage]);
 
-  const handleDownload = async () => {
-    const a = document.createElement("a");
-    // let startIndex = imageData.base64Start.indexOf("/");
-    // let endIndex = imageData.base64Start.indexOf(";");
-    //imageData.base64Start.slice(startIndex+1,endIndex
-    a.download = imageData.Folder_name_for_masks + ".jpg";
-    a.href = imageData.base64Start + imageData.originalImage;
-    a.click();
-  };
-
   const handleObjectClick = async (object) => {
     try {
       setIsDeletingObject(true)
@@ -165,7 +155,6 @@ export default function Home() {
       ) : (
         <ImagePreview
           isDeletingObject={isDeletingObject}
-          handleDownload={handleDownload}
           handleObjectClick={handleObjectClick}
           brushData={brushData}
           setBrushData={setBrushData}

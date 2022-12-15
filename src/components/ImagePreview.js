@@ -6,10 +6,10 @@ import Share from "./share";
 import Toolbar from "./toolbar";
 import DetectedImageBox from "./detectedImage";
 import { abortImageServices } from "../services/imageServices";
+import { download } from "../utils/download";
 
 function ImagePreview({
   handleObjectClick,
-  handleDownload,
   brushData,
   setBrushData,
   isDeletingObject,
@@ -27,6 +27,10 @@ function ImagePreview({
     });
     abortImageServices();
   };
+
+  const handleDownload = ()=>{
+    download(imageData?.Folder_name_for_masks,imageData?.base64Start+imageData?.originalImage);
+  }
   return (
     <section className="py-5 text-center">
       <div className="py-4 my-3 col-10 mx-auto">
