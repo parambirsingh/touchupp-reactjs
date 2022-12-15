@@ -38,7 +38,6 @@ function CanvasModal({
         // tempQ.y = Math.round(q?.y + decreaseY);
         tempQ.x = Math.round(q?.x*rx);
         tempQ.y = Math.round(q?.y *ry);
-        console.log(tempQ, q);
         return tempQ;
       })
       return temp
@@ -67,7 +66,6 @@ function CanvasModal({
     }
 
     var jpegUrl = ctx.canvas.toDataURL("image/jpeg");
-
     let brushedSrc = jpegUrl.slice(jpegUrl?.indexOf(",") + 1);
     setBrushedImage(brushedSrc);
     // canvas.current?.clearCanvas();
