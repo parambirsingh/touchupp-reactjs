@@ -25,7 +25,7 @@ function Share() {
                 <FacebookShareButton
                   windowHeight={600}
                   windowWidth={800}
-                  url={"https://touchupp.rudraserver.com/"}
+                  url={process.env.REACT_APP_FRONTEND_URL}
                   quote={"Touchupp Image"}
                   hashtag={"#Touchupp"}
                   description={"Touchupp Image"}
@@ -52,7 +52,7 @@ function Share() {
                   windowHeight={600}
                   windowWidth={800}
                   title="Touchupp Image"
-                  url={"https://touchupp.rudraserver.com"}
+                  url={process.env.REACT_APP_FRONTEND_URL}
                   description={"Touchupp Image"}
                   className="email-share-button"
                 >
@@ -65,7 +65,7 @@ function Share() {
                 <TwitterShareButton
                   windowHeight={600}
                   windowWidth={800}
-                  url={"https://touchupp.rudraserver.com/"}
+                  url={process.env.REACT_APP_FRONTEND_URL}
                   title={"TouchUpp Image"}
                   hashtags={["Touchupp"]}
                   className="twitter-share-button"
@@ -90,8 +90,8 @@ function Share() {
                 <PinterestShareButton
                   windowHeight={600}
                   windowWidth={800}
-                  url={"https://touchupp.rudraserver.com"}
-                  media={"https://touchupp.rudraserver.com"}
+                  url={process.env.REACT_APP_FRONTEND_URL}
+                  media={process.env.REACT_APP_FRONTEND_URL}
                   description={"Touchupp Image"}
                   className="pinterest-share-button"
                 >
@@ -116,7 +116,7 @@ function Share() {
                   windowHeight={600}
                   windowWidth={800}
                   title="Touchupp Image"
-                  url={"https://touchupp.rudraserver.com"}
+                  url={process.env.REACT_APP_FRONTEND_URL}
                   description={"Touchupp Image"}
                   className="reddit-share-button"
                 >
@@ -131,8 +131,8 @@ function Share() {
                   windowWidth={800}
                   title="Touchupp Image"
                   summary="Touchupp"
-                  url={"https://touchupp.rudraserver.com"}
-                  source={"https://touchupp.rudraserver.com"}
+                  url={process.env.REACT_APP_FRONTEND_URL}
+                  source={process.env.REACT_APP_FRONTEND_URL}
                 >
                   <svg
                     width="15"

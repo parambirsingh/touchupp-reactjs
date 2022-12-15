@@ -2,8 +2,6 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { Constants } from "../data/constants";
 
-const controller = new AbortController();
-
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 axios.interceptors.response.use(null, (error) => {
