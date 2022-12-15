@@ -34,8 +34,6 @@ function CanvasModal({
       let temp={...p};
       temp.paths = temp?.paths?.map(q=>{
         let tempQ = {};
-        // tempQ.x = Math.round(q?.x + decreaseX);
-        // tempQ.y = Math.round(q?.y + decreaseY);
         tempQ.x = Math.round(q?.x*rx);
         tempQ.y = Math.round(q?.y *ry);
         return tempQ;
@@ -66,9 +64,11 @@ function CanvasModal({
     }
 
     var jpegUrl = ctx.canvas.toDataURL("image/jpeg");
+//     var newTab = window.open();
+// newTab.document.body.innerHTML = `<img src="${jpegUrl}`
     let brushedSrc = jpegUrl.slice(jpegUrl?.indexOf(",") + 1);
     setBrushedImage(brushedSrc);
-    // canvas.current?.clearCanvas();
+ 
   };
 
   const removeSelectedPath = () => {
