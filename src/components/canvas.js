@@ -35,7 +35,12 @@ function Canvas({
   const handlePath = async () => {
     if (canvas?.current) {
       let path = await canvas?.current?.exportPaths();
-      if (path?.[0]?.paths) setPaths(path);
+     
+      if (path?.[0]?.paths){
+        path[0].height = getDimention()?.height;
+        path[0].width = getDimention()?.width;
+        setPaths(path);
+      } 
       // clearTimeout(setTimoutHandle);
       // setTimoutHandle = setTimeout(async () => {
       //   let path;

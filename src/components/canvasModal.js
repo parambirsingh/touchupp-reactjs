@@ -21,36 +21,47 @@ function CanvasModal({
 
   const handleDone = () => {
     if (!paths?.length || !paths?.[0]?.paths?.length) return;
-    // setPaths([])
     removeSelectedPath();
   };
 
   const draw = (ctx, img) => {
+    let canvaHeight = paths?.[0]?.height
+    let canvaWidth = paths?.[0]?.width
+      let rx = ctx.canvas.width/canvaWidth;
+      let ry = ctx.canvas.height/canvaHeight;
+   
+    let modifiedPaths  = paths?.map(p=>{  
+      let temp={...p};
+      temp.paths = temp?.paths?.map(q=>{
+        let tempQ = {};
+        // tempQ.x = Math.round(q?.x + decreaseX);
+        // tempQ.y = Math.round(q?.y + decreaseY);
+        tempQ.x = Math.round(q?.x*rx);
+        tempQ.y = Math.round(q?.y *ry);
+        console.log(tempQ, q);
+        return tempQ;
+      })
+      return temp
+    })
+    
     ctx.drawImage(img, 0, 0);
     ctx.fillStyle = "black";
     ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     ctx.fill();
-    for (let item of paths) {
+    for (let item of modifiedPaths) {
       ctx.beginPath();
       ctx.lineCap = "round";
       ctx.lineJoin = "round";
-      ctx.lineWidth = brushData.brushStock;
-
+      ctx.lineWidth = item.strokeWidth*rx;
+      
       ctx.moveTo(item?.paths[0]?.x, item?.paths[0]?.y);
       for (let i = 1; i < item?.paths?.length; i++) {
-        // let decreaseY = (item?.paths[i]?.y / 100) * percentDecreaseHeight;
-        // let decreaseX = (item?.paths[i]?.x / 100) * percentDecreaseWidth;
-
-        // item?.paths[i].y =  item?.paths[i]?.y + decreaseY;
-        // item?.paths[i].x =  item?.paths[i]?.x + decreaseX;
-
-        //  ctx.moveTo(item?.paths[i]?.x, item?.paths[i]?.y);
         ctx.lineTo(
           Math.round(item?.paths[i]?.x),
           Math.round(item?.paths[i]?.y)
         );
       }
-      ctx.closePath();
+      // ctx.closePath();
       ctx.strokeStyle = "white";
       ctx.stroke();
     }
@@ -64,15 +75,12 @@ function CanvasModal({
 
   const removeSelectedPath = () => {
     let dyanmicCanvas = document.createElement("CANVAS");
-    // dyanmicCanvas.height = 614;
-    // dyanmicCanvas.width = 1024;
     var img = document.createElement("IMG");
     img.onload = function () {
       dyanmicCanvas.height = img.height;
       dyanmicCanvas.width = img.width;
       let ctx = dyanmicCanvas.getContext("2d");
-      // console.log(img.height, img.width);
-      draw(ctx, img, dyanmicCanvas);
+      draw(ctx, img);
     };
     img.src = imageData.base64Start + imageData.originalImage;
   };
