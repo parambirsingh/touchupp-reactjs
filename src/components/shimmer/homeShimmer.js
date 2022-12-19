@@ -5,7 +5,7 @@ function HomeShimmer() {
   const [height ,setHeight] = useState(400)
 
   const handleHeight = ()=>{
-    let h = (window.innerHeight/1.5);
+    let h = (window.innerHeight/1.2);
     setHeight(h)
   }
   useEffect(()=>{

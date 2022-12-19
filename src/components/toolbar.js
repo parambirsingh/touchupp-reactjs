@@ -24,7 +24,7 @@ function Toolbar({ brushData, setBrushData, paths, handleDone,isBrushing }) {
                 setBrushData({
                   ...brushData,
                   brushMode: true,
-                  brushStock:150,
+                  brushStock:110,
                 });
                 abortImageServices();
               }}
@@ -90,7 +90,7 @@ function Toolbar({ brushData, setBrushData, paths, handleDone,isBrushing }) {
           <div className="bg-scroller px-4 py-2 rounded w-250px">
             <input
               min="20"
-              max="150"
+              max="110"
               type="range"
               value={brushData.brushStock}
               onChange={(e) =>

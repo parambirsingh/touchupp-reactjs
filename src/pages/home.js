@@ -16,7 +16,7 @@ export default function Home() {
   const [brushedImage, setBrushedImage] = useState('');
 
   const [brushData, setBrushData] = useState({
-    brushStock: 150,
+    brushStock: 110,
     brushMode: false,
   });
   const [imageDimension,setImageDimension] = useState({height:700,width:700})
