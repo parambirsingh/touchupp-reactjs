@@ -63,7 +63,6 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject,originalCoord })
       setRef({ coords });
     });
     // let arr = [imageRef.current.clientWidth, imageRef.current.clientHeight];
-
   };
 
   useEffect(() => {
@@ -88,7 +87,6 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject,originalCoord })
     });
   }, []);
 
-  
   return (
     // <div className="d-flex justify-content-center">
     <TransformWrapper
@@ -103,7 +101,7 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject,originalCoord })
           <TransformComponent>
             <div
               ref={boxRef}
-              className="d-flex justify-content-center align-items-center position-relative cursor-pan"
+              className="d-flex justify-content-center align-items-center position-relative cursor-pan h-max-80vh"
               // style={{ transform: `scale(${imageData?.scale})` }}
             >
               <TailSpin
@@ -118,62 +116,64 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject,originalCoord })
               />
 
               {imageData?.coords?.length &&
-                imageData?.coords?.map((c) => (
-                  !c.isTrashed && (<div key={c?.key}>
-                    <div
-                      className="position-absolute object-box-key"
-                      style={{
-                        top: c.coordinates[1] + "px",
-                        left: c.coordinates[0] + "px",
-                        backgroundColor: `rgb(${c.color?.join(",")})`,
-                      }}
-                    >
-                      {c?.key?.slice(
+                imageData?.coords?.map(
+                  (c) =>
+                    !c.isTrashed && (
+                      <div key={c?.key}>
+                        <div
+                          className="position-absolute object-box-key"
+                          style={{
+                            top: c.coordinates[1] + "px",
+                            left: c.coordinates[0] + "px",
+                            backgroundColor: `rgb(${c.color?.join(",")})`,
+                          }}
+                        >
+                          {c?.key?.slice(
                             0,
                             c?.key?.indexOf("0") > -1
                               ? c?.key?.indexOf("0")
                               : c?.key?.length
                           )}
-                    </div>
-                    <div
-                      className="position-absolute object-box"
-                      style={{
-                        top: (c.coordinates[1]) + "px",
-                        left: c.coordinates[0] + "px",
-                        width: c.coordinates[2] - c.coordinates[0] + "px",
-                        height: c.coordinates[3]+10 - c.coordinates[1] + "px",
-                        borderColor: `rgb(${c.color?.join(",")})`,
-                      }}
-                    ></div>
-                    <div
-                      className="position-absolute object-button"
-                      style={{
-                        top: c.coordinates[1] + "px",
-                        left: c.coordinates[2] + "px",
-                        zIndex:isDeletingObject?0:1
-                      }}
-                    >
-                      <span
-                        className="hover-danger  cursor-pointer"
-                        // style={{ color: `rgb(${c.color?.join(",")})` }}
-                        onClick={() =>
-                          !isDeletingObject ? handleObjectClick(c) : ""
-                        }
-                      >
-                        <i className="bi bi-x-circle-fill"></i>
-                        {c?.isTrashed}
-
-                      </span>
-                    </div>
-                  </div>
-                  )
-                ))} 
+                        </div>
+                        <div
+                          className="position-absolute object-box"
+                          style={{
+                            top: c.coordinates[1] + "px",
+                            left: c.coordinates[0] + "px",
+                            width: c.coordinates[2] - c.coordinates[0] + "px",
+                            height:
+                              c.coordinates[3] + 10 - c.coordinates[1] + "px",
+                            borderColor: `rgb(${c.color?.join(",")})`,
+                          }}
+                        ></div>
+                        <div
+                          className="position-absolute object-button"
+                          style={{
+                            top: c.coordinates[1] + "px",
+                            left: c.coordinates[2] + "px",
+                            zIndex: isDeletingObject ? 0 : 1,
+                          }}
+                        >
+                          <span
+                            className="hover-danger  cursor-pointer"
+                            // style={{ color: `rgb(${c.color?.join(",")})` }}
+                            onClick={() =>
+                              !isDeletingObject ? handleObjectClick(c) : ""
+                            }
+                          >
+                            <i className="bi bi-x-circle-fill"></i>
+                            {c?.isTrashed}
+                          </span>
+                        </div>
+                      </div>
+                    )
+                )}
 
               <img
                 ref={imageRef}
                 src={imageData.base64Start + imageData?.originalImage}
                 className={
-                  "object-fit rounded-2 " +
+                  "object-fit rounded-2 h-100 " +
                   (isDeletingObject && "loading-image")
                 }
                 style={{ objectFit: "contain", maxWidth: "100%" }}

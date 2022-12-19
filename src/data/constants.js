@@ -50,4 +50,26 @@ module.exports.Constants = {
       message: "An unexpected error has occured!",
     },
   },
+  screenDimensions: {
+    sm: {
+      screenWidth: 1368,
+      width: 950,
+      height: 550,
+    },
+    md: {
+      screenWidth: 1440,
+      width: 1200,
+      height: 760,
+    },
+    lg: {
+      screenWidth: 1680,
+      width: 850,
+      height: 650,
+    },
+    xl: {
+      screenWidth: 1800,
+      width: 1200,
+      height: 820,
+    },
+  }
 };

@@ -180,6 +180,7 @@ export default function Home() {
           setBrushData={setBrushData}
           setLocalSrc={setLocalSrc}
           originalCoord={originalCoord}
+          imageDimension={imageDimension}
         ></ImagePreview>
       )}
       <CanvasModal

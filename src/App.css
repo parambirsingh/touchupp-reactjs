@@ -244,9 +244,11 @@ h3,
 }
 .react-transform-wrapper {
   width: 100% !important;
+  height: 100% !important;
 }
 .react-transform-component {
   width: 100% !important;
+  height: 100% !important;
 }
 .cursor-pan {
   width: 100%;
@@ -339,7 +341,7 @@ h3,
 
 
 .object-box{
-  border: 0.4vw solid;
+  border: 0.2vw solid;
 }
 
 .object-box-key{
