@@ -47,7 +47,6 @@ function ImagePreview({
         ? Constants?.screenDimensions?.md
         : Constants?.screenDimensions?.sm
       : imageDimension;
-    return { height: window.innerHeight - 270 };
   };
 
   return (
