@@ -154,10 +154,10 @@ export default function Home() {
   };
 
   const filterCoords = () => {
-    console.log(drawPath, originalCoord)
+    // console.log(drawPath, originalCoord)
     drawPath?.map((draw) => {
       originalCoord.map((imageCoord) => {
-        console.log(draw, imageCoord)
+        // console.log(draw, imageCoord)
       })
     })
   }
