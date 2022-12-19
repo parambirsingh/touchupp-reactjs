@@ -46,7 +46,7 @@ function ImagePreview({
         : window?.innerWidth >= Constants?.screenDimensions?.md?.screenWidth
         ? Constants?.screenDimensions?.md
         : Constants?.screenDimensions?.sm
-      : imageDimension;
+      : Constants?.screenDimensions?.sm
   };
 
   return (
@@ -152,9 +152,9 @@ function ImagePreview({
                       brushData={brushData}
                       setBrushData={setBrushData}
                     />
-                    <div className="ml-auto">
+                    {/* <div className="ml-auto">
                       <Share />
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>
