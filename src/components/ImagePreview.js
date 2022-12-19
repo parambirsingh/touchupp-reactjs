@@ -53,7 +53,7 @@ function ImagePreview({
 
   return (
     <section className="py-5 text-center">
-      <div className="py-4 my-3 col-10 mx-auto">
+      <div className="pb-3 mb-2 col-10 mx-auto">
         <div className="row">
           <div className="col-md-12">
             <div className="d-flex align-items-center pb-4">
