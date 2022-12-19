@@ -39,15 +39,16 @@ function ImagePreview({
   };
 
   const getDimension = () => {
-    return imageDimension?.width > 1000
-      ? window?.innerWidth >= Constants?.screenDimensions?.xl?.screenWidth
-        ? Constants?.screenDimensions?.xl
-        : window?.innerWidth >= Constants?.screenDimensions?.lg?.screenWidth
-        ? Constants?.screenDimensions?.lg
-        : window?.innerWidth >= Constants?.screenDimensions?.md?.screenWidth
-        ? Constants?.screenDimensions?.md
-        : Constants?.screenDimensions?.sm
-      : imageDimension;
+    // return imageDimension?.width > 1000
+    //   ? window?.innerWidth >= Constants?.screenDimensions?.xl?.screenWidth
+    //     ? Constants?.screenDimensions?.xl
+    //     : window?.innerWidth >= Constants?.screenDimensions?.lg?.screenWidth
+    //     ? Constants?.screenDimensions?.lg
+    //     : window?.innerWidth >= Constants?.screenDimensions?.md?.screenWidth
+    //     ? Constants?.screenDimensions?.md
+    //     : Constants?.screenDimensions?.sm
+    //   : imageDimension;
+    return {height: window.innerHeight-270}
   };
 
   return (
@@ -125,7 +126,7 @@ function ImagePreview({
                   <div
                     style={{
                       height: getDimension()?.height + "px",
-                      width: getDimension()?.width + "px",
+                      width: 'auto',
                     }}
                   >
                     <DetectedImageBox
