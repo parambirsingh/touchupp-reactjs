@@ -114,7 +114,7 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject }) {
               />
               {imageData?.coords?.length &&
                 imageData?.coords?.map((c) => (
-                  <div key={c?.key}>
+                  !c.isTrashed && (<div key={c?.key}>
                     <div
                       className="position-absolute object-box-key"
                       style={{
@@ -158,7 +158,8 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject }) {
                       </span>
                     </div>
                   </div>
-                ))}
+                  )
+                ))} 
 
               <img
                 ref={imageRef}
