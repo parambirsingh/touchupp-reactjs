@@ -12,29 +12,30 @@ function CanvasModal({
   setBrushedImage,
   isBrushing,
   imageDimension,
+  setDrawPath
 }) {
   const [paths, setPaths] = useState([]);
   const [modal, setModal] = useState({ height: 700, width: 700 });
 
   const boxRef = useRef();
 
-     const handleResize = () => {
-       if (!boxRef?.current) return;
-       // let ratio = imageDimension.width / imageDimension.height;
+  const handleResize = () => {
+    if (!boxRef?.current) return;
+    // let ratio = imageDimension.width / imageDimension.height;
 
-       let obj = {
-         height: boxRef.current.clientHeight,
-         width: boxRef.current.clientWidth,
-       };
-       setModal({ ...obj });
-     };
+    let obj = {
+      height: boxRef.current.clientHeight,
+      width: boxRef.current.clientWidth,
+    };
+    setModal({ ...obj });
+  };
 
-     useEffect(() => {
-       handleResize();
-       window.addEventListener("resize", handleResize);
+  useEffect(() => {
+    handleResize();
+    window.addEventListener("resize", handleResize);
 
-       return () => window.removeEventListener("resize", handleResize);
-     }, []);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
 
 
@@ -67,6 +68,7 @@ function CanvasModal({
         </Modal.Header>
         <Modal.Body ref={boxRef}>
           <Canvas
+            setDrawPath={setDrawPath}
             brushData={brushData}
             brushedImage={brushedImage}
             isBrushing={isBrushing}

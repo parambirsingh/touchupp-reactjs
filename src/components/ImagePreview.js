@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { ImageContext } from "../context/imageContext";
-import ImageBox from "./imageBox";
 import Share from "./share";
 import Toolbar from "./toolbar";
 import DetectedImageBox from "./detectedImage";
@@ -14,8 +13,7 @@ function ImagePreview({
   setBrushData,
   isDeletingObject,
   setLocalSrc,
-  coords
-
+  originalCoord
 }) {
   const [imageData, setImageData] = useContext(ImageContext);
   const handleBack = () => {
@@ -106,7 +104,7 @@ function ImagePreview({
                 {/* Original Image */}
                 <div className="col-12">
                   <DetectedImageBox
-                    coords={coords}
+                    originalCoord={originalCoord}
                     handleObjectClick={handleObjectClick}
                     isDeletingObject={isDeletingObject}
                   />

@@ -14,7 +14,7 @@ function App({router}) {
     image:'',
     originalImage:'',
     base64Start:'',
-    coords: Constants.coordinates,
+    coords: [],
     Folder_name_for_masks: "",
     imageHistory: [],
     currentIndex: 0,
