@@ -7,6 +7,7 @@ import Toolbar from "./toolbar";
 import DetectedImageBox from "./detectedImage";
 import { abortImageServices } from "../services/imageServices";
 import { download } from "../utils/download";
+import { Constants } from "../data/constants";
 
 function ImagePreview({
   handleObjectClick,
@@ -14,8 +15,8 @@ function ImagePreview({
   setBrushData,
   isDeletingObject,
   setLocalSrc,
-  coords
-
+  coords,
+  imageDimension
 }) {
   const [imageData, setImageData] = useContext(ImageContext);
   const handleBack = () => {
@@ -31,8 +32,24 @@ function ImagePreview({
   };
 
   const handleDownload = () => {
-    download(imageData?.Folder_name_for_masks, imageData?.base64Start + imageData?.originalImage);
-  }
+    download(
+      imageData?.Folder_name_for_masks,
+      imageData?.base64Start + imageData?.originalImage
+    );
+  };
+
+  const getDimension = () => {
+    return imageDimension?.width > 1000
+      ? window?.innerWidth >= Constants?.screenDimensions?.xl?.screenWidth
+        ? Constants?.screenDimensions?.xl
+        : window?.innerWidth >= Constants?.screenDimensions?.lg?.screenWidth
+        ? Constants?.screenDimensions?.lg
+        : window?.innerWidth >= Constants?.screenDimensions?.md?.screenWidth
+        ? Constants?.screenDimensions?.md
+        : Constants?.screenDimensions?.sm
+      : imageDimension;
+  };
+
   return (
     <section className="py-5 text-center">
       <div className="py-4 my-3 col-10 mx-auto">
@@ -104,12 +121,19 @@ function ImagePreview({
             <div className="mt-3 img-sec  position-relative">
               <div className="row">
                 {/* Original Image */}
-                <div className="col-12">
-                  <DetectedImageBox
-                    coords={coords}
-                    handleObjectClick={handleObjectClick}
-                    isDeletingObject={isDeletingObject}
-                  />
+                <div className="col-12 align-items-center justify-content-center d-flex">
+                  <div
+                    style={{
+                      height: getDimension()?.height + "px",
+                      width: getDimension()?.width + "px",
+                    }}
+                  >
+                    <DetectedImageBox
+                      coords={coords}
+                      handleObjectClick={handleObjectClick}
+                      isDeletingObject={isDeletingObject}
+                    />
+                  </div>
                 </div>
                 {/* Modified Image */}
                 {/* <div className="col-6 side-image">

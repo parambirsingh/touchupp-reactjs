@@ -167,6 +167,7 @@ export default function Home() {
           brushData={brushData}
           setBrushData={setBrushData}
           setLocalSrc={setLocalSrc}
+          imageDimension={imageDimension}
         ></ImagePreview>
       )}
       <CanvasModal

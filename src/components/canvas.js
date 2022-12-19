@@ -4,6 +4,7 @@ import CustomCursor from "custom-cursor-react";
 import "custom-cursor-react/dist/index.css";
 import { ImageContext } from "../context/imageContext";
 import { TailSpin } from "react-loader-spinner";
+import { Constants } from "../data/constants";
 
 function Canvas({
   brushData,
@@ -139,37 +140,16 @@ function Canvas({
       // }, 1000);
     }
   };
-  const screenDimensions = {
-    sm: {
-      screenWidth: 1368,
-      width: 950,
-      height: 550,
-    },
-    md: {
-      screenWidth: 1440,
-      width: 1200,
-      height: 760,
-    },
-    lg: {
-      screenWidth: 1680,
-      width: 850,
-      height: 650,
-    },
-    xl: {
-      screenWidth: 1800,
-      width: 1200,
-      height: 820,
-    },
-  };
+ 
   const getDimention = () => {
     return imageDimension?.width > 1000
-      ? window?.innerWidth >= screenDimensions?.xl?.screenWidth
-        ? screenDimensions?.xl
-        : window?.innerWidth >= screenDimensions?.lg?.screenWidth
-        ? screenDimensions?.lg
-        : window?.innerWidth >= screenDimensions?.md?.screenWidth
-        ? screenDimensions?.md
-        : screenDimensions?.sm
+      ? window?.innerWidth >= Constants?.screenDimensions?.xl?.screenWidth
+        ? Constants?.screenDimensions?.xl
+        : window?.innerWidth >= Constants?.screenDimensions?.lg?.screenWidth
+        ? Constants?.screenDimensions?.lg
+        : window?.innerWidth >= Constants?.screenDimensions?.md?.screenWidth
+        ? Constants?.screenDimensions?.md
+        : Constants?.screenDimensions?.sm
       : imageDimension;
   };
   return (
