@@ -188,6 +188,7 @@ h3,
   max-height: 300px !important;
 }
 
+
 .mh-local {
   max-height: 500px !important;
 }
@@ -340,7 +341,7 @@ h3,
 
 
 .object-box{
-  border: 0.4vw solid;
+  border: 0.2vw solid;
 }
 
 .object-box-key{

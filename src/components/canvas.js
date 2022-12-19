@@ -13,6 +13,7 @@ function Canvas({
   setPaths,
   imageDimension,
   setBrushedImage,
+  setDrawPath
 }) {
   const [imageData] = useContext(ImageContext);
 
@@ -40,7 +41,6 @@ function Canvas({
         });
         return temp;
       });
-
       ctx.drawImage(img, 0, 0);
       ctx.fillStyle = "black";
       ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
@@ -67,6 +67,7 @@ function Canvas({
       //     var newTab = window.open();
       // newTab.document.body.innerHTML = `<img src="${jpegUrl}`
       let brushedSrc = jpegUrl.slice(jpegUrl?.indexOf(",") + 1);
+      setDrawPath(modifiedPaths);
       setBrushedImage(brushedSrc);
     };
 

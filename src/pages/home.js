@@ -10,27 +10,28 @@ import { Constants } from "../data/constants";
 
 export default function Home() {
   const [imageData, setImageData] = useContext(ImageContext);
+  const [originalCoord, setOriginalCoord] = useState([])
   const [isGettingImage, setIsGettingImage] = useState(false);
   const [isDeletingObject, setIsDeletingObject] = useState(false);
   const [isBrushing, setIsBrushing] = useState(false);
   const [brushedImage, setBrushedImage] = useState('');
-
+  const [drawPath, setDrawPath] = useState([])
   const [brushData, setBrushData] = useState({
     brushStock: 110,
     brushMode: false,
   });
-  const [imageDimension,setImageDimension] = useState({height:700,width:700})
+  const [imageDimension, setImageDimension] = useState({ height: 700, width: 700 })
 
-   const [localSrc, setLocalSrc] = useState(imageData.originalImage);
+  const [localSrc, setLocalSrc] = useState(imageData.originalImage);
 
   useEffect(() => {
-    if(imageData?.originalImage){
+    if (imageData?.originalImage) {
       let img = new Image();
       img.onload = function () {
-        setImageDimension({height: img?.height, width: img?.width});
+        setImageDimension({ height: img?.height, width: img?.width });
       };
       img.src = imageData.base64Start + imageData.originalImage;
-    } 
+    }
   }, [imageData?.originalImage])
 
   useEffect(() => {
@@ -38,7 +39,7 @@ export default function Home() {
   }, [brushedImage]);
 
   useEffect(() => {
-     getImageData();
+    getImageData();
   }, [imageData.getImage]);
 
   const handleObjectClick = async (object) => {
@@ -49,90 +50,93 @@ export default function Home() {
       form.append("folder_name", imageData?.Folder_name_for_masks);
       form.append("object_removal_name", object.key);
       const { data } = await removeObject(form);
-      let i = imageData?.coords?.findIndex(c=>c.key===object.key);
-      if(i>-1){
-        imageData.coords?.splice(i, 1,{...imageData?.coords?.[i],isTrashed:true});
+      let i = imageData?.coords?.findIndex(c => c.key === object.key);
+      if (i > -1) {
+        imageData.coords?.splice(i, 1, { ...imageData?.coords?.[i], isTrashed: true });
       }
       setImageData({ ...imageData, originalImage: data[1].Output_image });
       toast.success(object.key + " deleted successfully");
-       setIsDeletingObject(false);
+      setIsDeletingObject(false);
     } catch (ex) {
-       setIsDeletingObject(false);
+      setIsDeletingObject(false);
 
-       if (
-         ex?.code !== Constants.ERRORS.CANCELED_ERROR.code &&
-         ex?.response?.status>400 && ex?.response?.status<500
-       )
-         toast.error(ex);
+      if (
+        ex?.code !== Constants.ERRORS.CANCELED_ERROR.code &&
+        ex?.response?.status > 400 && ex?.response?.status < 500
+      )
+        toast.error(ex);
     }
   };
 
   const handleBrushUpdate = async () => {
-     try {
-      if(!brushedImage) return;
-       setIsBrushing(true);
-       let form = new FormData();
-       form.append("original_image", imageData?.originalImage);
-       form.append("image_mask", brushedImage);
-       
-       const { data } = await removeFromBrush(form);
-       setImageData({
-         ...imageData,
-         originalImage: data[1].Output_image_using_brush,
-       });
-       setBrushedImage('')
+    try {
+      if (!brushedImage) return;
+      setIsBrushing(true);
+      let form = new FormData();
+      form.append("original_image", imageData?.originalImage);
+      form.append("image_mask", brushedImage);
+
+      const { data } = await removeFromBrush(form);
+      setImageData({
+        ...imageData,
+        originalImage: data[1].Output_image_using_brush,
+      });
+      filterCoords()
+      setBrushedImage('')
       //  toast.success(object.key + " deleted successfully");
-       setIsBrushing(false);
-     } catch (ex) {
-       setIsBrushing(false);
-        setBrushedImage("");
-     
-         if (
-           ex?.code !== Constants.ERRORS.CANCELED_ERROR.code &&
-           ex?.response?.status > 400 &&
-           ex?.response?.status < 500
-         )
-           toast.error(ex);
-     }
+      setIsBrushing(false);
+    } catch (ex) {
+      setIsBrushing(false);
+      setBrushedImage("");
+
+      if (
+        ex?.code !== Constants.ERRORS.CANCELED_ERROR.code &&
+        ex?.response?.status > 400 &&
+        ex?.response?.status < 500
+      )
+        toast.error(ex);
+    }
   };
 
   const getImageData = async () => {
     try {
-      if(!imageData.originalImage) return;
+      if (!imageData.originalImage) return;
       let form = new FormData();
       form.append("photoBase64", imageData?.originalImage);
       setIsGettingImage(true);
-        window.scroll({
-          top: 0,
-          behavior: "smooth",
-        });
+      window.scroll({
+        top: 0,
+        behavior: "smooth",
+      });
 
       let { data } = await getImage(form);
-      if(data?.Status){
-         toast.error(data?.Status);
-      }else{
+      if (data?.Status) {
+        toast.error(data?.Status);
+      } else {
         let newJson = data?.[1]?.Coordinates?.replace(
           /([a-zA-Z0-9]+?):/g,
           '"$1":'
         );
         newJson = newJson?.replace(/'/g, '"');
-  
+
         let coords = JSON?.parse(newJson) || [];
-          if (data?.[3]?.Encoded_detected_image){
-            setImageData({
-              ...imageData,
-              imageHistory: [],
-              // originalImage: data?.[3]?.Encoded_detected_image,
-              image: data?.[3]?.Encoded_detected_image,
-              Folder_name_for_masks: data?.[2]?.Folder_name_for_masks,
-              coords,
-            }); 
-          }
-  
+        
+        setOriginalCoord(JSON?.parse(newJson))
+        if (data?.[3]?.Encoded_detected_image) {
+          setImageData({
+            ...imageData,
+            imageHistory: [],
+            // originalImage: data?.[3]?.Encoded_detected_image,
+            image: data?.[3]?.Encoded_detected_image,
+            Folder_name_for_masks: data?.[2]?.Folder_name_for_masks,
+            coords,
+          });
         }
-        setIsGettingImage(false);
+
+      }
+      setIsGettingImage(false);
     } catch (ex) {
-      if(isGettingImage){
+      if (isGettingImage) {
         setImageData({
           ...imageData,
           originalImage: "",
@@ -140,15 +144,23 @@ export default function Home() {
       }
       setIsGettingImage(false);
       // setImageData({...imageData,originalImage:''})
-       if (
-         ex?.code !== Constants.ERRORS.CANCELED_ERROR.code &&
-         ex?.response?.status > 400 &&
-         ex?.response?.status < 500
-       )
-         toast.error(ex);
+      if (
+        ex?.code !== Constants.ERRORS.CANCELED_ERROR.code &&
+        ex?.response?.status > 400 &&
+        ex?.response?.status < 500
+      )
+        toast.error(ex);
     }
   };
 
+  const filterCoords = () => {
+    // console.log(drawPath, originalCoord)
+    drawPath?.map((draw) => {
+      originalCoord.map((imageCoord) => {
+        // console.log(draw, imageCoord)
+      })
+    })
+  }
   return (
     <div className="container-fluid position-relative">
       {isGettingImage ? (
@@ -167,10 +179,12 @@ export default function Home() {
           brushData={brushData}
           setBrushData={setBrushData}
           setLocalSrc={setLocalSrc}
+          originalCoord={originalCoord}
           imageDimension={imageDimension}
         ></ImagePreview>
       )}
       <CanvasModal
+        setDrawPath={setDrawPath}
         brushData={brushData}
         setBrushData={setBrushData}
         brushedImage={brushedImage}

@@ -6,8 +6,8 @@ import ZoomTools from "./zoomTools";
 
 let originalHeight = 0;
 let originalWidth = 0;
-let originalCoord = [];
-function DetectedImageBox({ handleObjectClick, isDeletingObject }) {
+// let originalCoord = [];
+function DetectedImageBox({ handleObjectClick, isDeletingObject,originalCoord }) {
   const [imageData, setImageData] = useContext(ImageContext);
   const [ref, setRef] = useState({});
 
@@ -15,7 +15,7 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject }) {
   const boxRef = useRef();
 
   useEffect(() => {
-    originalCoord = JSON.parse(JSON.stringify(imageData?.coords)) || [];
+    // originalCoord = JSON.parse(JSON.stringify(imageData?.coords)) || [];
   }, [imageData.image]);
 
   useEffect(() => {
@@ -73,7 +73,7 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject }) {
 
   useEffect(() => {
     if (originalCoord?.length === 0) {
-      originalCoord = JSON.parse(JSON.stringify(imageData?.coords));
+      // originalCoord = JSON.parse(JSON.stringify(imageData?.coords));
     }
     setTimeout(() => {
       if (originalCoord?.length < 0) return;
@@ -101,7 +101,7 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject }) {
           <TransformComponent>
             <div
               ref={boxRef}
-              className="d-flex justify-content-center align-items-center position-relative cursor-pan"
+              className="d-flex justify-content-center align-items-center position-relative cursor-pan h-max-80vh"
               // style={{ transform: `scale(${imageData?.scale})` }}
             >
               <TailSpin
