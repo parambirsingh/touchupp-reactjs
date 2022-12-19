@@ -33,7 +33,8 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject }) {
     let yStart = 0;
     let coords = JSON.parse(JSON.stringify(imageData?.coords));
     coords?.map((v, i) => {
-      xStart = (boxRef?.current?.clientWidth - imageRef?.current?.clientWidth) / 2;
+      xStart =
+        (boxRef?.current?.clientWidth - imageRef?.current?.clientWidth) / 2;
       yStart =
         (boxRef?.current?.clientHeight - imageRef?.current?.clientHeight) / 2;
       percentDecreaseHeight =
@@ -46,12 +47,16 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject }) {
         (originalCoord[i]?.coordinates?.[0] / 100) * percentDecreaseWidth;
       let decreaseWidth =
         (originalCoord[i]?.coordinates?.[2] / 100) * percentDecreaseWidth;
-      v.coordinates[1] =
-        yStart + (originalCoord[i].coordinates?.[1] - decreaseY);
+      let decreaseHeight =
+        (originalCoord[i]?.coordinates?.[3] / 100) * percentDecreaseHeight;
       v.coordinates[0] =
         xStart + (originalCoord[i].coordinates?.[0] - decreaseX);
+      v.coordinates[1] =
+        yStart + (originalCoord[i].coordinates?.[1] - decreaseY);
       v.coordinates[2] =
         xStart + (originalCoord[i].coordinates?.[2] - decreaseWidth);
+      v.coordinates[3] =
+        yStart + (originalCoord[i].coordinates?.[3] - decreaseHeight);
       return v;
     });
     setRef({ coords });
@@ -70,15 +75,16 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject }) {
     setTimeout(() => {
       if (originalCoord?.length < 0) return;
       let img = new Image();
-      img.onload = ()=>{   
+      img.onload = () => {
         originalHeight = img?.height;
         originalWidth = img?.width;
         handleResize();
-      }
-      img.src =imageData?.base64Start + imageData?.image;
+      };
+      img.src = imageData?.base64Start + imageData?.image;
     });
   }, []);
 
+  
   return (
     // <div className="d-flex justify-content-center">
     <TransformWrapper
@@ -108,34 +114,62 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject }) {
               />
               {imageData?.coords?.length &&
                 imageData?.coords?.map((c) => (
-                  <div
-                    className="position-absolute object-button"
-                    key={c.key}
-                    style={{
-                      top: c.coordinates[1] + "px",
-                      left: c.coordinates[2] + "px",
-                    }}
-                  >
-                    <span
-                      className="hover-danger  cursor-pointer"
-                      style={{ color: `rgb(${c.color?.join(",")})` }}
-                      onClick={() =>
-                        !isDeletingObject ? handleObjectClick(c) : ""
-                      }
+                  <div key={c?.key}>
+                    <div
+                      className="position-absolute object-box-key"
+                      key={c.key}
+                      style={{
+                        top: c.coordinates[1] - 15 + "px",
+                        left: c.coordinates[0] + "px",
+                        backgroundColor: `rgb(${c.color?.join(",")})`,
+                        color: "white",
+                      }}
                     >
-                      <i className="bi bi-x-circle-fill"></i>
-                      {c?.isTrashed}
-                      {/* <span className='text-white text-wrap'>
+                      {c?.key}
+                    </div>
+                    <div
+                      className="position-absolute object-box"
+                      key={c.key}
+                      style={{
+                        top: c.coordinates[1] + "px",
+                        left: c.coordinates[0] + "px",
+                        width: c.coordinates[2] - c.coordinates[0] + "px",
+                        height: c.coordinates[3] - c.coordinates[1] + "px",
+                        borderColor: `rgb(${c.color?.join(",")})`,
+                      }}
+                    ></div>
+                    <div
+                      className="position-absolute object-button"
+                      style={{
+                        top: c.coordinates[1] + "px",
+                        left: c.coordinates[2] + "px",
+                        zIndex:isDeletingObject?0:1
+                      }}
+                    >
+                      <span
+                        className="hover-danger  cursor-pointer"
+                        style={{ color: `rgb(${c.color?.join(",")})` }}
+                        onClick={() =>
+                          !isDeletingObject ? handleObjectClick(c) : ""
+                        }
+                      >
+                        <i className="bi bi-x-circle-fill"></i>
+                        {c?.isTrashed}
+                        {/* <span className='text-white text-wrap'>
                                     {c.key}
                                 </span> */}
-                    </span>
+                      </span>
+                    </div>
                   </div>
                 ))}
 
               <img
                 ref={imageRef}
                 src={imageData.base64Start + imageData?.originalImage}
-                className={"object-fit rounded-2 " + (isDeletingObject && "loading-image")}
+                className={
+                  "object-fit rounded-2 " +
+                  (isDeletingObject && "loading-image")
+                }
                 style={{ objectFit: "contain", maxWidth: "100%" }}
                 alt="img"
               />
