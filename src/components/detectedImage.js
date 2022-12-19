@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
+import { TailSpin } from "react-loader-spinner";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { ImageContext } from "../context/imageContext";
 import ZoomTools from "./zoomTools";
@@ -31,7 +32,7 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject }) {
     let xStart = 0;
     let yStart = 0;
     let coords = JSON.parse(JSON.stringify(imageData?.coords));
-    coords.map((v, i) => {
+    coords?.map((v, i) => {
       xStart = (boxRef?.current?.clientWidth - imageRef?.current?.clientWidth) / 2;
       yStart =
         (boxRef?.current?.clientHeight - imageRef?.current?.clientHeight) / 2;
@@ -68,9 +69,13 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject }) {
     }
     setTimeout(() => {
       if (originalCoord?.length < 0) return;
-      originalHeight = imageRef?.current?.naturalHeight;
-      originalWidth = imageRef?.current?.naturalWidth;
-      handleResize();
+      let img = new Image();
+      img.onload = ()=>{   
+        originalHeight = img?.height;
+        originalWidth = img?.width;
+        handleResize();
+      }
+      img.src =imageData?.base64Start + imageData?.image;
     });
   }, []);
 
@@ -88,36 +93,49 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject }) {
           <TransformComponent>
             <div
               ref={boxRef}
-              className="d-flex justify-content-center position-relative cursor-pan"
+              className="d-flex justify-content-center align-items-center position-relative cursor-pan"
               // style={{ transform: `scale(${imageData?.scale})` }}
             >
-              {imageData.coords.map((c) => (
-                <div
-                  className="position-absolute object-button"
-                  key={c.key}
-                  style={{
-                    top: c.coordinates[1] + "px",
-                    left: c.coordinates[2] + "px",
-                  }}
-                >
-                  <span
-                    className="hover-danger text-primary cursor-pointer"
-                    onClick={() =>
-                      !isDeletingObject ? handleObjectClick(c) : ""
-                    }
+              <TailSpin
+                height="50"
+                width="50"
+                color="#dc3545"
+                ariaLabel="tail-spin-loading"
+                radius="1"
+                wrapperStyle={{}}
+                wrapperClass="position-absolute"
+                visible={isDeletingObject}
+              />
+              {imageData?.coords?.length &&
+                imageData?.coords?.map((c) => (
+                  <div
+                    className="position-absolute object-button"
+                    key={c.key}
+                    style={{
+                      top: c.coordinates[1] + "px",
+                      left: c.coordinates[2] + "px",
+                    }}
                   >
-                    <i className="bi bi-x-circle-fill"></i>
-                    {/* <span className='text-white text-wrap'>
+                    <span
+                      className="hover-danger  cursor-pointer"
+                      style={{ color: `rgb(${c.color?.join(",")})` }}
+                      onClick={() =>
+                        !isDeletingObject ? handleObjectClick(c) : ""
+                      }
+                    >
+                      <i className="bi bi-x-circle-fill"></i>
+                      {c?.isTrashed}
+                      {/* <span className='text-white text-wrap'>
                                     {c.key}
                                 </span> */}
-                  </span>
-                </div>
-              ))}
+                    </span>
+                  </div>
+                ))}
 
               <img
                 ref={imageRef}
-                src={imageData.base64Start + imageData.image}
-                className="object-fit rounded-2"
+                src={imageData.base64Start + imageData?.originalImage}
+                className={"object-fit rounded-2 " + (isDeletingObject && "loading-image")}
                 style={{ objectFit: "contain", maxWidth: "100%" }}
                 alt="img"
               />

@@ -20,13 +20,13 @@ function HomeShimmer() {
       <div className="w-100 mb-3 rounded home-shimmer  row padding-box mb-5">
         <div className="col-1"></div>
         <div
-          className="col-5  rounded-2 me-4 backlog-simmer "
+          className="col-10  rounded-2 backlog-simmer "
           style={{ height: height + "px" }}
         ></div>
-        <div
+        {/* <div
           className="col-5  rounded-2 backlog-simmer "
           style={{ height: height + "px" }}
-        ></div>
+        ></div> */}
         <div className="col-1"></div>
       </div>
     </div>

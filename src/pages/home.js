@@ -16,7 +16,7 @@ export default function Home() {
   const [brushedImage, setBrushedImage] = useState('');
 
   const [brushData, setBrushData] = useState({
-    brushStock: 30,
+    brushStock: 150,
     brushMode: false,
   });
   const [imageDimension,setImageDimension] = useState({height:700,width:700})
@@ -49,6 +49,10 @@ export default function Home() {
       form.append("folder_name", imageData?.Folder_name_for_masks);
       form.append("object_removal_name", object.key);
       const { data } = await removeObject(form);
+      let i = imageData?.coords?.findIndex(c=>c.key===object.key);
+      if(i>-1){
+        imageData.coords?.splice(i, 1,{...imageData?.coords?.[i],isTrashed:true});
+      }
       setImageData({ ...imageData, originalImage: data[1].Output_image });
       toast.success(object.key + " deleted successfully");
        setIsDeletingObject(false);
@@ -113,16 +117,16 @@ export default function Home() {
         );
         newJson = newJson?.replace(/'/g, '"');
   
-        let coords = JSON?.parse(newJson);
+        let coords = JSON?.parse(newJson) || [];
           if (data?.[3]?.Encoded_detected_image){
             setImageData({
               ...imageData,
               imageHistory: [],
-              // image: imageData?.originalImage,
+              // originalImage: data?.[3]?.Encoded_detected_image,
               image: data?.[3]?.Encoded_detected_image,
               Folder_name_for_masks: data?.[2]?.Folder_name_for_masks,
               coords,
-            });
+            }); 
           }
   
         }

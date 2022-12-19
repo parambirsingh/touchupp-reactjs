@@ -102,20 +102,20 @@ function ImagePreview({
             <div className="mt-3 img-sec  position-relative">
               <div className="row">
                 {/* Original Image */}
-                <div className="col-6">
+                <div className="col-12">
                   <DetectedImageBox
                     handleObjectClick={handleObjectClick}
                     isDeletingObject={isDeletingObject}
                   />
                 </div>
                 {/* Modified Image */}
-                <div className="col-6 side-image">
+                {/* <div className="col-6 side-image">
                   <ImageBox
                     isDeletingObject={isDeletingObject}
                     brushData={brushData}
                     setBrushData={setBrushData}
                   />
-                </div>
+                </div> */}
               </div>
               <div className="row">
                 <div className="col-6 "></div>

@@ -24,7 +24,7 @@ function Toolbar({ brushData, setBrushData, paths, handleDone,isBrushing }) {
                 setBrushData({
                   ...brushData,
                   brushMode: true,
-                  brushStock: 30,
+                  brushStock:150,
                 });
                 abortImageServices();
               }}
@@ -87,10 +87,10 @@ function Toolbar({ brushData, setBrushData, paths, handleDone,isBrushing }) {
               </svg>
             </button>
           </div>
-          <div className="bg-scroller px-4 py-2 rounded">
+          <div className="bg-scroller px-4 py-2 rounded w-250px">
             <input
-              min="8"
-              max="100"
+              min="20"
+              max="150"
               type="range"
               value={brushData.brushStock}
               onChange={(e) =>
@@ -103,7 +103,7 @@ function Toolbar({ brushData, setBrushData, paths, handleDone,isBrushing }) {
               id="customRange1"
             />
           </div>
-          <div className="ms-4">
+          {/* <div className="ms-4">
             <button
               disabled={paths?.length === 0 || isBrushing}
               className="btn btn-danger fw-bold"
@@ -113,7 +113,7 @@ function Toolbar({ brushData, setBrushData, paths, handleDone,isBrushing }) {
             >
               Done
             </button>
-          </div>
+          </div> */}
 
           {/* <button className="btn" onClick={handleUndo}>
               <i className="bi bi-arrow-counterclockwise"></i>
