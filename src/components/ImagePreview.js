@@ -14,6 +14,8 @@ function ImagePreview({
   setBrushData,
   isDeletingObject,
   setLocalSrc,
+  coords
+
 }) {
   const [imageData, setImageData] = useContext(ImageContext);
   const handleBack = () => {
@@ -28,8 +30,8 @@ function ImagePreview({
     abortImageServices();
   };
 
-  const handleDownload = ()=>{
-    download(imageData?.Folder_name_for_masks,imageData?.base64Start+imageData?.originalImage);
+  const handleDownload = () => {
+    download(imageData?.Folder_name_for_masks, imageData?.base64Start + imageData?.originalImage);
   }
   return (
     <section className="py-5 text-center">
@@ -104,6 +106,7 @@ function ImagePreview({
                 {/* Original Image */}
                 <div className="col-12">
                   <DetectedImageBox
+                    coords={coords}
                     handleObjectClick={handleObjectClick}
                     isDeletingObject={isDeletingObject}
                   />

@@ -118,7 +118,7 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject }) {
                     <div
                       className="position-absolute object-box-key"
                       style={{
-                        top: c.coordinates[1] - 20 + "px",
+                        top: c.coordinates[1] + "px",
                         left: c.coordinates[0] + "px",
                         backgroundColor: `rgb(${c.color?.join(",")})`,
                       }}
@@ -128,10 +128,10 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject }) {
                     <div
                       className="position-absolute object-box"
                       style={{
-                        top: c.coordinates[1] + "px",
+                        top: (c.coordinates[1]) + "px",
                         left: c.coordinates[0] + "px",
                         width: c.coordinates[2] - c.coordinates[0] + "px",
-                        height: c.coordinates[3] - c.coordinates[1] + "px",
+                        height: c.coordinates[3]+10 - c.coordinates[1] + "px",
                         borderColor: `rgb(${c.color?.join(",")})`,
                       }}
                     ></div>
@@ -152,9 +152,7 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject }) {
                       >
                         <i className="bi bi-x-circle-fill"></i>
                         {c?.isTrashed}
-                        {/* <span className='text-white text-wrap'>
-                                    {c.key}
-                                </span> */}
+
                       </span>
                     </div>
                   </div>

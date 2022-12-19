@@ -338,10 +338,11 @@ h3,
 
 
 .object-box{
-  border: 4px solid;
+  border: 0.4vw solid;
 }
 
 .object-box-key{
   color: white;
-  font-size: medium;
+  font-size: 1vw;
+  margin-top: -2vh !important;
 }
