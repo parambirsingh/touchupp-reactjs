@@ -188,7 +188,7 @@ function Canvas({
           ariaLabel="tail-spin-loading"
           radius="1"
           wrapperStyle={{zIndex:10001}}
-          wrapperClass="position-absolute justify-content-center align-items-center h-100 w-100 cursor-not-allowed"
+          wrapperClass="position-absolute justify-content-center align-items-center h-100 w-100"
           visible={isBrushing}
         />
  

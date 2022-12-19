@@ -113,7 +113,7 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject }) {
                 ariaLabel="tail-spin-loading"
                 radius="1"
                 wrapperStyle={{ zIndex: 5 }}
-                wrapperClass="position-absolute justify-content-center align-items-center h-100 w-100 cursor-not-allowed"
+                wrapperClass="position-absolute justify-content-center align-items-center h-100 w-100"
                 visible={isDeletingObject}
               />
 
