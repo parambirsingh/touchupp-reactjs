@@ -345,3 +345,7 @@ h3,
   color: white;
   font-size: medium;
 }
+
+.cursor-not-allowed{
+  cursor: not-allowed !important;
+}

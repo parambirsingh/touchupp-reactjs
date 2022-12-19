@@ -108,58 +108,66 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject }) {
                 color="#dc3545"
                 ariaLabel="tail-spin-loading"
                 radius="1"
-                wrapperStyle={{}}
-                wrapperClass="position-absolute"
+                wrapperStyle={{ zIndex: 5 }}
+                wrapperClass="position-absolute justify-content-center align-items-center h-100 w-100 cursor-not-allowed"
                 visible={isDeletingObject}
               />
+
               {imageData?.coords?.length &&
-                imageData?.coords?.map((c) => (
-                  !c.isTrashed && (<div key={c?.key}>
-                    <div
-                      className="position-absolute object-box-key"
-                      style={{
-                        top: c.coordinates[1] - 20 + "px",
-                        left: c.coordinates[0] + "px",
-                        backgroundColor: `rgb(${c.color?.join(",")})`,
-                      }}
-                    >
-                      {c?.key}
-                    </div>
-                    <div
-                      className="position-absolute object-box"
-                      style={{
-                        top: c.coordinates[1] + "px",
-                        left: c.coordinates[0] + "px",
-                        width: c.coordinates[2] - c.coordinates[0] + "px",
-                        height: c.coordinates[3] - c.coordinates[1] + "px",
-                        borderColor: `rgb(${c.color?.join(",")})`,
-                      }}
-                    ></div>
-                    <div
-                      className="position-absolute object-button"
-                      style={{
-                        top: c.coordinates[1] + "px",
-                        left: c.coordinates[2] + "px",
-                        zIndex:isDeletingObject?0:1
-                      }}
-                    >
-                      <span
-                        className="hover-danger  cursor-pointer"
-                        style={{ color: `rgb(${c.color?.join(",")})` }}
-                        onClick={() =>
-                          !isDeletingObject ? handleObjectClick(c) : ""
-                        }
-                      >
-                        <i className="bi bi-x-circle-fill"></i>
-                        {c?.isTrashed}
-                        {/* <span className='text-white text-wrap'>
+                imageData?.coords?.map(
+                  (c) =>
+                    !c.isTrashed && (
+                      <div key={c?.key}>
+                        <div
+                          className="position-absolute object-box-key"
+                          style={{
+                            top: c.coordinates[1] - 20 + "px",
+                            left: c.coordinates[0] + "px",
+                            backgroundColor: `rgb(${c.color?.join(",")})`,
+                          }}
+                        >
+                          {c?.key?.slice(
+                            0,
+                            c?.key?.indexOf("0") > -1
+                              ? c?.key?.indexOf("0")
+                              : c?.key?.length
+                          )}
+                        </div>
+                        <div
+                          className="position-absolute object-box"
+                          style={{
+                            top: c.coordinates[1] + "px",
+                            left: c.coordinates[0] + "px",
+                            width: c.coordinates[2] - c.coordinates[0] + "px",
+                            height: c.coordinates[3] - c.coordinates[1] + "px",
+                            borderColor: `rgb(${c.color?.join(",")})`,
+                          }}
+                        ></div>
+                        <div
+                          className="position-absolute object-button"
+                          style={{
+                            top: c.coordinates[1] + "px",
+                            left: c.coordinates[2] + "px",
+                            zIndex: isDeletingObject ? 0 : 1,
+                          }}
+                        >
+                          <span
+                            className="hover-danger  cursor-pointer"
+                            style={{ color: `rgb(${c.color?.join(",")})` }}
+                            onClick={() =>
+                              !isDeletingObject ? handleObjectClick(c) : ""
+                            }
+                          >
+                            <i className="bi bi-x-circle-fill"></i>
+                            {c?.isTrashed}
+                            {/* <span className='text-white text-wrap'>
                                     {c.key}
                                 </span> */}
-                      </span>
-                    </div>
-                  </div>
-                  )
-                ))} 
+                          </span>
+                        </div>
+                      </div>
+                    )
+                )}
 
               <img
                 ref={imageRef}
