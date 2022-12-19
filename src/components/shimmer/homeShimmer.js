@@ -16,8 +16,8 @@ function HomeShimmer() {
   },[])
 
   return (
-    <div className="bg-white container-fluid">
-      <div className="w-100 mb-3 rounded home-shimmer  row padding-box mb-5">
+    <div className="pt-5 bg-white container-fluid">
+      <div className="w-100 pt-3  mb-3 rounded home-shimmer  row padding-box mb-5">
         <div className="col-1"></div>
         <div
           className="col-10  rounded-2 backlog-simmer "
