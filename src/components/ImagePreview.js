@@ -16,7 +16,7 @@ function ImagePreview({
   isDeletingObject,
   setLocalSrc,
   coords,
-  imageDimension
+  imageDimension,
 }) {
   const [imageData, setImageData] = useContext(ImageContext);
   const handleBack = () => {
@@ -39,16 +39,16 @@ function ImagePreview({
   };
 
   const getDimension = () => {
-    // return imageDimension?.width > 1000
-    //   ? window?.innerWidth >= Constants?.screenDimensions?.xl?.screenWidth
-    //     ? Constants?.screenDimensions?.xl
-    //     : window?.innerWidth >= Constants?.screenDimensions?.lg?.screenWidth
-    //     ? Constants?.screenDimensions?.lg
-    //     : window?.innerWidth >= Constants?.screenDimensions?.md?.screenWidth
-    //     ? Constants?.screenDimensions?.md
-    //     : Constants?.screenDimensions?.sm
-    //   : imageDimension;
-    return {height: window.innerHeight-270}
+    return imageDimension?.width > 1000
+      ? window?.innerWidth >= Constants?.screenDimensions?.xl?.screenWidth
+        ? Constants?.screenDimensions?.xl
+        : window?.innerWidth >= Constants?.screenDimensions?.lg?.screenWidth
+        ? Constants?.screenDimensions?.lg
+        : window?.innerWidth >= Constants?.screenDimensions?.md?.screenWidth
+        ? Constants?.screenDimensions?.md
+        : Constants?.screenDimensions?.sm
+      : imageDimension;
+    return { height: window.innerHeight - 270 };
   };
 
   return (
@@ -125,8 +125,8 @@ function ImagePreview({
                 <div className="col-12 align-items-center justify-content-center d-flex">
                   <div
                     style={{
-                      height: getDimension()?.height + "px",
-                      width: 'auto',
+                      // height: getDimension()?.height + "px",
+                      width: getDimension()?.width + "px",
                     }}
                   >
                     <DetectedImageBox
