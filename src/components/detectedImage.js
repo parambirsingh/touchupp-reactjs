@@ -23,43 +23,47 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject }) {
     setImageData({ ...imageData, ...ref });
     // }
   }, [ref]);
+  let resizeInterval;
   const handleResize = () => {
     if (!imageRef || !boxRef) return;
+    clearTimeout(resizeInterval);
+    resizeInterval = setTimeout(() => {
+      let percentDecreaseHeight = 0;
+      let percentDecreaseWidth = 0;
+      let xStart = 0;
+      let yStart = 0;
+      let coords = imageData?.coords;
+      coords?.map((v, i) => {
+        xStart =
+          (boxRef?.current?.clientWidth - imageRef?.current?.clientWidth) / 2;
+        yStart =
+          (boxRef?.current?.clientHeight - imageRef?.current?.clientHeight) / 2;
+        percentDecreaseHeight =
+          100 - (imageRef?.current?.clientHeight / originalHeight) * 100;
+        percentDecreaseWidth =
+          100 - (imageRef?.current?.clientWidth / originalWidth) * 100;
+        let decreaseY =
+          (originalCoord[i]?.coordinates?.[1] / 100) * percentDecreaseHeight;
+        let decreaseX =
+          (originalCoord[i]?.coordinates?.[0] / 100) * percentDecreaseWidth;
+        let decreaseWidth =
+          (originalCoord[i]?.coordinates?.[2] / 100) * percentDecreaseWidth;
+        let decreaseHeight =
+          (originalCoord[i]?.coordinates?.[3] / 100) * percentDecreaseHeight;
+        v.coordinates[0] =
+          xStart + (originalCoord[i].coordinates?.[0] - decreaseX);
+        v.coordinates[1] =
+          yStart + (originalCoord[i].coordinates?.[1] - decreaseY);
+        v.coordinates[2] =
+          xStart + (originalCoord[i].coordinates?.[2] - decreaseWidth);
+        v.coordinates[3] =
+          yStart + (originalCoord[i].coordinates?.[3] - decreaseHeight);
+        return v;
+      });
+      setRef({ coords });
+    });
     // let arr = [imageRef.current.clientWidth, imageRef.current.clientHeight];
 
-    let percentDecreaseHeight = 0;
-    let percentDecreaseWidth = 0;
-    let xStart = 0;
-    let yStart = 0;
-    let coords = JSON.parse(JSON.stringify(imageData?.coords));
-    coords?.map((v, i) => {
-      xStart =
-        (boxRef?.current?.clientWidth - imageRef?.current?.clientWidth) / 2;
-      yStart =
-        (boxRef?.current?.clientHeight - imageRef?.current?.clientHeight) / 2;
-      percentDecreaseHeight =
-        100 - (imageRef?.current?.clientHeight / originalHeight) * 100;
-      percentDecreaseWidth =
-        100 - (imageRef?.current?.clientWidth / originalWidth) * 100;
-      let decreaseY =
-        (originalCoord[i]?.coordinates?.[1] / 100) * percentDecreaseHeight;
-      let decreaseX =
-        (originalCoord[i]?.coordinates?.[0] / 100) * percentDecreaseWidth;
-      let decreaseWidth =
-        (originalCoord[i]?.coordinates?.[2] / 100) * percentDecreaseWidth;
-      let decreaseHeight =
-        (originalCoord[i]?.coordinates?.[3] / 100) * percentDecreaseHeight;
-      v.coordinates[0] =
-        xStart + (originalCoord[i].coordinates?.[0] - decreaseX);
-      v.coordinates[1] =
-        yStart + (originalCoord[i].coordinates?.[1] - decreaseY);
-      v.coordinates[2] =
-        xStart + (originalCoord[i].coordinates?.[2] - decreaseWidth);
-      v.coordinates[3] =
-        yStart + (originalCoord[i].coordinates?.[3] - decreaseHeight);
-      return v;
-    });
-    setRef({ coords });
   };
 
   useEffect(() => {
@@ -108,10 +112,11 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject }) {
                 color="#dc3545"
                 ariaLabel="tail-spin-loading"
                 radius="1"
-                wrapperStyle={{}}
-                wrapperClass="position-absolute"
+                wrapperStyle={{ zIndex: 5 }}
+                wrapperClass="position-absolute justify-content-center align-items-center h-100 w-100"
                 visible={isDeletingObject}
               />
+
               {imageData?.coords?.length &&
                 imageData?.coords?.map((c) => (
                   !c.isTrashed && (<div key={c?.key}>
@@ -123,7 +128,12 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject }) {
                         backgroundColor: `rgb(${c.color?.join(",")})`,
                       }}
                     >
-                      {c?.key}
+                      {c?.key?.slice(
+                            0,
+                            c?.key?.indexOf("0") > -1
+                              ? c?.key?.indexOf("0")
+                              : c?.key?.length
+                          )}
                     </div>
                     <div
                       className="position-absolute object-box"
@@ -145,7 +155,7 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject }) {
                     >
                       <span
                         className="hover-danger  cursor-pointer"
-                        style={{ color: `rgb(${c.color?.join(",")})` }}
+                        // style={{ color: `rgb(${c.color?.join(",")})` }}
                         onClick={() =>
                           !isDeletingObject ? handleObjectClick(c) : ""
                         }

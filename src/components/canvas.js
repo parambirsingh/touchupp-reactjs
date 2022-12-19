@@ -181,18 +181,17 @@ function Canvas({
         onTouchStart={() => handlePath()}
         // onMouseOut={() => handlePath()}
       >
-        {isBrushing && (
-          <TailSpin
-            height="50"
-            width="50"
-            color="#dc3545"
-            ariaLabel="tail-spin-loading"
-            radius="1"
-            wrapperStyle={{}}
-            wrapperClass="position-absolute justify-content-center"
-            visible={true}
-          />
-        )}
+        <TailSpin
+          height="50"
+          width="50"
+          color="#dc3545"
+          ariaLabel="tail-spin-loading"
+          radius="1"
+          wrapperStyle={{zIndex:10001}}
+          wrapperClass="position-absolute justify-content-center align-items-center h-100 w-100"
+          visible={isBrushing}
+        />
+ 
         <ReactSketchCanvas
           height={getDimention()?.height}
           width={getDimention()?.width}

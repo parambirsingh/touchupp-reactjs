@@ -343,6 +343,11 @@ h3,
 
 .object-box-key{
   color: white;
-  font-size: 1vw;
-  margin-top: -2vh !important;
+  font-size: 1vw !important;
+  margin-top: -3vh !important;
+  font-size: medium;
+}
+
+.cursor-not-allowed{
+  cursor: not-allowed !important;
 }
