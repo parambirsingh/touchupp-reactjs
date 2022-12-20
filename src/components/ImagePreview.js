@@ -16,18 +16,20 @@ function ImagePreview({
   setLocalSrc,
   originalCoord,
   imageDimension,
+  setOriginalCoord,
 }) {
   const [imageData, setImageData] = useContext(ImageContext);
   const handleBack = () => {
     setLocalSrc("");
     setImageData({
       ...imageData,
-      originalImage:"",
+      originalImage: "",
       image: "",
       imageHistory: [],
       currentIndex: 0,
       coords: [],
     });
+    setOriginalCoord([]);
     abortImageServices();
   };
 
@@ -47,7 +49,7 @@ function ImagePreview({
         : window?.innerWidth >= Constants?.screenDimensions?.md?.screenWidth
         ? Constants?.screenDimensions?.md
         : Constants?.screenDimensions?.sm
-      : Constants?.screenDimensions?.xsm
+      : Constants?.screenDimensions?.xsm;
   };
 
   return (

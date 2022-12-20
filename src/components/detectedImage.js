@@ -27,6 +27,7 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject,originalCoord,im
     if (!imageRef || !boxRef) return;
     setTimeout(() => {
       let coords = [...imageData?.coords];
+      console.log(imageDimension)
       let rx = imageRef?.current?.clientWidth / imageDimension.width;
       let ry = imageRef?.current?.clientHeight / imageDimension.height;
       coords?.map((v, i) => {
@@ -59,6 +60,12 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject,originalCoord,im
     })
   }, []);
 
+    useEffect(() => {
+      setTimeout(() => {
+        if (originalCoord?.length < 0) return;
+        handleResize();
+      });
+    }, [imageData?.image]);
   return (
     // <div className="d-flex justify-content-center">
     <TransformWrapper

@@ -24,14 +24,18 @@ export default function Home() {
 
   const [localSrc, setLocalSrc] = useState(imageData.originalImage);
 
-  useEffect(() => {
-    if (imageData?.image) {
+
+  const updateDimension = (url)=>{
       let img = new Image();
       img.onload = function () {
+        console.log({ height: img?.height, width: img?.width });
         setImageDimension({ height: img?.height, width: img?.width });
       };
-      img.src = imageData.base64Start + imageData.image;
-    }
+      img.src = url;
+
+  }
+  useEffect(() => {
+    // updateDimension();
   }, [imageData?.image])
 
   useEffect(() => {
@@ -134,6 +138,9 @@ export default function Home() {
         
         setOriginalCoord(JSON?.parse(newJson))
         if (data?.[3]?.Encoded_detected_image) {
+          updateDimension(
+            imageData.base64Start + data?.[3]?.Encoded_detected_image
+          );
           setImageData({
             ...imageData,
             imageHistory: [],
@@ -190,6 +197,7 @@ export default function Home() {
           brushData={brushData}
           setBrushData={setBrushData}
           setLocalSrc={setLocalSrc}
+          setOriginalCoord={setOriginalCoord}
           originalCoord={originalCoord}
           imageDimension={imageDimension}
         ></ImagePreview>
