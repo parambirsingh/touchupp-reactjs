@@ -7,7 +7,6 @@ import './assets/css/style.css'
 import './App.css';
 import { ImageContext } from './context/imageContext';
 import { useState } from 'react';
-import { Constants } from './data/constants';
 import { ToastContainer } from 'react-toastify';
 function App({router}) {
   const [imageData, setImageData] = useState({

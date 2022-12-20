@@ -53,8 +53,8 @@ module.exports.Constants = {
   screenDimensions: {
     xsm: {
       screenWidth: 1368,
-      width: 750,
-      height: 350,
+      width: 650,
+      height: 250,
     },
     sm: {
       screenWidth: 1368,
