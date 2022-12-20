@@ -25,23 +25,21 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject,originalCoord })
 
   const handleResize = () => {
     if (!imageRef || !boxRef) return;
-     setTimeout(() => {
+    setTimeout(() => {
       let coords = [...imageData?.coords];
+      let rx = imageRef?.current?.clientWidth / originalWidth;
+      let ry = imageRef?.current?.clientHeight / originalHeight;
       coords?.map((v, i) => {
-
-          let rx = imageRef?.current?.clientWidth /originalWidth;
-          let ry = imageRef?.current?.clientHeight / originalHeight;
-      
-         v.coordinates[0] =
-           imageRef?.current?.offsetLeft +
-           originalCoord[i].coordinates?.[0] * rx;
-         v.coordinates[1] =
-            imageRef?.current?.offsetTop + (originalCoord[i].coordinates?.[1]*ry);
-         v.coordinates[2] =
-           imageRef?.current?.offsetLeft +
-           originalCoord[i].coordinates?.[2] * rx;
-         v.coordinates[3] =
-            imageRef?.current?.offsetTop + (originalCoord[i].coordinates?.[3]*ry);
+        v.coordinates[0] =
+          imageRef?.current?.offsetLeft +
+          originalCoord[i].coordinates?.[0] * rx;
+        v.coordinates[1] =
+          imageRef?.current?.offsetTop + (originalCoord[i].coordinates?.[1] * ry);
+        v.coordinates[2] =
+          imageRef?.current?.offsetLeft +
+          originalCoord[i].coordinates?.[2] * rx;
+        v.coordinates[3] =
+          imageRef?.current?.offsetTop + (originalCoord[i].coordinates?.[3] * ry);
         return v;
       });
          setRef(coords)
@@ -55,14 +53,14 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject,originalCoord })
   }, []);
 
   useEffect(() => {
-      let img = new Image();
-      img.onload = () => {
-        originalHeight = img?.height;
-        originalWidth = img?.width;
-        if (originalCoord?.length < 0) return;
-        handleResize();
-      };
-      img.src = imageData?.base64Start + imageData?.image;
+    let img = new Image();
+    img.onload = () => {
+      originalHeight = img?.height;
+      originalWidth = img?.width;
+      if (originalCoord?.length < 0) return;
+      handleResize();
+    };
+    img.src = imageData?.base64Start + imageData?.image;
   }, []);
 
   return (
@@ -72,7 +70,7 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject,originalCoord })
       centerOnInit={true}
       centerZoomedOut={true}
       wheel={{ disabled: true }}
-      // pinch={{ disabled: true }}
+    // pinch={{ disabled: true }}
     >
       {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
         <>
@@ -99,7 +97,7 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject,originalCoord })
                     !c.isTrashed && (
                       <div key={c?.key}>
                         <div
-                          className="position-absolute object-box-key"
+                          className="position-absolute object-box-key text-truncate"
                           style={{
                             top: c.coordinates[1]-19 + "px",
                             left: c.coordinates[0] + "px",
@@ -120,7 +118,7 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject,originalCoord })
                             left: c.coordinates[0] + "px",
                             width: c.coordinates[2] - c.coordinates[0] + "px",
                             height:
-                              c.coordinates[3]  - c.coordinates[1] + "px",
+                              c.coordinates[3] - c.coordinates[1] + "px",
                             borderColor: `rgb(${c.color?.join(",")})`,
                           }}
                         ></div>
