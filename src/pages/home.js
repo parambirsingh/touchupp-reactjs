@@ -25,13 +25,13 @@ export default function Home() {
   const [localSrc, setLocalSrc] = useState(imageData.originalImage);
 
 
-  const updateDimension = (url)=>{
-      let img = new Image();
-      img.onload = function () {
-        console.log({ height: img?.height, width: img?.width });
-        setImageDimension({ height: img?.height, width: img?.width });
-      };
-      img.src = url;
+  const updateDimension = (url) => {
+    let img = new Image();
+    img.onload = function () {
+      console.log({ height: img?.height, width: img?.width });
+      setImageDimension({ height: img?.height, width: img?.width });
+    };
+    img.src = url;
 
   }
   useEffect(() => {
@@ -135,20 +135,23 @@ export default function Home() {
         newJson = newJson?.replace(/'/g, '"');
 
         let coords = JSON?.parse(newJson) || [];
-        
+
         setOriginalCoord(JSON?.parse(newJson))
         if (data?.[3]?.Encoded_detected_image) {
           updateDimension(
             imageData.base64Start + data?.[3]?.Encoded_detected_image
           );
-          setImageData({
-            ...imageData,
-            imageHistory: [],
-            // originalImage: data?.[3]?.Encoded_detected_image,
-            image: data?.[3]?.Encoded_detected_image,
-            Folder_name_for_masks: data?.[2]?.Folder_name_for_masks,
-            coords,
-          });
+
+          setTimeout(() => {
+            setImageData({
+              ...imageData,
+              imageHistory: [],
+              // originalImage: data?.[3]?.Encoded_detected_image,
+              image: data?.[3]?.Encoded_detected_image,
+              Folder_name_for_masks: data?.[2]?.Folder_name_for_masks,
+              coords,
+            });
+          })
         }
 
       }
