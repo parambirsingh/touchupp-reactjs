@@ -35,12 +35,12 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject,originalCoord,im
           imageRef?.current?.offsetLeft +
           originalCoord[i].coordinates?.[0] * rx;
         v.coordinates[1] =
-          imageRef?.current?.offsetTop + (originalCoord[i].coordinates?.[1] * ry);
+          5+imageRef?.current?.offsetTop + (originalCoord[i].coordinates?.[1] * ry);
         v.coordinates[2] =
           imageRef?.current?.offsetLeft +
           originalCoord[i].coordinates?.[2] * rx;
         v.coordinates[3] =
-          imageRef?.current?.offsetTop + (originalCoord[i].coordinates?.[3] * ry);
+          5+imageRef?.current?.offsetTop + (originalCoord[i].coordinates?.[3] * ry);
         return v;
       });
          setRef(coords)
@@ -150,7 +150,7 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject,originalCoord,im
 
               <img
                 ref={imageRef}
-                src={imageData.base64Start + imageData?.image}
+                src={imageData.base64Start + imageData?.originalImage}
                 className={
                   "object-fit rounded-2 h-100 " +
                   (isDeletingObject && "loading-image")

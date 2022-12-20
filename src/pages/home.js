@@ -34,9 +34,9 @@ export default function Home() {
       img.src = url;
 
   }
-  useEffect(() => {
-    // updateDimension();
-  }, [imageData?.image])
+  // useEffect(() => {
+  //   // updateDimension();
+  // }, [imageData?.image])
 
   useEffect(() => {
     handleBrushUpdate();
