@@ -4,6 +4,7 @@ import { ImageContext } from "../context/imageContext";
 import Canvas from "./canvas";
 import Toolbar from "./toolbar";
 import { abortImageServices } from "../services/imageServices";
+import { TailSpin } from "react-loader-spinner";
 
 function CanvasModal({
   brushData,
