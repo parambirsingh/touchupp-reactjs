@@ -32,7 +32,6 @@ export default function Home() {
   const updateDimension = (url) => {
     let img = new Image();
     img.onload = function () {
-      console.log({ height: img?.height, width: img?.width });
       setDetectedDimension({ height: img?.height, width: img?.width });
     };
     img.src = url;
@@ -42,7 +41,6 @@ export default function Home() {
     if(imageData.originalImage){
       let img = new Image();
       img.onload = function () {
-        console.log({ height: img?.height, width: img?.width });
         setImageDimension({ height: img?.height, width: img?.width });
       };
       img.src = imageData.base64Start+imageData.originalImage
@@ -148,17 +146,16 @@ export default function Home() {
         let coords = JSON?.parse(newJson) || [];
 
         setOriginalCoord(JSON?.parse(newJson))
-        if (data?.[3]?.Encoded_detected_image) {
+        if (data?.[4]?.Encoded_detected_image) {
           updateDimension(
-            imageData.base64Start + data?.[3]?.Encoded_detected_image
+            imageData.base64Start + data?.[4]?.Encoded_detected_image
           );
-
           setTimeout(() => {
             setImageData({
               ...imageData,
               imageHistory: [],
-              // originalImage: data?.[3]?.Encoded_detected_image,
-              image: data?.[3]?.Encoded_detected_image,
+              // originalImage: data?.[4]?.Encoded_detected_image,
+              image: data?.[4]?.Encoded_detected_image,
               Folder_name_for_masks: data?.[2]?.Folder_name_for_masks,
               coords,
             });

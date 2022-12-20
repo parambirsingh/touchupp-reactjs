@@ -28,7 +28,7 @@ function DetectedImageBox({
   }, [ref]);
 
   const handleResize = () => {
-    if (!imageRef || !boxRef) return;
+    if (!imageRef?.current || !boxRef?.current) return;
     setTimeout(() => {
       let coords = [...imageData?.coords];
 
@@ -39,14 +39,14 @@ function DetectedImageBox({
           imageRef?.current?.offsetLeft +
           originalCoord[i].coordinates?.[0] * rx;
         v.coordinates[1] =
-          4+
+          6+
           imageRef?.current?.offsetTop +
           originalCoord[i].coordinates?.[1] * ry;
         v.coordinates[2] =
           imageRef?.current?.offsetLeft +
           originalCoord[i].coordinates?.[2] * rx;
         v.coordinates[3] =
-          8 +
+          6 +
           imageRef?.current?.offsetTop +
           originalCoord[i].coordinates?.[3] * ry;
         return v;
