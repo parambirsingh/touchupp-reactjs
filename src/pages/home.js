@@ -54,7 +54,13 @@ export default function Home() {
       if (i > -1) {
         imageData.coords?.splice(i, 1, { ...imageData?.coords?.[i], isTrashed: true });
       }
-      setImageData({ ...imageData, originalImage: data[1].Output_image });
+      originalCoord?.splice(i, 1, {
+        ...imageData?.coords?.[i],
+        isTrashed: true,
+      })
+      setOriginalCoord(originalCoord);
+
+      setImageData({ ...imageData, image: data[1].Output_image });
       toast.success(object.key + " deleted successfully");
       setIsDeletingObject(false);
     } catch (ex) {
@@ -79,7 +85,7 @@ export default function Home() {
       const { data } = await removeFromBrush(form);
       setImageData({
         ...imageData,
-        originalImage: data[1].Output_image_using_brush,
+        image: data[1].Output_image_using_brush,
       });
       filterCoords()
       setBrushedImage('')
