@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { TailSpin } from "react-loader-spinner";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { ImageContext } from "../context/imageContext";
@@ -6,10 +6,9 @@ import ZoomTools from "./zoomTools";
 
 let originalHeight = 0;
 let originalWidth = 0;
-// let originalCoord = [];
+
 function DetectedImageBox({ handleObjectClick, isDeletingObject,originalCoord }) {
   const [imageData, setImageData] = useContext(ImageContext);
-  const [ref, setRef] = useState({});
 
   const imageRef = useRef();
   const boxRef = useRef();
@@ -18,51 +17,30 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject,originalCoord })
     // originalCoord = JSON.parse(JSON.stringify(imageData?.coords)) || [];
   }, [imageData.image]);
 
-  useEffect(() => {
-    // if(ref.originalImage){
-    setImageData({ ...imageData, ...ref });
-    // }
-  }, [ref]);
-  let resizeInterval;
+ 
   const handleResize = () => {
     if (!imageRef || !boxRef) return;
-    clearTimeout(resizeInterval);
-    resizeInterval = setTimeout(() => {
-      let percentDecreaseHeight = 0;
-      let percentDecreaseWidth = 0;
-      let xStart = 0;
-      let yStart = 0;
-      let coords = imageData?.coords;
+     setTimeout(() => {
+      let coords = [...imageData?.coords];
       coords?.map((v, i) => {
-        xStart =
-          (boxRef?.current?.clientWidth - imageRef?.current?.clientWidth) / 2;
-        yStart =
-          (boxRef?.current?.clientHeight - imageRef?.current?.clientHeight) / 2;
-        percentDecreaseHeight =
-          100 - (imageRef?.current?.clientHeight / originalHeight) * 100;
-        percentDecreaseWidth =
-          100 - (imageRef?.current?.clientWidth / originalWidth) * 100;
-        let decreaseY =
-          (originalCoord[i]?.coordinates?.[1] / 100) * percentDecreaseHeight;
-        let decreaseX =
-          (originalCoord[i]?.coordinates?.[0] / 100) * percentDecreaseWidth;
-        let decreaseWidth =
-          (originalCoord[i]?.coordinates?.[2] / 100) * percentDecreaseWidth;
-        let decreaseHeight =
-          (originalCoord[i]?.coordinates?.[3] / 100) * percentDecreaseHeight;
-        v.coordinates[0] =
-          xStart + (originalCoord[i].coordinates?.[0] - decreaseX);
-        v.coordinates[1] =
-          yStart + (originalCoord[i].coordinates?.[1] - decreaseY);
-        v.coordinates[2] =
-          xStart + (originalCoord[i].coordinates?.[2] - decreaseWidth);
-        v.coordinates[3] =
-          yStart + (originalCoord[i].coordinates?.[3] - decreaseHeight);
+
+          let rx = imageRef?.current?.clientWidth /originalWidth;
+          let ry = imageRef?.current?.clientHeight / originalHeight;
+      
+         v.coordinates[0] =
+           imageRef?.current?.offsetLeft +
+           originalCoord[i].coordinates?.[0] * rx;
+         v.coordinates[1] =
+            imageRef?.current?.offsetTop + (originalCoord[i].coordinates?.[1]*ry);
+         v.coordinates[2] =
+           imageRef?.current?.offsetLeft +
+           originalCoord[i].coordinates?.[2] * rx;
+         v.coordinates[3] =
+            imageRef?.current?.offsetTop + (originalCoord[i].coordinates?.[3]*ry);
         return v;
       });
-      setRef({ coords });
+         setImageData({ ...imageData, coords });
     });
-    // let arr = [imageRef.current.clientWidth, imageRef.current.clientHeight];
   };
 
   useEffect(() => {
@@ -72,19 +50,14 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject,originalCoord })
   }, []);
 
   useEffect(() => {
-    if (originalCoord?.length === 0) {
-      // originalCoord = JSON.parse(JSON.stringify(imageData?.coords));
-    }
-    setTimeout(() => {
-      if (originalCoord?.length < 0) return;
       let img = new Image();
       img.onload = () => {
         originalHeight = img?.height;
         originalWidth = img?.width;
+        if (originalCoord?.length < 0) return;
         handleResize();
       };
       img.src = imageData?.base64Start + imageData?.image;
-    });
   }, []);
 
   return (
@@ -101,7 +74,7 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject,originalCoord })
           <TransformComponent>
             <div
               ref={boxRef}
-              className="d-flex justify-content-center align-items-center position-relative cursor-pan h-max-80vh"
+              className="d-flex justify-content-center align-items-center position-relative cursor-pan "
               // style={{ transform: `scale(${imageData?.scale})` }}
             >
               <TailSpin
@@ -142,7 +115,7 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject,originalCoord })
                             left: c.coordinates[0] + "px",
                             width: c.coordinates[2] - c.coordinates[0] + "px",
                             height:
-                              c.coordinates[3] + 10 - c.coordinates[1] + "px",
+                              c.coordinates[3]  - c.coordinates[1] + "px",
                             borderColor: `rgb(${c.color?.join(",")})`,
                           }}
                         ></div>
@@ -171,7 +144,7 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject,originalCoord })
 
               <img
                 ref={imageRef}
-                src={imageData.base64Start + imageData?.originalImage}
+                src={imageData.base64Start + imageData?.image}
                 className={
                   "object-fit rounded-2 h-100 " +
                   (isDeletingObject && "loading-image")
