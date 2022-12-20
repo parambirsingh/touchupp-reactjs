@@ -123,7 +123,7 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject,originalCoord })
                         <div
                           className="position-absolute object-box-key"
                           style={{
-                            top: c.coordinates[1] + "px",
+                            top: (c.coordinates[1] -5)+ "px",
                             left: c.coordinates[0] + "px",
                             backgroundColor: `rgb(${c.color?.join(",")})`,
                           }}
@@ -142,7 +142,7 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject,originalCoord })
                             left: c.coordinates[0] + "px",
                             width: c.coordinates[2] - c.coordinates[0] + "px",
                             height:
-                              c.coordinates[3] + 10 - c.coordinates[1] + "px",
+                              c.coordinates[3]  - c.coordinates[1] + "px",
                             borderColor: `rgb(${c.color?.join(",")})`,
                           }}
                         ></div>
