@@ -7,7 +7,7 @@ import ZoomTools from "./zoomTools";
 let originalHeight = 0;
 let originalWidth = 0;
 // let originalCoord = [];
-function DetectedImageBox({ handleObjectClick, isDeletingObject,originalCoord }) {
+function DetectedImageBox({ handleObjectClick, isDeletingObject,originalCoord,imageDimension, }) {
   const [imageData, setImageData] = useContext(ImageContext);
   const [ref, setRef] = useState({});
 
@@ -27,8 +27,8 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject,originalCoord })
     if (!imageRef || !boxRef) return;
     setTimeout(() => {
       let coords = [...imageData?.coords];
-      let rx = imageRef?.current?.clientWidth / originalWidth;
-      let ry = imageRef?.current?.clientHeight / originalHeight;
+      let rx = imageRef?.current?.clientWidth / imageDimension.width;
+      let ry = imageRef?.current?.clientHeight / imageDimension.height;
       coords?.map((v, i) => {
         v.coordinates[0] =
           imageRef?.current?.offsetLeft +
@@ -53,14 +53,10 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject,originalCoord })
   }, []);
 
   useEffect(() => {
-    let img = new Image();
-    img.onload = () => {
-      originalHeight = img?.height;
-      originalWidth = img?.width;
+    setTimeout(()=>{
       if (originalCoord?.length < 0) return;
       handleResize();
-    };
-    img.src = imageData?.base64Start + imageData?.image;
+    })
   }, []);
 
   return (

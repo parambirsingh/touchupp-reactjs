@@ -132,6 +132,7 @@ function ImagePreview({
                       originalCoord={originalCoord}
                       handleObjectClick={handleObjectClick}
                       isDeletingObject={isDeletingObject}
+                      imageDimension={imageDimension}
                     />
                   </div>
                 </div>
