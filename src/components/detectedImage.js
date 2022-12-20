@@ -33,20 +33,18 @@ function DetectedImageBox({
       let coords = [...imageData?.coords];
 
       let rx = imageRef?.current?.clientWidth / detectedDimension.width;
-      let ry = imageRef?.current?.clientHeight / detectedDimension.height;
+      let ry = imageRef?.current?.clientHeight / (detectedDimension.height-6);
       coords?.map((v, i) => {
         v.coordinates[0] =
           imageRef?.current?.offsetLeft +
           originalCoord[i].coordinates?.[0] * rx;
         v.coordinates[1] =
-          6+
           imageRef?.current?.offsetTop +
           originalCoord[i].coordinates?.[1] * ry;
         v.coordinates[2] =
           imageRef?.current?.offsetLeft +
           originalCoord[i].coordinates?.[2] * rx;
         v.coordinates[3] =
-          6 +
           imageRef?.current?.offsetTop +
           originalCoord[i].coordinates?.[3] * ry;
         return v;
