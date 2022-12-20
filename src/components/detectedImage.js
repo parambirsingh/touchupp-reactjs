@@ -7,9 +7,10 @@ import ZoomTools from "./zoomTools";
 let originalHeight = 0;
 let originalWidth = 0;
 
-function DetectedImageBox({ handleObjectClick, isDeletingObject,originalCoord }) {
+function DetectedImageBox({ handleObjectClick, isDeletingObject, originalCoord }) {
   const [imageData, setImageData] = useContext(ImageContext);
-
+  let yVal = -2.8
+  let changeYVal = -2.8
   const imageRef = useRef();
   const boxRef = useRef();
 
@@ -17,29 +18,30 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject,originalCoord })
     // originalCoord = JSON.parse(JSON.stringify(imageData?.coords)) || [];
   }, [imageData.image]);
 
- 
+
   const handleResize = () => {
     if (!imageRef || !boxRef) return;
-     setTimeout(() => {
+    setTimeout(() => {
       let coords = [...imageData?.coords];
-      coords?.map((v, i) => {
+      let rx = imageRef?.current?.clientWidth / originalWidth;
+      let ry = imageRef?.current?.clientHeight / originalHeight;
 
-          let rx = imageRef?.current?.clientWidth /originalWidth;
-          let ry = imageRef?.current?.clientHeight / originalHeight;
-      
-         v.coordinates[0] =
-           imageRef?.current?.offsetLeft +
-           originalCoord[i].coordinates?.[0] * rx;
-         v.coordinates[1] =
-            imageRef?.current?.offsetTop + (originalCoord[i].coordinates?.[1]*ry);
-         v.coordinates[2] =
-           imageRef?.current?.offsetLeft +
-           originalCoord[i].coordinates?.[2] * rx;
-         v.coordinates[3] =
-            imageRef?.current?.offsetTop + (originalCoord[i].coordinates?.[3]*ry);
+      changeYVal = (yVal/100)*ry
+      console.log(changeYVal)
+      coords?.map((v, i) => {
+        v.coordinates[0] =
+          imageRef?.current?.offsetLeft +
+          originalCoord[i].coordinates?.[0] * rx;
+        v.coordinates[1] =
+          imageRef?.current?.offsetTop + (originalCoord[i].coordinates?.[1] * ry);
+        v.coordinates[2] =
+          imageRef?.current?.offsetLeft +
+          originalCoord[i].coordinates?.[2] * rx;
+        v.coordinates[3] =
+          imageRef?.current?.offsetTop + (originalCoord[i].coordinates?.[3] * ry);
         return v;
       });
-         setImageData({ ...imageData, coords });
+      setImageData({ ...imageData, coords });
     });
   };
 
@@ -50,14 +52,14 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject,originalCoord })
   }, []);
 
   useEffect(() => {
-      let img = new Image();
-      img.onload = () => {
-        originalHeight = img?.height;
-        originalWidth = img?.width;
-        if (originalCoord?.length < 0) return;
-        handleResize();
-      };
-      img.src = imageData?.base64Start + imageData?.image;
+    let img = new Image();
+    img.onload = () => {
+      originalHeight = img?.height;
+      originalWidth = img?.width;
+      if (originalCoord?.length < 0) return;
+      handleResize();
+    };
+    img.src = imageData?.base64Start + imageData?.image;
   }, []);
 
   return (
@@ -67,7 +69,7 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject,originalCoord })
       centerOnInit={true}
       centerZoomedOut={true}
       wheel={{ disabled: true }}
-      // pinch={{ disabled: true }}
+    // pinch={{ disabled: true }}
     >
       {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
         <>
@@ -75,7 +77,7 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject,originalCoord })
             <div
               ref={boxRef}
               className="d-flex justify-content-center align-items-center position-relative cursor-pan "
-              // style={{ transform: `scale(${imageData?.scale})` }}
+            // style={{ transform: `scale(${imageData?.scale})` }}
             >
               <TailSpin
                 height="50"
@@ -96,9 +98,10 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject,originalCoord })
                         <div
                           className="position-absolute object-box-key"
                           style={{
-                            top: (c.coordinates[1] -5)+ "px",
+                            top: c.coordinates[1] + "px",
                             left: c.coordinates[0] + "px",
                             backgroundColor: `rgb(${c.color?.join(",")})`,
+                            marginTop:changeYVal+'vh'
                           }}
                         >
                           {c?.key?.slice(
@@ -115,7 +118,7 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject,originalCoord })
                             left: c.coordinates[0] + "px",
                             width: c.coordinates[2] - c.coordinates[0] + "px",
                             height:
-                              c.coordinates[3]  - c.coordinates[1] + "px",
+                              c.coordinates[3] - c.coordinates[1] + "px",
                             borderColor: `rgb(${c.color?.join(",")})`,
                           }}
                         ></div>
