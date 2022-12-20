@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { TailSpin } from "react-loader-spinner";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { ImageContext } from "../context/imageContext";
@@ -6,22 +6,27 @@ import ZoomTools from "./zoomTools";
 
 let originalHeight = 0;
 let originalWidth = 0;
-
+// let originalCoord = [];
 function DetectedImageBox({ handleObjectClick, isDeletingObject,originalCoord }) {
   const [imageData, setImageData] = useContext(ImageContext);
+  const [ref, setRef] = useState({});
 
   const imageRef = useRef();
   const boxRef = useRef();
 
   useEffect(() => {
-    // originalCoord = JSON.parse(JSON.stringify(imageData?.coords)) || [];
   }, [imageData.image]);
 
- 
+  useEffect(() => {
+    // if(ref.originalImage){
+    setImageData({ ...imageData, ...ref });
+    // }
+  }, [ref]);
+
   const handleResize = () => {
     if (!imageRef || !boxRef) return;
      setTimeout(() => {
-      let coords = [...imageData?.coords];
+      let coords = imageData?.coords;
       coords?.map((v, i) => {
 
           let rx = imageRef?.current?.clientWidth /originalWidth;
@@ -39,7 +44,7 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject,originalCoord })
             imageRef?.current?.offsetTop + (originalCoord[i].coordinates?.[3]*ry);
         return v;
       });
-         setImageData({ ...imageData, coords });
+         setRef(coords)
     });
   };
 
@@ -74,7 +79,7 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject,originalCoord })
           <TransformComponent>
             <div
               ref={boxRef}
-              className="d-flex justify-content-center align-items-center position-relative cursor-pan "
+              className="d-flex justify-content-center align-items-center position-relative cursor-pan"
               // style={{ transform: `scale(${imageData?.scale})` }}
             >
               <TailSpin
@@ -144,7 +149,7 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject,originalCoord })
 
               <img
                 ref={imageRef}
-                src={imageData.base64Start + imageData?.image}
+                src={imageData.base64Start + imageData?.originalImage}
                 className={
                   "object-fit rounded-2 h-100 " +
                   (isDeletingObject && "loading-image")
