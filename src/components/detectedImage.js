@@ -26,7 +26,7 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject,originalCoord })
   const handleResize = () => {
     if (!imageRef || !boxRef) return;
      setTimeout(() => {
-      let coords = imageData?.coords;
+      let coords = [...imageData?.coords];
       coords?.map((v, i) => {
 
           let rx = imageRef?.current?.clientWidth /originalWidth;
@@ -125,7 +125,7 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject,originalCoord })
                           }}
                         ></div>
                         <div
-                          className="position-absolute object-button"
+                          className="position-absolute object-button text-primary"
                           style={{
                             top: c.coordinates[1] + "px",
                             left: c.coordinates[2] + "px",
