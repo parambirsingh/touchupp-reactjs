@@ -341,18 +341,16 @@ h3,
 
 
 .object-box{
-  /* border: 0.2vw solid; */
-  border: 3px solid;
-
+  border: 3px  solid;
 }
 
 .object-box-key{
   color: white;
-  font-size: 1vw !important;
-  /* margin-top: -2.8vh !important; */
-  /* margin-top: auto !important; */
-
-  font-size: medium;
+  /* height: 3vh; */
+  width: auto;
+   /* font-size: 1vh !important; */
+  /*margin-top: -2.8vh !important; */
+  /* font-size: medium; */
 }
 
 .cursor-not-allowed{

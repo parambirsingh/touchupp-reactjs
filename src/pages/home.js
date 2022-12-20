@@ -60,7 +60,11 @@ export default function Home() {
       })
       setOriginalCoord(originalCoord);
 
-      setImageData({ ...imageData, image: data[1].Output_image });
+      setImageData({
+        ...imageData,
+        // image: data[1].Output_image,
+        originalImage: data[1].Output_image,
+      });
       toast.success(object.key + " deleted successfully");
       setIsDeletingObject(false);
     } catch (ex) {
@@ -85,7 +89,8 @@ export default function Home() {
       const { data } = await removeFromBrush(form);
       setImageData({
         ...imageData,
-        image: data[1].Output_image_using_brush,
+        // image: data[1].Output_image_using_brush,
+        originalImage: data[1].Output_image_using_brush,
       });
       filterCoords()
       setBrushedImage('')
@@ -132,7 +137,7 @@ export default function Home() {
           setImageData({
             ...imageData,
             imageHistory: [],
-            // originalImage: data?.[3]?.Encoded_detected_image,
+            originalImage: data?.[3]?.Encoded_detected_image,
             image: data?.[3]?.Encoded_detected_image,
             Folder_name_for_masks: data?.[2]?.Folder_name_for_masks,
             coords,

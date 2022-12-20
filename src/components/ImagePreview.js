@@ -46,7 +46,7 @@ function ImagePreview({
         : window?.innerWidth >= Constants?.screenDimensions?.md?.screenWidth
         ? Constants?.screenDimensions?.md
         : Constants?.screenDimensions?.sm
-      : Constants?.screenDimensions?.sm
+      : Constants?.screenDimensions?.xsm
   };
 
   return (
