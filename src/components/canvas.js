@@ -80,7 +80,7 @@ function Canvas({
         let ctx = dyanmicCanvas.getContext("2d");
         draw(ctx, img,paths);
       };
-      img.src = imageData.base64Start + imageData?.image;
+      img.src = imageData.base64Start + imageData?.originalImage;
     };
 
  
@@ -168,11 +168,11 @@ function Canvas({
           color="#dc3545"
           ariaLabel="tail-spin-loading"
           radius="1"
-          wrapperStyle={{zIndex:10001}}
+          wrapperStyle={{ zIndex: 10001 }}
           wrapperClass="position-absolute justify-content-center align-items-center h-100 w-100"
           visible={isBrushing}
         />
- 
+
         <ReactSketchCanvas
           height={getDimention()?.height}
           width={getDimention()?.width}
@@ -190,7 +190,7 @@ function Canvas({
           eraserWidth={brushData.brushStock}
           strokeColor="#dc3545b3"
           // preserveBackgroundImageAspectRatio="xMidYMid meet"
-          backgroundImage={imageData.base64Start + imageData.image}
+          backgroundImage={imageData.base64Start + imageData?.originalImage}
         />
         <CustomCursor
           targets={[".cursor-area"]}

@@ -7,15 +7,19 @@ import ZoomTools from "./zoomTools";
 let originalHeight = 0;
 let originalWidth = 0;
 // let originalCoord = [];
-function DetectedImageBox({ handleObjectClick, isDeletingObject,originalCoord,imageDimension, }) {
+function DetectedImageBox({
+  handleObjectClick,
+  isDeletingObject,
+  originalCoord,
+  detectedDimension,
+}) {
   const [imageData, setImageData] = useContext(ImageContext);
   const [ref, setRef] = useState({});
 
   const imageRef = useRef();
   const boxRef = useRef();
 
-  useEffect(() => {
-  }, [imageData.image]);
+  useEffect(() => {}, [imageData.image]);
 
   useEffect(() => {
     // if(ref.originalImage){
@@ -27,23 +31,27 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject,originalCoord,im
     if (!imageRef || !boxRef) return;
     setTimeout(() => {
       let coords = [...imageData?.coords];
-      console.log(imageDimension)
-      let rx = imageRef?.current?.clientWidth / imageDimension.width;
-      let ry = imageRef?.current?.clientHeight / imageDimension.height;
+
+      let rx = imageRef?.current?.clientWidth / detectedDimension.width;
+      let ry = imageRef?.current?.clientHeight / detectedDimension.height;
       coords?.map((v, i) => {
         v.coordinates[0] =
           imageRef?.current?.offsetLeft +
           originalCoord[i].coordinates?.[0] * rx;
         v.coordinates[1] =
-          5+imageRef?.current?.offsetTop + (originalCoord[i].coordinates?.[1] * ry);
+          4+
+          imageRef?.current?.offsetTop +
+          originalCoord[i].coordinates?.[1] * ry;
         v.coordinates[2] =
           imageRef?.current?.offsetLeft +
           originalCoord[i].coordinates?.[2] * rx;
         v.coordinates[3] =
-          5+imageRef?.current?.offsetTop + (originalCoord[i].coordinates?.[3] * ry);
+          8 +
+          imageRef?.current?.offsetTop +
+          originalCoord[i].coordinates?.[3] * ry;
         return v;
       });
-         setRef(coords)
+      setRef(coords);
     });
   };
 
@@ -54,18 +62,18 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject,originalCoord,im
   }, []);
 
   useEffect(() => {
-    setTimeout(()=>{
+    setTimeout(() => {
       if (originalCoord?.length < 0) return;
       handleResize();
-    })
+    });
   }, []);
 
-    useEffect(() => {
-      setTimeout(() => {
-        if (originalCoord?.length < 0) return;
-        handleResize();
-      });
-    }, [imageData?.image]);
+  useEffect(() => {
+    setTimeout(() => {
+      if (originalCoord?.length < 0) return;
+      handleResize();
+    });
+  }, [imageData?.image]);
   return (
     // <div className="d-flex justify-content-center">
     <TransformWrapper
@@ -73,7 +81,7 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject,originalCoord,im
       centerOnInit={true}
       centerZoomedOut={true}
       wheel={{ disabled: true }}
-    // pinch={{ disabled: true }}
+      // pinch={{ disabled: true }}
     >
       {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
         <>
@@ -102,7 +110,7 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject,originalCoord,im
                         <div
                           className="position-absolute object-box-key text-truncate"
                           style={{
-                            top: c.coordinates[1]-19 + "px",
+                            top: c.coordinates[1] - 19 + "px",
                             left: c.coordinates[0] + "px",
                             backgroundColor: `rgb(${c.color?.join(",")})`,
                           }}
@@ -120,8 +128,7 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject,originalCoord,im
                             top: c.coordinates[1] + "px",
                             left: c.coordinates[0] + "px",
                             width: c.coordinates[2] - c.coordinates[0] + "px",
-                            height:
-                              c.coordinates[3] - c.coordinates[1] + "px",
+                            height: c.coordinates[3] - c.coordinates[1] + "px",
                             borderColor: `rgb(${c.color?.join(",")})`,
                           }}
                         ></div>

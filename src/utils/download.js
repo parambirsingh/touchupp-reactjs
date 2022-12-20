@@ -19,6 +19,7 @@ export const download = async (name,data) => {
     };
     img.src = data;
   } catch (ex) {
+    console.log(ex)
     document?.body?.removeChild(img);
   }
 };

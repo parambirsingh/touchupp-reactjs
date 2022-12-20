@@ -21,6 +21,10 @@ export default function Home() {
     brushMode: false,
   });
   const [imageDimension, setImageDimension] = useState({ height: 700, width: 700 })
+  const [detectedDimension, setDetectedDimension] = useState({
+    height: 700,
+    width: 700,
+  });
 
   const [localSrc, setLocalSrc] = useState(imageData.originalImage);
 
@@ -29,14 +33,21 @@ export default function Home() {
     let img = new Image();
     img.onload = function () {
       console.log({ height: img?.height, width: img?.width });
-      setImageDimension({ height: img?.height, width: img?.width });
+      setDetectedDimension({ height: img?.height, width: img?.width });
     };
     img.src = url;
 
   }
-  // useEffect(() => {
-  //   // updateDimension();
-  // }, [imageData?.image])
+  useEffect(() => {
+    if(imageData.originalImage){
+      let img = new Image();
+      img.onload = function () {
+        console.log({ height: img?.height, width: img?.width });
+        setImageDimension({ height: img?.height, width: img?.width });
+      };
+      img.src = imageData.base64Start+imageData.originalImage
+    }
+  }, [imageData?.originalImage])
 
   useEffect(() => {
     handleBrushUpdate();
@@ -203,6 +214,7 @@ export default function Home() {
           setOriginalCoord={setOriginalCoord}
           originalCoord={originalCoord}
           imageDimension={imageDimension}
+          detectedDimension={detectedDimension}
         ></ImagePreview>
       )}
       <CanvasModal

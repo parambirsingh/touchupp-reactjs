@@ -16,6 +16,7 @@ function ImagePreview({
   setLocalSrc,
   originalCoord,
   imageDimension,
+  detectedDimension,
   setOriginalCoord,
 }) {
   const [imageData, setImageData] = useContext(ImageContext);
@@ -134,7 +135,7 @@ function ImagePreview({
                       originalCoord={originalCoord}
                       handleObjectClick={handleObjectClick}
                       isDeletingObject={isDeletingObject}
-                      imageDimension={imageDimension}
+                      detectedDimension={detectedDimension}
                     />
                   </div>
                 </div>
