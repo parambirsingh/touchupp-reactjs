@@ -10,6 +10,7 @@ import { useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 function App({router}) {
   const [imageData, setImageData] = useState({
+    uploadedImage:'',
     image:'',
     originalImage:'',
     base64Start:'',

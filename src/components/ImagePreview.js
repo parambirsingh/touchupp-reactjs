@@ -22,6 +22,7 @@ function ImagePreview({
     setLocalSrc("");
     setImageData({
       ...imageData,
+      originalImage:"",
       image: "",
       imageHistory: [],
       currentIndex: 0,
@@ -33,7 +34,7 @@ function ImagePreview({
   const handleDownload = () => {
     download(
       imageData?.Folder_name_for_masks,
-      imageData?.base64Start + imageData?.originalImage
+      imageData?.base64Start + imageData?.image
     );
   };
 

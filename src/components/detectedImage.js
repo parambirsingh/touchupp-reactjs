@@ -149,7 +149,7 @@ function DetectedImageBox({ handleObjectClick, isDeletingObject,originalCoord })
 
               <img
                 ref={imageRef}
-                src={imageData.base64Start + imageData?.originalImage}
+                src={imageData.base64Start + imageData?.image}
                 className={
                   "object-fit rounded-2 h-100 " +
                   (isDeletingObject && "loading-image")

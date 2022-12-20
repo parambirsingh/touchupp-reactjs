@@ -80,7 +80,7 @@ function Canvas({
         let ctx = dyanmicCanvas.getContext("2d");
         draw(ctx, img,paths);
       };
-      img.src = imageData.base64Start + imageData.originalImage;
+      img.src = imageData.base64Start + imageData?.image;
     };
 
  
@@ -190,7 +190,7 @@ function Canvas({
           eraserWidth={brushData.brushStock}
           strokeColor="#dc3545b3"
           // preserveBackgroundImageAspectRatio="xMidYMid meet"
-          backgroundImage={imageData.base64Start + imageData.originalImage}
+          backgroundImage={imageData.base64Start + imageData.image}
         />
         <CustomCursor
           targets={[".cursor-area"]}

@@ -25,14 +25,14 @@ export default function Home() {
   const [localSrc, setLocalSrc] = useState(imageData.originalImage);
 
   useEffect(() => {
-    if (imageData?.originalImage) {
+    if (imageData?.image) {
       let img = new Image();
       img.onload = function () {
         setImageDimension({ height: img?.height, width: img?.width });
       };
-      img.src = imageData.base64Start + imageData.originalImage;
+      img.src = imageData.base64Start + imageData.image;
     }
-  }, [imageData?.originalImage])
+  }, [imageData?.image])
 
   useEffect(() => {
     handleBrushUpdate();
@@ -62,7 +62,7 @@ export default function Home() {
 
       setImageData({
         ...imageData,
-        // image: data[1].Output_image,
+        image: data[1].Output_image,
         originalImage: data[1].Output_image,
       });
       toast.success(object.key + " deleted successfully");
@@ -89,7 +89,7 @@ export default function Home() {
       const { data } = await removeFromBrush(form);
       setImageData({
         ...imageData,
-        // image: data[1].Output_image_using_brush,
+        image: data[1].Output_image_using_brush,
         originalImage: data[1].Output_image_using_brush,
       });
       filterCoords()
@@ -137,7 +137,7 @@ export default function Home() {
           setImageData({
             ...imageData,
             imageHistory: [],
-            originalImage: data?.[3]?.Encoded_detected_image,
+            // originalImage: data?.[3]?.Encoded_detected_image,
             image: data?.[3]?.Encoded_detected_image,
             Folder_name_for_masks: data?.[2]?.Folder_name_for_masks,
             coords,
